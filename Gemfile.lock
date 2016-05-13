@@ -1,0 +1,32 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    contest (0.1.3)
+    json_pure (1.8.3)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rake (11.1.2)
+    redgreen (1.2.2)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    sinatra (1.4.7)
+      rack (~> 1.5)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    sinatra-content-for (0.1)
+      contest
+      redgreen
+      sinatra
+      sr-mg
+    sr-mg (0.0.5)
+      rake
+      rubyforge
+    tilt (2.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  sinatra
+  sinatra-content-for

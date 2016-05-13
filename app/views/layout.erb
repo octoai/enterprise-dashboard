@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>Octo Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN Vendor CSS-->
+    <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/plugins/switchery/css/switchery.min.css" rel="stylesheet" type="text/css" media="screen" />
+    <!-- BEGIN Pages CSS-->
+    <link href="pages/css/pages-icons.css" rel="stylesheet" type="text/css">
+    <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
+
+    <% yield_content :styles %>
+    <!--[if lte IE 9]>
+        <link href="pages/css/ie9.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script type="text/javascript">
+    window.onload = function()
+    {
+      // fix for windows 8
+      if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
+        document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="pages/css/windows.chrome.fix.css" />'
+    }
+    </script>
+  </head>
+  <body class="fixed-header">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar" data-pages="sidebar">
+      <div id="appMenu" class="sidebar-overlay-slide from-top">
+      </div>
+      <!-- BEGIN SIDEBAR HEADER -->
+      <div class="sidebar-header">
+        <img src="assets/img/logo_white.png" alt="logo" class="brand" data-src="assets/img/logo_white.png" data-src-retina="assets/img/logo_white_2x.png" width="78" height="22">
+        <div class="sidebar-header-controls">
+          <button data-pages-toggle="#appMenu" class="btn btn-xs sidebar-slide-toggle btn-link m-l-20" type="button"><i class="fa fa-angle-down fs-16"></i>
+          </button>
+          <button data-toggle-pin="sidebar" class="btn btn-link visible-lg-inline" type="button"><i class="fa fs-12"></i>
+          </button>
+        </div>
+      </div>
+      <!-- END SIDEBAR HEADER -->
+      <!-- BEGIN SIDEBAR MENU -->
+      <div class="sidebar-menu">
+        <ul class="menu-items">
+          <li class="m-t-30">
+            <a href="/home" class="detailed">
+              <span class="title">Home</span>
+              <span class="details">Welcome Page</span>
+            </a>
+            <span class="icon-thumbnail "><i class="pg-home"></i></span>
+          </li>
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Segmentation</span>
+              <span class=" arrow"></span>
+            </a>
+            <span class="icon-thumbnail">S</span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/segmentation">Overview</a>
+                <span class="icon-thumbnail">S-O</span>
+              </li>
+            </ul>
+          </li>
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Funnel</span>
+              <span class="arrow"></span>
+            </a>
+            <span class="icon-thumbnail">F</span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/funnel">Overview</a>
+                <span class="icon-thumbnail">F-O</span>
+              </li>
+              <li class="">
+                <a href="/funnel/new">Add Funnel</a>
+                <span class="icon-thumbnail">F-A</span>
+              </li>
+            </ul>
+          </li>
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Rules</span>
+              <span class="arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/rule">Overview</a>
+                <span class="icon-thumbnail">R</span>
+              </li>
+            </ul>
+          </li>
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">User Feeds</span>
+              <span class="arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/user">Timeline</a>
+                <span class="icon-thumbnail">U</span>
+              </li>
+            </ul>
+          </li>
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Notifications</span>
+              <span class="arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/notification">Overview</a>
+                <span class="icon-thumbnail">N</span>
+              </li>
+              <li class="">
+                <a href="/notification">Conversions</a>
+                <span class="icon-thumbnail">N</span>
+              </li>
+            </ul>
+          </li>
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Feeds</span>
+              <span class=" arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/feed">Overview</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- START PAGE-CONTAINER -->
+    <div class="page-container">
+      <!-- START PAGE HEADER WRAPPER -->
+      <!-- START HEADER -->
+      <div class="header ">
+        <!-- START MOBILE CONTROLS -->
+        <div class="container-fluid relative">
+          <!-- LEFT SIDE -->
+          <div class="pull-left full-height visible-sm visible-xs">
+            <!-- START ACTION BAR -->
+            <div class="header-inner">
+              <a href="#" class="btn-link toggle-sidebar visible-sm-inline-block visible-xs-inline-block padding-5" data-toggle="sidebar">
+                <span class="icon-set menu-hambuger"></span>
+              </a>
+            </div>
+            <!-- END ACTION BAR -->
+          </div>
+          <div class="pull-center hidden-md hidden-lg">
+            <div class="header-inner">
+              <div class="brand inline">
+                <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+              </div>
+            </div>
+          </div>
+          <!-- RIGHT SIDE -->
+          <div class="pull-right full-height visible-sm visible-xs">
+            <!-- START ACTION BAR -->
+            <div class="header-inner">
+              <a href="#" class="btn-link visible-sm-inline-block visible-xs-inline-block" data-toggle="quickview" data-toggle-element="#quickview">
+                <span class="icon-set menu-hambuger-plus"></span>
+              </a>
+            </div>
+            <!-- END ACTION BAR -->
+          </div>
+        </div>
+        <!-- END MOBILE CONTROLS -->
+        <div class=" pull-left sm-table hidden-xs hidden-sm">
+          <div class="header-inner">
+            <div class="brand inline">
+              <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+            </div>
+            <!-- START NOTIFICATION LIST -->
+            <ul class="notification-list no-margin hidden-sm hidden-xs b-grey b-l b-r no-style p-l-30 p-r-20">
+              <li class="p-r-15 inline">
+                <div class="dropdown">
+                  <a href="javascript:;" id="notification-center" class="icon-set globe-fill" data-toggle="dropdown">
+                    <span class="bubble"></span>
+                  </a>
+                  <!-- START Notification Dropdown -->
+                  <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
+                    <!-- START Notification -->
+                    
+                    <!-- END Notification -->
+                  </div>
+                  <!-- END Notification Dropdown -->
+                </div>
+              </li>
+              <!-- <li class="p-r-15 inline">
+                <a href="#" class="icon-set clip "></a>
+              </li>
+              <li class="p-r-15 inline">
+                <a href="#" class="icon-set grid-box"></a>
+              </li> -->
+            </ul>
+            <!-- END NOTIFICATIONS LIST -->
+            <!-- <a href="#" class="search-link" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a>  -->
+          </div>
+        </div>
+        <!-- <div class=" pull-right">
+          <div class="header-inner">
+            <a href="#" class="btn-link icon-set menu-hambuger-plus m-l-20 sm-no-margin hidden-sm hidden-xs" data-toggle="quickview" data-toggle-element="#quickview"></a>
+          </div>
+        </div> -->
+        <div class=" pull-right">
+          <!-- START User Info-->
+          <div class="visible-lg visible-md m-t-10">
+            <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
+              <span class="semi-bold">Anonymous</span> <span class="text-master">User</span>
+            </div>
+            <div class="dropdown pull-right">
+              <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                  <img src="images/user_icon.png" alt="" data-src="images/user_icon.png" data-src-retina="images/user_icon.png" width="32" height="32">
+                </span>
+              </button>
+              <ul class="dropdown-menu profile-dropdown" role="menu">
+                <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
+                </li>
+                <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
+                </li>
+                <li><a href="#"><i class="pg-signals"></i> Help</a>
+                </li>
+                <li class="bg-master-lighter">
+                  <a href="#" class="clearfix">
+                    <span class="pull-left">Logout</span>
+                    <span class="pull-right"><i class="pg-power"></i></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- END User Info-->
+        </div>
+      </div>
+      <!-- END HEADER -->
+      <!-- END PAGE HEADER WRAPPER -->
+      <!-- START PAGE CONTENT WRAPPER -->
+      <div class="page-content-wrapper">
+        <!-- START PAGE CONTENT -->
+        <div class="content">
+          <!-- START JUMBOTRON -->
+          <div class="jumbotron" data-pages="parallax">
+            <div class="container-fluid container-fixed-lg sm-p-l-20 sm-p-r-20">
+              <div class="inner">
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                  <li>
+                    <p>Octo</p>
+                  </li>
+                  
+                  <!-- <li><a href="#" class="active">Home</a></li> -->
+                  <% yield_content :breadcrumb %>
+                  
+                </ul>
+                <!-- END BREADCRUMB -->
+              </div>
+            </div>
+          </div>
+          <!-- END JUMBOTRON -->
+          <!-- START CONTAINER FLUID -->
+          <div class="container-fluid container-fixed-lg">
+            <!-- BEGIN PlACE PAGE CONTENT HERE -->
+            <%= yield %>
+            <!-- END PLACE PAGE CONTENT HERE -->
+          </div>
+          <!-- END CONTAINER FLUID -->
+        </div>
+        <!-- END PAGE CONTENT -->
+        <!-- START FOOTER -->
+        <div class="container-fluid container-fixed-lg footer">
+          <div class="copyright sm-text-center">
+            <p class="small no-margin pull-left sm-pull-reset">
+              <span class="hint-text">Copyright © 2016</span>
+              <span class="font-montserrat">Aurora Borealis Pvt. Ltd.</span>
+              <span class="hint-text">All rights reserved.</span>
+              <span class="sm-block">
+                <a href="#" class="m-l-10 m-r-10">Terms of use</a> | <a href="#" class="m-l-10">Privacy Policy</a>
+              </span>
+            </p>
+            <p class="small no-margin pull-right sm-pull-reset">
+              <a href="//octo.ai">OCTOMATIC</a>
+            </p>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <!-- END FOOTER -->
+      </div>
+      <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+
+    <!-- BEGIN VENDOR JS -->
+    <script src="assets/plugins/pace/pace.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/modernizr.custom.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery/jquery-easy.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-bez/jquery.bez.min.js"></script>
+    <script src="assets/plugins/jquery-ios-list/jquery.ioslist.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/plugins/jquery-actual/jquery.actual.min.js"></script>
+    <script src="assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="assets/plugins/amcharts/amcharts.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="assets/plugins/bootstrap-select2/select2.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/classie/classie.js"></script>
+    <script src="assets/plugins/switchery/js/switchery.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+    <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+
+    <script src="assets/plugins/amcharts/funnel.js" type="text/javascript"></script>
+    <!-- END VENDOR JS -->
+    <!-- BEGIN CORE TEMPLATE JS -->
+    <script src="pages/js/pages.js" type="text/javascript"></script>
+    <!-- END CORE TEMPLATE JS -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="assets/js/scripts.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL JS -->
+
+    <% yield_content :scripts %>
+  </body>
+</html>

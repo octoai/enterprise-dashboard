@@ -1,0 +1,214 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/funnel">Funnel</a></li>
+  <li><a href="#" class="active">Add New</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+    /* Custom CSS for this page */
+
+    span.rowDelete {
+      cursor: pointer;
+      padding-left: 15px;
+    }
+
+    .field_wrapper {
+      padding: 12px;
+      border: 1px solid #c2c2d3;
+      border-radius: 3px;
+      box-shadow: inset 0 1px #fff,0 1px 2px rgba(0,0,0,0.07);
+      background: #f1f3f7;
+      margin: 15px;
+    }
+
+    .field_wrapper > input {
+      width: 100%;
+    }
+
+    .inputValues {
+      padding: 12px;
+      border: 1px solid #c2c2d3;
+      border-radius: 3px;
+      box-shadow: inset 0 1px #fff,0 1px 2px rgba(0,0,0,0.07);
+      background: #f1f3f7;
+      margin: 15px;
+      display: block;
+    }
+
+    .inputValues > input {
+      width: 90%;
+    }
+
+    .inputValues > .SNo {
+      padding-right: 5px;
+    }
+
+    .pg-menu_justify {
+      cursor: move;
+    }
+
+  </style>
+  <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
+<% end %>
+
+<section>
+  <span>
+    <h4 class="pull-left">Add Funnel</h4>
+    <section class="pull-right">
+      <button type="btn" class="btn btn-success" onclick="createFunnel()">Save</button>
+      <button type="btn" class="btn btn-danger" onclick="location.reload()">Cancel</button>
+    </section>
+  </span>
+  <br/>
+  <div class="field_wrapper">
+    <input placeholder="Name your funnel" id="funnel_name" type="text">
+  </div>
+  <div>
+    <h4>Add Pages</h4>
+  </div>
+</section>
+
+<section id="sortable">
+  
+  <div id="initRow" class="inputValues ui-state-default">
+    <span class="pg-menu_justify"></span>
+    <span class="SNo">Step 1 </span>
+    <input id="auto1" name="pageName" type="text" placeholder="Pick your page" class="pageName">
+  </div>
+
+  <span id="endpoint"></span>
+</section>
+
+<div class="actionBar">
+  <button type="button" class="btn btn-primary pull-left" id="addRow">
+    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
+  </button>
+  <section class="pull-right">
+    <button type="btn" class="btn btn-success" onclick="createFunnel()">Save</button>
+    <button type="btn" class="btn btn-danger" onclick="location.reload()">Cancel</button>
+  </section>
+</div>
+
+<!-- Dummy Element -->
+<div style="display:none;">
+  <div id="additional">
+    <span class="pg-menu_justify"></span>
+    <span class="SNo">Step</span>
+    <input name="pageName" type="text" placeholder="Pick your page" class="pageName">
+  </div>
+</div>
+
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    // Custom JS for this page only
+
+    var StepsCounter = 1;
+
+    function addRow() {
+      var endpoint = $('#endpoint');
+      var additionalRow = $('#additional');
+      
+      var newRow = additionalRow.clone()
+                      .removeAttr('id')
+                      .addClass('inputValues ui-state-default')
+                      .insertBefore(endpoint);
+      
+      var deleteRow = $('<span class="rowDelete"><i class="glyphicon glyphicon-remove-sign"></i></span>');
+
+      newRow.append(deleteRow).on('click', 'span.rowDelete', function() {
+        removeRow(newRow);
+      }).slideDown(200, function() {
+        $(this).find('input').focus();
+        var inputValues = $('.inputValues');
+        var indexValue = inputValues.index($(this)) + 1;
+        StepsCounter++;
+        $(this).children(".SNo").html("Step " + indexValue);
+        $(this).children(".pageName").attr('id', 'auto' + StepsCounter);
+        console.log(StepsCounter);
+        add_autocomplete('auto' + StepsCounter);
+      });
+    }
+
+    function removeRow(newRow) {
+      newRow.slideUp(200, function() {
+        $(this)
+          .next('div:not(#initRow)')
+          .find('input').focus()
+          .end()
+          .end()
+          .remove();
+        updateSteps();
+      });
+    }
+
+    function add_autocomplete(idValue){
+      new autoComplete({
+        selector: '#' + idValue,
+        minChars: 0,
+        source: function(term, suggest){
+          term = term.toLowerCase();
+          var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
+          var suggestions = [];
+          for (i=0;i<choices.length;i++) {
+            if (~choices[i].toLowerCase().indexOf(term)) {
+              suggestions.push(choices[i]);
+            }
+          }
+          suggest(suggestions);
+        }
+      });
+    }
+
+    function updateSteps() {
+      $(".inputValues").each(function(){
+        var inputValues = $('.inputValues');
+        var indexValue = inputValues.index($(this)) + 1;
+        $(this).find(".SNo").html("Step " + indexValue);
+      });
+    }
+
+    Array.prototype.clean = function(deleteValue) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == deleteValue) {         
+          this.splice(i, 1);
+          i--;
+        }
+      }
+      return this;
+    };
+
+    $(function() {
+      var addBtn = $('#addRow');
+      addBtn.on('click', function(){
+        addRow();
+      });
+      $("#sortable").sortable({
+        update: function(){
+          updateSteps();
+        }
+      });
+      add_autocomplete('auto1');
+    });
+
+    function createFunnel(){
+      pages = [];
+      var funnelName = $("#funnel_name").val();
+      $(".inputValues").each(function(){
+        pages.push($(this).find(".pageName").val());
+        pages.clean(undefined);
+        pages.clean("");
+      });
+      if(pages.length > 0 && funnelName != ''){
+        $.post("/funnel/create", {'pages': pages, 'funnelName': funnelName}, function(data){
+          alert(data);
+        });
+      } else {
+        alert("Fill up values first.");
+      }
+    }
+  </script>
+
+  <script type="text/javascript" src="assets/js/auto-complete.min.js"></script>
+<% end %>

@@ -1,0 +1,154 @@
+<% content_for :breadcrumb do %>
+  <li><a href="#" class="active">Funnel</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+  	/* Custom CSS for this page */
+
+  </style>
+<% end %>
+
+<div class="secondary-navbar">
+	<form class="navbar-form navbar-left" role="search">
+	  <h4>View Funnel</h4>
+	</form>
+	<form class="navbar-form navbar-right" role="search">
+	  <a type="button" class="btn btn-info navbar-btn" href="/funnel/new"><i class="pg-plus"></i> Add Funnel</a>
+	</form>
+</div>
+<br/><br/>
+<div class="row">
+  <div class="col-md-3 b-r b-grey sm-b-b">
+  	<!-- Start Table -->
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">Select Funnel
+        </div>
+        <div class="tools">
+          <a class="collapse" href="javascript:;"></a>
+          <a class="config" data-toggle="modal" href="#grid-config"></a>
+          <a class="reload" href="javascript:;"></a>
+          <a class="remove" href="javascript:;"></a>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-condensed" id="condensedTable">
+            <thead>
+	            <tr role="row">
+	            	<th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
+	            </tr>
+            </thead>
+            <tbody>
+              <tr onclick="re_arrange()">
+                <td class="v-align-middle semi-bold">First</td>
+              </tr>
+              <tr onclick="re_arrange()">
+                <td class="v-align-middle semi-bold">Second</td>
+              </tr>
+              <tr onclick="re_arrange()">
+                <td class="v-align-middle semi-bold">Third</td>
+              </tr>
+              <tr onclick="re_arrange()">
+                <td class="v-align-middle semi-bold">Fourth</td>
+              </tr>
+              <tr onclick="re_arrange()">
+                <td class="v-align-middle semi-bold">Fifth</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+		<!-- End Table -->
+  </div>
+  <div class="col-md-9">
+    <div id="chartdiv" style="padding-left: 100px; width: 90%; height: 500px;"></div>
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+
+	  function random_number() {
+	  	return Math.floor(Math.random() * 500)
+	  }
+
+	  function re_arrange(){
+	  	data = [
+	      {
+	        "title": "Website visits",
+	        "value": random_number()
+	      },{
+	        "title": "Downloads",
+	        "value": random_number()
+	      },{
+	        "title": "Requested price list",
+	        "value": random_number()
+	      },{
+	        "title": "Contaced for more info",
+	        "value": random_number()
+	      },{
+	        "title": "Purchased",
+	        "value": random_number()
+	      },{
+	        "title": "Contacted for support",
+	        "value": random_number()
+	      },{
+	        "title": "Purchased additional products",
+	        "value": random_number()
+	      }
+			];
+			chart.dataProvider = data;
+			chart.validateData();
+	  }
+
+  	var chart;
+    var data = [
+      {
+        "title": "Website visits",
+        "value": random_number()
+      },{
+        "title": "Downloads",
+        "value": random_number()
+      },{
+        "title": "Requested price list",
+        "value": random_number()
+      },{
+        "title": "Contaced for more info",
+        "value": random_number()
+      },{
+        "title": "Purchased",
+        "value": random_number()
+      },{
+        "title": "Contacted for support",
+        "value": random_number()
+      },{
+        "title": "Purchased additional products",
+        "value": random_number()
+      }
+		];
+
+    AmCharts.ready(function () {
+      chart = new AmCharts.AmFunnelChart();
+      chart.rotate = false;
+      chart.titleField = "title";
+      chart.balloon.fixedPosition = false;
+      chart.marginRight = 210;
+      chart.marginLeft = 15;
+      chart.labelPosition = "right";
+      chart.funnelAlpha = 0.9;
+      chart.valueField = "value";
+      chart.startX = -500;
+      chart.dataProvider = data;
+      chart.startAlpha = 0;
+      chart.depth3D = 60;
+      chart.angle = 60;
+      chart.outlineAlpha = 1;
+      chart.outlineThickness = 2;
+      chart.outlineColor = "#FFFFFF";
+      chart.write("chartdiv");
+    });
+  </script>
+<% end %>
