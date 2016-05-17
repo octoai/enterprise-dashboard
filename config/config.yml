@@ -1,0 +1,30 @@
+name: octo_development
+host: '127.0.0.1'
+port: 9042
+keyspace: octo_development
+max_retries: 3
+retry_delay: 0.5
+replication:
+  class: SimpleStrategy
+  replication_factor: 1
+redis:
+  host: 127.0.0.1
+  port: 6379
+statsd:
+  host: 127.0.0.1
+  port: 8125
+kafka:
+  brokers:
+    - 127.0.0.1:9092
+  client_id: octomatic_development
+  topic: events
+kong:
+  ratelimiting:
+    day: 100000
+    minute: 100
+    second: 100
+    hour: 10000
+    month: 100000
+    year: 1000000000
+dashboard:
+  title: 'Octo Dashboard'

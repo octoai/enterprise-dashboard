@@ -5,7 +5,9 @@
 <% content_for :styles do %>
   <style type="text/css">
   	/* Custom CSS for this page */
-
+    .select_funnel.active {
+      background: black;
+    }
   </style>
 <% end %>
 
@@ -40,22 +42,8 @@
 	            	<th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
 	            </tr>
             </thead>
-            <tbody>
-              <tr onclick="re_arrange()">
-                <td class="v-align-middle semi-bold">First</td>
-              </tr>
-              <tr onclick="re_arrange()">
-                <td class="v-align-middle semi-bold">Second</td>
-              </tr>
-              <tr onclick="re_arrange()">
-                <td class="v-align-middle semi-bold">Third</td>
-              </tr>
-              <tr onclick="re_arrange()">
-                <td class="v-align-middle semi-bold">Fourth</td>
-              </tr>
-              <tr onclick="re_arrange()">
-                <td class="v-align-middle semi-bold">Fifth</td>
-              </tr>
+            <tbody id="funnels_list">
+              <!-- Place Funnel List Here -->
             </tbody>
           </table>
         </div>
@@ -64,91 +52,72 @@
 		<!-- End Table -->
   </div>
   <div class="col-md-9">
-    <div id="chartdiv" style="padding-left: 100px; width: 90%; height: 500px;"></div>
+    <center>
+      <div id="chart_title"></div>
+      <div id="chartdiv" style="padding-left: 100px; width: 90%; height: 500px;"></div>
+    </center>
   </div>
 </div>
 
 <% content_for :scripts do %>
   <script type="text/javascript">
 
-	  function random_number() {
-	  	return Math.floor(Math.random() * 500)
-	  }
-
-	  function re_arrange(){
-	  	data = [
-	      {
-	        "title": "Website visits",
-	        "value": random_number()
-	      },{
-	        "title": "Downloads",
-	        "value": random_number()
-	      },{
-	        "title": "Requested price list",
-	        "value": random_number()
-	      },{
-	        "title": "Contaced for more info",
-	        "value": random_number()
-	      },{
-	        "title": "Purchased",
-	        "value": random_number()
-	      },{
-	        "title": "Contacted for support",
-	        "value": random_number()
-	      },{
-	        "title": "Purchased additional products",
-	        "value": random_number()
-	      }
-			];
-			chart.dataProvider = data;
-			chart.validateData();
-	  }
-
   	var chart;
-    var data = [
-      {
-        "title": "Website visits",
-        "value": random_number()
-      },{
-        "title": "Downloads",
-        "value": random_number()
-      },{
-        "title": "Requested price list",
-        "value": random_number()
-      },{
-        "title": "Contaced for more info",
-        "value": random_number()
-      },{
-        "title": "Purchased",
-        "value": random_number()
-      },{
-        "title": "Contacted for support",
-        "value": random_number()
-      },{
-        "title": "Purchased additional products",
-        "value": random_number()
-      }
-		];
 
-    AmCharts.ready(function () {
-      chart = new AmCharts.AmFunnelChart();
-      chart.rotate = false;
-      chart.titleField = "title";
-      chart.balloon.fixedPosition = false;
-      chart.marginRight = 210;
-      chart.marginLeft = 15;
-      chart.labelPosition = "right";
-      chart.funnelAlpha = 0.9;
-      chart.valueField = "value";
-      chart.startX = -500;
-      chart.dataProvider = data;
-      chart.startAlpha = 0;
-      chart.depth3D = 60;
-      chart.angle = 60;
-      chart.outlineAlpha = 1;
-      chart.outlineThickness = 2;
-      chart.outlineColor = "#FFFFFF";
-      chart.write("chartdiv");
+    $('#funnels_list').on('click', 'tr.select_funnel', function() {
+      get_graph_data($(this).data('name'));
+
+      $(".select_funnel").each(function(){
+        $(this).removeClass("active");
+      });
+      $(this).addClass("active");
+    });
+
+    function get_graph_data(name){
+      $.getJSON('/funnel/graph_data', 
+        {funnelName: name}, 
+        function(response){
+          chart.dataProvider = response;
+          chart.validateData();
+        }
+      );
+      $('#chart_title').html("<h2>"+name+"</h2>");
+    }
+
+    $(function() {
+
+      var data = [];
+      var html = "";
+
+      AmCharts.ready(function () {
+        chart = new AmCharts.AmFunnelChart();
+        chart.rotate = false;
+        chart.titleField = "title";
+        chart.balloon.fixedPosition = false;
+        chart.marginRight = 210;
+        chart.marginLeft = 15;
+        chart.labelPosition = "right";
+        chart.funnelAlpha = 0.9;
+        chart.valueField = "value";
+        chart.startX = -500;
+        chart.dataProvider = data;
+        chart.startAlpha = 0;
+        chart.depth3D = 60;
+        chart.angle = 60;
+        chart.outlineAlpha = 1;
+        chart.outlineThickness = 2;
+        chart.outlineColor = "#FFFFFF";
+        chart.write("chartdiv");
+      });
+
+      $.getJSON('/funnel/all', null, function(response){
+        for (x in response.data) {
+          html += "<tr class='select_funnel' data-name='"+response.data[x]+"'><td class='v-align-middle semi-bold'>"+response.data[x]+"</td></tr>";
+        }
+        $("#funnels_list").html(html);
+        get_graph_data(response.data[0]);
+      });
+      
     });
   </script>
 <% end %>

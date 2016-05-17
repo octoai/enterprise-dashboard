@@ -55,8 +55,8 @@
   <span>
     <h4 class="pull-left">Add Funnel</h4>
     <section class="pull-right">
-      <button type="btn" class="btn btn-success" onclick="createFunnel()">Save</button>
-      <button type="btn" class="btn btn-danger" onclick="location.reload()">Cancel</button>
+      <button type="btn" class="btn btn-danger" onclick="createFunnel()">Save</button>
+      <button type="btn" class="btn btn-success" onclick="funnel_home()">Cancel</button>
     </section>
   </span>
   <br/>
@@ -84,8 +84,8 @@
     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
   </button>
   <section class="pull-right">
-    <button type="btn" class="btn btn-success" onclick="createFunnel()">Save</button>
-    <button type="btn" class="btn btn-danger" onclick="location.reload()">Cancel</button>
+    <button type="btn" class="btn btn-danger" onclick="createFunnel()">Save</button>
+      <button type="btn" class="btn btn-success" onclick="funnel_home()">Cancel</button>
   </section>
 </div>
 
@@ -126,7 +126,6 @@
         StepsCounter++;
         $(this).children(".SNo").html("Step " + indexValue);
         $(this).children(".pageName").attr('id', 'auto' + StepsCounter);
-        console.log(StepsCounter);
         add_autocomplete('auto' + StepsCounter);
       });
     }
@@ -144,12 +143,28 @@
     }
 
     function add_autocomplete(idValue){
+      var dataArray = [];
+      $.getJSON('/funnel/pageNames', null, function(response){
+        dataArray = response.data;
+      });
       new autoComplete({
         selector: '#' + idValue,
         minChars: 0,
-        source: function(term, suggest){
+        cache: false,
+        source: function(term, suggest){ // suggest -> response
+          var choices = dataArray;
+
+          // var temp = choices;
+          // $(".pageName").each(function(){
+          //   if ($(this).val() != ""){
+          //     if($.inArray($(this).val(), temp) > -1){
+          //       temp.pop($(this).val());
+          //     }
+          //   }
+          // });
+          // choices = temp;
+          
           term = term.toLowerCase();
-          var choices = ['ActionScript', 'AppleScript', 'Asp', 'Assembly', 'BASIC', 'Batch', 'C', 'C++', 'CSS', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'HTML', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'PowerShell', 'Python', 'Ruby', 'Scala', 'Scheme', 'SQL', 'TeX', 'XML'];
           var suggestions = [];
           for (i=0;i<choices.length;i++) {
             if (~choices[i].toLowerCase().indexOf(term)) {
@@ -167,6 +182,10 @@
         var indexValue = inputValues.index($(this)) + 1;
         $(this).find(".SNo").html("Step " + indexValue);
       });
+    }
+
+    function funnel_home(){
+      window.location = '/funnel';
     }
 
     Array.prototype.clean = function(deleteValue) {
@@ -202,7 +221,7 @@
       });
       if(pages.length > 0 && funnelName != ''){
         $.post("/funnel/create", {'pages': pages, 'funnelName': funnelName}, function(data){
-          alert(data);
+          funnel_home();
         });
       } else {
         alert("Fill up values first.");

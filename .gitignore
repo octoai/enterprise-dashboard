@@ -1,1 +1,8 @@
 .DS_Store
+*.log
+.idea/
+*.rdb
+*.png
+*.jpg
+*.jpeg
+*.gif
