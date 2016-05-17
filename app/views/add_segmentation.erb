@@ -1,0 +1,59 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/funnel">Funnel</a></li>
+  <li><a href="#" class="active">Add New</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+    /* Custom CSS for this page */
+
+  </style>
+  <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
+<% end %>
+
+<section>
+  <span>
+    <h4 class="pull-left">Add Segmentation</h4>
+    <section class="pull-right">
+      <button type="btn" class="btn btn-danger" onclick="">Save</button>
+      <button type="btn" class="btn btn-success" onclick="">Cancel</button>
+    </section>
+  </span>
+  <br/>
+  <div class="field_wrapper">
+    <input placeholder="Name your Segmentation" id="segmentation_name" type="text">
+  </div>
+</section>
+
+<section>
+  
+  <div class="inputValues">
+    <input id="auto1" name="pageName" type="text" placeholder="Pick" class="pageName">
+  </div>
+
+  <span id="endpoint"></span>
+</section>
+
+<div class="actionBar">
+  <button type="button" class="btn btn-primary pull-left" id="addRow">
+    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
+  </button>
+  <section class="pull-right">
+    <button type="btn" class="btn btn-danger" onclick="">Save</button>
+      <button type="btn" class="btn btn-success" onclick="">Cancel</button>
+  </section>
+</div>
+
+<!-- Dummy Element -->
+<div style="display:none;">
+  <div id="additional">
+    <input name="pageName" type="text" placeholder="Pick your page" class="pageName">
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+
+
+  </script>
+<% end %>
