@@ -57,7 +57,7 @@
           <li class="m-t-30">
             <a href="/home" class="detailed">
               <span class="title">Home</span>
-              <span class="details">Welcome Page</span>
+
             </a>
             <span class="icon-thumbnail "><i class="pg-home"></i></span>
           </li>
@@ -95,6 +95,9 @@
               </li>
             </ul>
           </li>
+
+          <% if false %>
+            <%# Dont need Rules now %>
           <li class="">
             <a href="javascript:;">
               <span class="title">Rules</span>
@@ -108,9 +111,10 @@
               </li>
             </ul>
           </li>
+        <% end %>
           <li class="">
             <a href="javascript:;">
-              <span class="title">User Feeds</span>
+              <span class="title">User Timeline</span>
               <span class="arrow"></span>
             </a>
             <span class="icon-thumbnail"><i class="pg-grid"></i></span>
@@ -133,14 +137,22 @@
                 <span class="icon-thumbnail">N</span>
               </li>
               <li class="">
+                <a href="/notification">Templates</a>
+                <span class="icon-thumbnail">N</span>
+              </li>
+              <li class="">
                 <a href="/notification">Conversions</a>
+                <span class="icon-thumbnail">N</span>
+              </li>
+              <li class="">
+                <a href="/notification">Settings</a>
                 <span class="icon-thumbnail">N</span>
               </li>
             </ul>
           </li>
           <li class="">
             <a href="javascript:;">
-              <span class="title">Feeds</span>
+              <span class="title">Newsfeed</span>
               <span class=" arrow"></span>
             </a>
             <span class="icon-thumbnail"><i class="pg-grid"></i></span>
@@ -149,8 +161,71 @@
                 <a href="/feed">Overview</a>
                 <span class="icon-thumbnail">F</span>
               </li>
+              <li class="">
+                <a href="/feed">Conversions</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
             </ul>
           </li>
+
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Trends</span>
+              <span class=" arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/feed">Products</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+              <li class="">
+                <a href="/feed">Pages</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+              <li class="">
+                <a href="/feed">Categories</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+              <li class="">
+                <a href="/feed">Tags</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="">
+            <a href="javascript:;">
+              <span class="title">Billing & Quota</span>
+              <span class=" arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <ul class="sub-menu">
+              <li class="">
+                <a href="/feed">Quota</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+              <li class="">
+                <a href="/feed">Billing</a>
+                <span class="icon-thumbnail">F</span>
+              </li>
+            </ul>
+          </li>
+
+         <li class="">
+            <a href="#" class="detailed">
+              <span class="title">API Settings</span>
+            </a>
+         </li>
+
+
+         <li class="">
+            <a href="#" class="detailed">
+              <span class="title">Event Tracking</span>
+            </a>
+         </li>
+
         </ul>
         <div class="clearfix"></div>
       </div>
