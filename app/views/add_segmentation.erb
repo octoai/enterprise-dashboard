@@ -7,6 +7,13 @@
   <style type="text/css">
     /* Custom CSS for this page */
 
+    .custom-row {
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      background: #e6e6e6;
+    }
+
   </style>
   <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
 <% end %>
@@ -15,20 +22,73 @@
   <span>
     <h4 class="pull-left">Add Segmentation</h4>
     <section class="pull-right">
-      <button type="btn" class="btn btn-danger" onclick="">Save</button>
-      <button type="btn" class="btn btn-success" onclick="">Cancel</button>
+      <button type="btn" class="btn btn-danger" onclick="createSegment()">Save</button>
+      <button type="btn" class="btn btn-success" onclick="segmentHome()">Cancel</button>
     </section>
   </span>
   <br/>
-  <div class="field_wrapper">
-    <input placeholder="Name your Segmentation" id="segmentation_name" type="text">
+  <div class="custom-row">
+    <input placeholder="Name your Segmentation" id="segmentation_name" type="text" style="width: 100%;">
+  </div>
+  <br/>
+  <div>
+    <h4>Segmentation Inputs</h4>
   </div>
 </section>
 
-<section>
+<section id="inputValues">
+
+  <div class="custom-row">
+    <span>
+      <span><b>TYPE </b></span>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span>
+        <input type="radio" name="seg_type" value="user" onclick="changeType(this.value)" style="margin-left: 10px;"> User
+        <input type="radio" name="seg_type" value="event" onclick="changeType(this.value)" style="margin-left: 10px;"> Event
+      </span>
+    </span>
+  </div>
+
+  <br/>
+  <div class="custom-row" id="event_type" style="display: none;">
+    <span>
+      <span><b>Event Type &nbsp;</b></span>
+      <select name="event_type">
+        <option value="">Select Option &nbsp; &nbsp;</option>
+        <% @events.each do |x| %>
+          <option value="<%= x[:eventname] %>"><%= x[:eventname] %></option>
+        <% end %>
+      </select>
+    </span>
+  </div>
+  <br/>
   
-  <div class="inputValues">
-    <input id="auto1" name="pageName" type="text" placeholder="Pick" class="pageName">
+  <div class="custom-row">
+    <span>
+      <span><b>Dimension &nbsp;</b></span>
+      <select name="dimension" class="dimension">
+        <option value="">Select Option &nbsp; &nbsp;</option>
+        <% @dimensions.each do |x| %>
+          <option value="<%= x[:id] %>"><%= x[:text] %></option>
+        <% end %>
+      </select>
+      <span class="values">
+        <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
+        
+        <!-- Operator Selection -->
+        <select name="operators" class="operators">
+          <option value="">Select Option &nbsp; &nbsp;</option>
+          <% @operators.each do |x| %>
+            <option value="<%= x[:id] %>"><%= x[:text] %></option>
+          <% end %>
+        </select>
+
+        <!-- Accepts Value -->
+        <span class="valueElement" style="display: none;">
+        </span>
+
+      </span>
+    </span>
   </div>
 
   <span id="endpoint"></span>
@@ -39,21 +99,174 @@
     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
   </button>
   <section class="pull-right">
-    <button type="btn" class="btn btn-danger" onclick="">Save</button>
-      <button type="btn" class="btn btn-success" onclick="">Cancel</button>
+    <button type="btn" class="btn btn-danger" onclick="createSegment()">Save</button>
+      <button type="btn" class="btn btn-success" onclick="segmentHome()">Cancel</button>
   </section>
 </div>
 
 <!-- Dummy Element -->
-<div style="display:none;">
-  <div id="additional">
-    <input name="pageName" type="text" placeholder="Pick your page" class="pageName">
+<div id="dummy_row" style="display: none;">
+  <br />
+  <div>
+    <center>
+      <!-- Operator Selection -->
+        <select name="logic_operators" class="logic_operators">
+          <option value="">Select Option &nbsp; &nbsp;</option>
+          <% @logic_operators.each do |x| %>
+            <option value="<%= x[:id] %>"><%= x[:text] %></option>
+          <% end %>
+        </select>
+    </center>
+  </div>
+  <br />
+  <div class="custom-row">
+    <span>
+      <span><b>Dimension &nbsp;</b></span>
+      <select name="dimension" class="dimension">
+        <option value="">Select Option &nbsp; &nbsp;</option>
+        <% @dimensions.each do |x| %>
+          <option value="<%= x[:id] %>"><%= x[:text] %></option>
+        <% end %>
+      </select>
+      <span class="values">
+        <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
+        
+        <!-- Operator Selection -->
+        <select name="operators" class="operators">
+          <option value="">Select Option &nbsp; &nbsp;</option>
+          <% @operators.each do |x| %>
+            <option value="<%= x[:id] %>"><%= x[:text] %></option>
+          <% end %>
+        </select>
+
+        <!-- Accepts Value -->
+        <span class="valueElement" style="display: none;">
+        </span>
+
+      </span>
+    </span>
   </div>
 </div>
 
+<!-- Operators -->
+<div style="display: none;">
+  <% @operators.each do |x| %>
+    <option value="<%= x[:id] %>"><%= x[:text] %></option>
+  <% end %>
+</div>
+
+<!-- Dimensions -->
+<div style="display: none;">
+  <% @dimensions.each do |x| %>
+    <option value="<%= x[:id] %>"><%= x[:text] %></option>
+  <% end %>
+</div>
+
+<!-- Logic Operators -->
+<div style="display: none;">
+  <% @logic_operators.each do |x| %>
+    <option value="<%= x[:id] %>"><%= x[:text] %></option>
+  <% end %>
+</div>
+
+
+<!-- Scripts -->
 <% content_for :scripts do %>
   <script type="text/javascript">
 
+  function changeType(value){
+    if (value == "user"){
+      $('#event_type').css("display", "none");
+    } else if(value == "event") {
+      $('#event_type').slideDown();
+    }
+  }
+
+  function segmentHome() {
+    window.location = '/segmentation';
+  }
+
+  function createSegment() {
+    var name = $('#segmentation_name').val();
+    var type = $('input[name=seg_type]:checked').val();
+    var eventType = $('select[name=event_type]').val();
+    var dimensions = [];
+    var operators = [];
+    var values = [];
+    var logicOperators = [];
+
+    $(".dimension").each( function( index, element ){
+      dimensions.push($(this).val());
+    });
+
+    $(".operators").each( function( index, element ){
+      operators.push($(this).val());
+    });
+
+    $(".rowValue").each( function( index, element ){
+      values.push($(this).val());
+    });
+
+    $(".logic_operators").each( function( index, element ){
+      logicOperators.push($(this).val());
+    });
+
+    dimensions.pop();
+    operators.pop();
+    logicOperators.pop();
+
+    console.log(name);
+    console.log(type);
+    console.log(eventType);
+    console.log(dimensions);
+    console.log(operators);
+    console.log(values);
+    console.log(logicOperators);
+  }
+
+  $('#addRow').click(function(){
+    var endpoint = $('#endpoint');
+    var additionalRow = $('#dummy_row');
+    var newRow = additionalRow.clone()
+                      .removeAttr('id')
+                      .insertBefore(endpoint)
+                      .slideDown();
+  });
+
+  $(document.body).on('change', '.operators', function(){
+    // console.log($(this).val());
+  });
+
+  $(document.body).on('change', '.dimension', function(){
+    // console.log($(this).val());
+    var parent_element = $(this).parent('span');
+    var value_element = parent_element.children('.values').children('.valueElement');
+    
+    if($(this).val() == 8 || $(this).val() == 9){ // For Date Time Type input
+      value_element.css('display','inline-block');
+      value_element.html('');
+      value_element.append($('<span><b>&nbsp;&nbsp; Value &nbsp;</b></span>'));
+      value_element.append($('<input name="datePicker" class="rowValue">'));
+      value_element.children('input[name="datePicker"]').daterangepicker({
+            "timePicker": true,
+            "opens": "left",
+            "startDate": "05/11/2016",
+            "endDate": "05/17/2016"
+       });
+    } else if ($(this).val() < 8){ // For Text Type Input
+      value_element.css('display','inline-block');
+      value_element.html('');
+      value_element.append($('<span><b>&nbsp;&nbsp; Value &nbsp;</b></span>'));
+      value_element.append($('<input name="textValue" type="text" class="rowValue" placeholder="Pick a value">'));
+    } else {
+
+    }
+
+  });
+
+  $(function() {
+
+  });
 
   </script>
 <% end %>
