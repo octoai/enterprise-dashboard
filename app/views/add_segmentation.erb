@@ -169,7 +169,6 @@
   <% end %>
 </div>
 
-
 <!-- Scripts -->
 <% content_for :scripts do %>
   <script type="text/javascript">
@@ -204,7 +203,11 @@
     });
 
     $(".rowValue").each( function( index, element ){
-      values.push($(this).val());
+      if ($(this).data('type') == "datetime"){
+        values.push($(this).val().split(' - '));
+      } else {
+        values.push($(this).val());
+      }
     });
 
     $(".logic_operators").each( function( index, element ){
@@ -215,13 +218,19 @@
     operators.pop();
     logicOperators.pop();
 
-    console.log(name);
-    console.log(type);
-    console.log(eventType);
-    console.log(dimensions);
-    console.log(operators);
-    console.log(values);
-    console.log(logicOperators);
+    jsonValue = {
+      'name': name,
+      'type': type,
+      'eventType': eventType,
+      'dimensions': dimensions,
+      'operators': operators,
+      'values': values,
+      'logicOperators': logicOperators
+    };
+
+    $.post('/segmentation/create', { jsonData: jsonValue}, function(response){
+      // createSegment();
+    });
   }
 
   $('#addRow').click(function(){
@@ -237,8 +246,11 @@
     // console.log($(this).val());
   });
 
+  $(document.body).on('apply.daterangepicker', 'input[name="datePicker"]', function(ev, picker) {
+      $(this).val(picker.startDate.format('YYYY/MM/DD h:mm:ss a') + ' - ' + picker.endDate.format('YYYY/MM/DD h:mm:ss a'));
+  });
+
   $(document.body).on('change', '.dimension', function(){
-    // console.log($(this).val());
     var parent_element = $(this).parent('span');
     var value_element = parent_element.children('.values').children('.valueElement');
     
@@ -246,18 +258,26 @@
       value_element.css('display','inline-block');
       value_element.html('');
       value_element.append($('<span><b>&nbsp;&nbsp; Value &nbsp;</b></span>'));
-      value_element.append($('<input name="datePicker" class="rowValue">'));
+      value_element.append($('<input type="text" name="datePicker" class="rowValue" data-type="datetime">'));
       value_element.children('input[name="datePicker"]').daterangepicker({
             "timePicker": true,
             "opens": "left",
             "startDate": "05/11/2016",
             "endDate": "05/17/2016"
-       });
+          });
     } else if ($(this).val() < 8){ // For Text Type Input
       value_element.css('display','inline-block');
       value_element.html('');
       value_element.append($('<span><b>&nbsp;&nbsp; Value &nbsp;</b></span>'));
-      value_element.append($('<input name="textValue" type="text" class="rowValue" placeholder="Pick a value">'));
+      value_element.append($('<select name="rowValue" class="rowValue"><option value="">Select Option &nbsp; &nbsp;</option></select>'));
+      var add_options = value_element.children('.rowValue');
+      // var name = $(this).children('option[value='+$(this).val()+']').text();
+      $.getJSON('/segmentation/dimensions', { dimension: $(this).val()}, function(response){
+        dataArray = response.data;
+        $.each( dataArray, function( index, value ) {
+          add_options.append($('<option value="'+value['id']+'">'+value['text']+'</option>'));
+        });
+      });
     } else {
 
     }
