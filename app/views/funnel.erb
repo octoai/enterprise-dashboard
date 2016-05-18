@@ -4,7 +4,7 @@
 
 <% content_for :styles do %>
   <style type="text/css">
-  	/* Custom CSS for this page */
+   /* Custom CSS for this page */
     .select_funnel.active {
       background: black;
     }
@@ -12,17 +12,17 @@
 <% end %>
 
 <div class="secondary-navbar">
-	<form class="navbar-form navbar-left" role="search">
-	  <h4>View Funnel</h4>
-	</form>
-	<form class="navbar-form navbar-right" role="search">
-	  <a type="button" class="btn btn-info navbar-btn" href="/funnel/new"><i class="pg-plus"></i> Add Funnel</a>
-	</form>
+ <form class="navbar-form navbar-left" role="search">
+   <h4>View Funnel</h4>
+ </form>
+ <form class="navbar-form navbar-right" role="search">
+   <a type="button" class="btn btn-info navbar-btn" href="/funnel/new"><i class="pg-plus"></i> Add Funnel</a>
+ </form>
 </div>
 <br/><br/>
 <div class="row">
   <div class="col-md-3 b-r b-grey sm-b-b">
-  	<!-- Start Table -->
+   <!-- Start Table -->
     <div class="panel panel-transparent">
       <div class="panel-heading">
         <div class="panel-title">Select Funnel
@@ -38,9 +38,9 @@
         <div class="table-responsive">
           <table class="table table-hover table-condensed" id="condensedTable">
             <thead>
-	            <tr role="row">
-	            	<th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
-	            </tr>
+             <tr role="row">
+              <th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
+             </tr>
             </thead>
             <tbody id="funnels_list">
               <!-- Place Funnel List Here -->
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-		<!-- End Table -->
+  <!-- End Table -->
   </div>
   <div class="col-md-9">
     <center>
@@ -62,7 +62,7 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
 
-  	var chart;
+   var chart;
 
     $('#funnels_list').on('click', 'tr.select_funnel', function() {
       get_graph_data($(this).data('name'));
