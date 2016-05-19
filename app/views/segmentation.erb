@@ -5,7 +5,7 @@
 <% content_for :styles do %>
   <style type="text/css">
     /* Custom CSS for this page */
-    .select_segmentation.active {
+    .select_segment.active {
       background: black;
     }
   </style>
@@ -58,468 +58,179 @@
     </center>
   </div>
 </div>
-<br/><br/>
-<div class="row">
-  <div class="col-md-12 m-b-10">
-    <div class="widget-11 panel no-border no-margin widget-loader-bar">
-      <div class="panel-heading ">
-        <div class="panel-title">Segmentation Table
-        </div>
-        <div class="panel-controls">
-          <ul>
-            <li><a data-toggle="refresh" class="portlet-refresh text-black" href="#"><i
-                class="portlet-icon portlet-icon-refresh"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="p-l-25 p-r-25 p-b-20">
-        <div class="pull-left">
-          <h2 class="text-success no-margin">GRAPH DATA</h2>
-        </div>
-        <h3 class="pull-right semi-bold"><sup>
-          <small class="semi-bold">$</small>
-        </sup> 102,967
-        </h3>
-        <div class="clearfix"></div>
-      </div>
-      <div class="widget-11-table auto-overflow">
-        <table class="table table-condensed table-hover">
-          <tbody>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">dewdrops</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18">$27</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">johnsmith</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18 text-primary">$1000</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">janedrooler</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18">$27</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">johnsmith</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18 text-primary">$1000</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">dewdrops</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18">$27</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">johnsmith</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18 text-primary">$1000</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">dewdrops</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18">$27</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">johnsmith</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18 text-primary">$1000</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">dewdrops</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18">$27</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="font-montserrat all-caps fs-12">Purchase CODE #2345</td>
-            <td class="text-right">
-              <span class="hint-text small">johnsmith</span>
-            </td>
-            <td class="text-right b-r b-dashed b-grey">
-              <span class="hint-text small">Qty 1</span>
-            </td>
-            <td>
-              <span class="font-montserrat fs-18 text-primary">$1000</span>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="padding-25">
-        <p class="small no-margin">
-          <a href="#"><i class="fa fs-16 fa-arrow-circle-o-down text-success m-r-10"></i></a>
-          <span class="hint-text ">Show more details of APPLE . INC</span>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <% content_for :scripts do %>
   <script type="text/javascript">
   	// Custom JS for this page only
     var chart;
-      var graph;
+    var chartData = [];
+
+    $('#segmentations_list').on('click', 'tr.select_segment', function() {
+      generateChartData($(this).data('slugname'), $(this).data('name'));
+
+      $(".select_segment").each(function(){
+        $(this).removeClass("active");
+      });
+      $(this).addClass("active");
+    });
+
+    // generate some random data, quite different range
+    function generateChartData(slug_name, name) {
+
+      $.getJSON('/segmentation/graph_data', 
+        {segmentName: slug_name}, 
+        function(response){
+          $.each( response.reverse(), function( key, value ) {
+            json = {
+              date: new Date(value['ts']),
+              abs: parseInt(value['abs']),
+              perc: parseFloat(value['perc'].toFixed(2))
+            };
+            chartData.push(json);
+          });
+          
+          var last_index = chartData.length - 1;
+          var initElement = chartData[0];
+          var lastElement = chartData[last_index];
+          add_trendline(initElement['date'], lastElement['date'], initElement['abs'], lastElement['abs'], "#FF6600");
+
+          // add_trendline(initElement['date'], lastElement['date'], initElement['perc'], lastElement['perc'], "#FCD202");          
+
+          chart.dataProvider = chartData;
+          chart.validateData();
+
+        }
+      );
+
+      
+      $('#chart_title').html("<h2>"+name+"</h2>");
+    }
+
+    function add_trendline(initDate, finalDate, initValue, finalValue, color="#CC0000"){
+      // TREND LINES
+      // first trend line
+      var trendLine = new AmCharts.TrendLine();
+      // note,when creating date objects 0 month is January, as months are zero based in JavaScript.
+      trendLine.initialDate = initDate; // 12 is hour - to start trend line in the middle of the day
+      trendLine.finalDate = finalDate;
+      trendLine.initialValue = initValue;
+      trendLine.finalValue = finalValue;
+      trendLine.lineColor = color;//"#CC0000";
+      chart.addTrendLine(trendLine);
+    }
+
     $(function() {
 
-      var data = [{
-                    "year": "1950",
-                    "value": -0.307
-                },
-                {
-                    "year": "1951",
-                    "value": -0.168
-                },
-                {
-                    "year": "1952",
-                    "value": -0.073
-                },
-                {
-                    "year": "1953",
-                    "value": -0.027
-                },
-                {
-                    "year": "1954",
-                    "value": -0.251
-                },
-                {
-                    "year": "1955",
-                    "value": -0.281
-                },
-                {
-                    "year": "1956",
-                    "value": -0.348
-                },
-                {
-                    "year": "1957",
-                    "value": -0.074
-                },
-                {
-                    "year": "1958",
-                    "value": -0.011
-                },
-                {
-                    "year": "1959",
-                    "value": -0.074
-                },
-                {
-                    "year": "1960",
-                    "value": -0.124
-                },
-                {
-                    "year": "1961",
-                    "value": -0.024
-                },
-                {
-                    "year": "1962",
-                    "value": -0.022
-                },
-                {
-                    "year": "1963",
-                    "value": 0
-                },
-                {
-                    "year": "1964",
-                    "value": -0.296
-                },
-                {
-                    "year": "1965",
-                    "value": -0.217
-                },
-                {
-                    "year": "1966",
-                    "value": -0.147
-                },
-                {
-                    "year": "1967",
-                    "value": -0.15
-                },
-                {
-                    "year": "1968",
-                    "value": -0.16
-                },
-                {
-                    "year": "1969",
-                    "value": -0.011
-                },
-                {
-                    "year": "1970",
-                    "value": -0.068
-                },
-                {
-                    "year": "1971",
-                    "value": -0.19
-                },
-                {
-                    "year": "1972",
-                    "value": -0.056
-                },
-                {
-                    "year": "1973",
-                    "value": 0.077
-                },
-                {
-                    "year": "1974",
-                    "value": -0.213
-                },
-                {
-                    "year": "1975",
-                    "value": -0.17
-                },
-                {
-                    "year": "1976",
-                    "value": -0.254
-                },
-                {
-                    "year": "1977",
-                    "value": 0.019
-                },
-                {
-                    "year": "1978",
-                    "value": -0.063
-                },
-                {
-                    "year": "1979",
-                    "value": 0.05
-                },
-                {
-                    "year": "1980",
-                    "value": 0.077
-                },
-                {
-                    "year": "1981",
-                    "value": 0.12
-                },
-                {
-                    "year": "1982",
-                    "value": 0.011
-                },
-                {
-                    "year": "1983",
-                    "value": 0.177
-                },
-                {
-                    "year": "1984",
-                    "value": -0.021
-                },
-                {
-                    "year": "1985",
-                    "value": -0.037
-                },
-                {
-                    "year": "1986",
-                    "value": 0.03
-                },
-                {
-                    "year": "1987",
-                    "value": 0.179
-                },
-                {
-                    "year": "1988",
-                    "value": 0.18
-                },
-                {
-                    "year": "1989",
-                    "value": 0.104
-                },
-                {
-                    "year": "1990",
-                    "value": 0.255
-                },
-                {
-                    "year": "1991",
-                    "value": 0.21
-                },
-                {
-                    "year": "1992",
-                    "value": 0.065
-                },
-                {
-                    "year": "1993",
-                    "value": 0.11
-                },
-                {
-                    "year": "1994",
-                    "value": 0.172
-                },
-                {
-                    "year": "1995",
-                    "value": 0.269
-                },
-                {
-                    "year": "1996",
-                    "value": 0.141
-                },
-                {
-                    "year": "1997",
-                    "value": 0.353
-                },
-                {
-                    "year": "1998",
-                    "value": 0.548
-                },
-                {
-                    "year": "1999",
-                    "value": 0.298
-                },
-                {
-                    "year": "2000",
-                    "value": 0.267
-                },
-                {
-                    "year": "2001",
-                    "value": 0.411
-                },
-                {
-                    "year": "2002",
-                    "value": 0.462
-                },
-                {
-                    "year": "2003",
-                    "value": 0.47
-                },
-                {
-                    "year": "2004",
-                    "value": 0.445
-                },
-                {
-                    "year": "2005",
-                    "value": 0.47
-                }];
-      var html = "";
-
       AmCharts.ready(function () {
-        // SERIAL CHART
         chart = new AmCharts.AmSerialChart();
-
-        chart.dataProvider = data;
-        chart.marginLeft = 10;
-        chart.categoryField = "year";
-        chart.dataDateFormat = "YYYY";
-
-        // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
-        chart.addListener("dataUpdated", zoomChart);
+        chart.dataProvider = chartData;
+        chart.categoryField = "date";
+        chart.synchronizeGrid = true; // this makes all axes grid to be at the same intervals
 
         // AXES
         // category
         var categoryAxis = chart.categoryAxis;
         categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
-        categoryAxis.minPeriod = "YYYY"; // our data is yearly, so we set minPeriod to YYYY
-        categoryAxis.dashLength = 3;
+        categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
         categoryAxis.minorGridEnabled = true;
-        categoryAxis.minorGridAlpha = 0.1;
+        categoryAxis.axisColor = "#DADADA";
+        categoryAxis.twoLineMode = true;
+        categoryAxis.dateFormats = [{
+              period: 'fff',
+              format: 'JJ:NN:SS'
+          }, {
+              period: 'ss',
+              format: 'JJ:NN:SS'
+          }, {
+              period: 'mm',
+              format: 'JJ:NN'
+          }, {
+              period: 'hh',
+              format: 'JJ:NN'
+          }, {
+              period: 'DD',
+              format: 'DD'
+          }, {
+              period: 'WW',
+              format: 'DD'
+          }, {
+              period: 'MM',
+              format: 'MMM'
+          }, {
+              period: 'YYYY',
+              format: 'YYYY'
+          }];
 
-        // value
-        var valueAxis = new AmCharts.ValueAxis();
-        valueAxis.axisAlpha = 0;
-        valueAxis.inside = true;
-        valueAxis.dashLength = 3;
-        chart.addValueAxis(valueAxis);
+        // first value axis (on the left)
+        var valueAxis1 = new AmCharts.ValueAxis();
+        valueAxis1.axisColor = "#FF6600";
+        valueAxis1.axisThickness = 2;
+        chart.addValueAxis(valueAxis1);
 
-        // GRAPH
-        graph = new AmCharts.AmGraph();
-        graph.type = "smoothedLine"; // this line makes the graph smoothed line.
-        graph.lineColor = "#d1655d";
-        graph.negativeLineColor = "#637bb6"; // this line makes the graph to change color when it drops below 0
-        graph.bullet = "round";
-        graph.bulletSize = 8;
-        graph.bulletBorderColor = "#FFFFFF";
-        graph.bulletBorderAlpha = 1;
-        graph.bulletBorderThickness = 2;
-        graph.lineThickness = 2;
-        graph.valueField = "value";
-        graph.balloonText = "[[category]]<br><b><span style='font-size:14px;'>[[value]]</span></b>";
-        chart.addGraph(graph);
+        // second value axis (on the right)
+        var valueAxis2 = new AmCharts.ValueAxis();
+        valueAxis2.position = "right"; // this line makes the axis to appear on the right
+        valueAxis2.axisColor = "#FCD202";
+        valueAxis2.gridAlpha = 0;
+        valueAxis2.axisThickness = 2;
+        chart.addValueAxis(valueAxis2);
+
+        // GRAPHS
+        // first graph
+        var graph1 = new AmCharts.AmGraph();
+        graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+        graph1.title = "Absolute Value";
+        graph1.valueField = "abs";
+        graph1.bullet = "round";
+        graph1.hideBulletsCount = 30;
+        graph1.bulletBorderThickness = 1;
+        chart.addGraph(graph1);
+
+        // second graph
+        var graph2 = new AmCharts.AmGraph();
+        graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+        graph2.title = "Percentage";
+        graph2.valueField = "perc";
+        graph2.bullet = "square";
+        graph2.hideBulletsCount = 30;
+        graph2.bulletBorderThickness = 1;
+        chart.addGraph(graph2);
 
         // CURSOR
         var chartCursor = new AmCharts.ChartCursor();
-        chartCursor.cursorAlpha = 0;
-        chartCursor.cursorPosition = "mouse";
-        chartCursor.categoryBalloonDateFormat = "YYYY";
+        chartCursor.cursorAlpha = 0.1;
+        chartCursor.fullWidth = true;
+        chartCursor.valueLineBalloonEnabled = true;
         chart.addChartCursor(chartCursor);
 
         // SCROLLBAR
         var chartScrollbar = new AmCharts.ChartScrollbar();
         chart.addChartScrollbar(chartScrollbar);
 
-        chart.creditsPosition = "bottom-right";
+        // LEGEND
+        var legend = new AmCharts.AmLegend();
+        legend.marginLeft = 110;
+        legend.useGraphSettings = true;
+        chart.addLegend(legend);
 
         // WRITE
         chart.write("chartdiv");
       });
 
 
-      // $.getJSON('/funnel/all', null, function(response){
-      //   for (x in response.data) {
-      //     html += "<tr class='select_funnel' data-name='"+response.data[x]+"'><td class='v-align-middle semi-bold'>"+response.data[x]+"</td></tr>";
-      //   }
-      //   $("#funnels_list").html(html);
-      //   get_graph_data(response.data[0]);
-      // });
+      var html = "";
+
+      $.getJSON('/segmentation/all', null, function(response){
+        for (x in response.data) {
+          html += "<tr class='select_segment' data-name='"+response.data[x].name+"' data-slugname='"+response.data[x].name_slug+"'><td class='v-align-middle semi-bold'>"+response.data[x].name+"</td></tr>";
+        }
+        $("#segmentations_list").html(html);
+        if(response.data[0] != null){
+          // get_graph_data(response.data[0].name_slug, response.data[0].name);
+        } else {
+          $('#chart_title').html("<h3>No Funnel Found</h3>");
+        }
+      });
       
     });
 

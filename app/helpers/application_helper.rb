@@ -17,5 +17,10 @@ module ApplicationHelper
     end
   end
 
+  # Get the first enterprise object for debugging
+  def get_enterprise
+    Octo::Enterprise.first
+  end
+
 end
 

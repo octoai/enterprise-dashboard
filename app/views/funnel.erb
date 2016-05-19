@@ -65,7 +65,7 @@
    var chart;
 
     $('#funnels_list').on('click', 'tr.select_funnel', function() {
-      get_graph_data($(this).data('name'));
+      get_graph_data($(this).data('slugname'), $(this).data('name'));
 
       $(".select_funnel").each(function(){
         $(this).removeClass("active");
@@ -73,9 +73,9 @@
       $(this).addClass("active");
     });
 
-    function get_graph_data(name){
+    function get_graph_data(slug_name, name){
       $.getJSON('/funnel/graph_data', 
-        {funnelName: name}, 
+        {funnelName: slug_name}, 
         function(response){
           chart.dataProvider = response;
           chart.validateData();
@@ -84,38 +84,40 @@
       $('#chart_title').html("<h2>"+name+"</h2>");
     }
 
+    AmCharts.ready(function () {
+      chart = new AmCharts.AmFunnelChart();
+      chart.rotate = false;
+      chart.titleField = "title";
+      chart.balloon.fixedPosition = false;
+      chart.marginRight = 210;
+      chart.marginLeft = 15;
+      chart.labelPosition = "right";
+      chart.funnelAlpha = 0.9;
+      chart.valueField = "value";
+      chart.startX = -500;
+      chart.dataProvider = [];
+      chart.startAlpha = 0;
+      chart.depth3D = 60;
+      chart.angle = 60;
+      chart.outlineAlpha = 1;
+      chart.outlineThickness = 2;
+      chart.outlineColor = "#FFFFFF";
+      chart.write("chartdiv");
+    });
+
     $(function() {
-
-      var data = [];
       var html = "";
-
-      AmCharts.ready(function () {
-        chart = new AmCharts.AmFunnelChart();
-        chart.rotate = false;
-        chart.titleField = "title";
-        chart.balloon.fixedPosition = false;
-        chart.marginRight = 210;
-        chart.marginLeft = 15;
-        chart.labelPosition = "right";
-        chart.funnelAlpha = 0.9;
-        chart.valueField = "value";
-        chart.startX = -500;
-        chart.dataProvider = data;
-        chart.startAlpha = 0;
-        chart.depth3D = 60;
-        chart.angle = 60;
-        chart.outlineAlpha = 1;
-        chart.outlineThickness = 2;
-        chart.outlineColor = "#FFFFFF";
-        chart.write("chartdiv");
-      });
 
       $.getJSON('/funnel/all', null, function(response){
         for (x in response.data) {
-          html += "<tr class='select_funnel' data-name='"+response.data[x]+"'><td class='v-align-middle semi-bold'>"+response.data[x]+"</td></tr>";
+          html += "<tr class='select_funnel' data-name='"+response.data[x].name+"' data-slugname='"+response.data[x].name_slug+"'><td class='v-align-middle semi-bold'>"+response.data[x].name+"</td></tr>";
         }
         $("#funnels_list").html(html);
-        get_graph_data(response.data[0]);
+        if(response.data[0] != null){
+          get_graph_data(response.data[0].name_slug, response.data[0].name);
+        } else {
+          $('#chart_title').html("<h3>No Funnel Found</h3>");
+        }
       });
     });
   </script>

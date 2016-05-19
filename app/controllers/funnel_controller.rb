@@ -11,7 +11,7 @@ class FunnelController < ApplicationController
   post '/create' do
     name = params[:funnelName]
     data = params[:pages]
-    enterprise = Octo::Enterprise.first
+    enterprise = get_enterprise
     Octo::Funnel.new(
       enterprise_id: enterprise[:id],
       name: name,
@@ -28,16 +28,14 @@ class FunnelController < ApplicationController
   end
 
   get '/all' do
-    funnels = []
-    Octo::Funnel.all.select do |x|
-      funnels.push(x.name_slug)
-    end
-    {data: funnels}.to_json
+    enterprise = get_enterprise
+    funnel_list = Octo::Funnel.find_all_by_enterprise_id(enterprise.id)
+    {data: funnel_list}.to_json
   end
 
   get '/graph_data' do
     funnelName = params[:funnelName]
-    enterprise = Octo::Enterprise.first
+    enterprise = get_enterprise
     funnel = Octo::Funnel.where(enterprise_id: enterprise[:id], name_slug: funnelName).first
     data = Octo::FunnelData.where(enterprise_id: enterprise[:id], funnel_slug: funnelName).first
     counter = 0
