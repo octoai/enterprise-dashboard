@@ -9,7 +9,7 @@
 
 <div class="secondary-navbar">
 
-    <h4>Trends</h4>
+    <h4>Product Trends</h4>
 
 </div>
 <div class="row">
@@ -43,30 +43,13 @@
              </tr>
             </thead>
             <tbody id="funnels_list">
-              <tr>
-                <td>Real Time</td>
-              </tr>
-              <tr>
-                <td>30 Minutes Trend</td>
-              </tr>
-              <tr>
-                <td>1 hour Trend</td>
-              </tr>
-              <tr>
-                <td>3 hour Trends</td>
-              </tr>
-              <tr>
-                <td>6 hour Trends</td>
-              </tr>
-              <tr>
-                <td>12 hour Trends</td>
-              </tr>
-              <tr>
-                <td>1 day Trends</td>
-              </tr>
-               <tr>
-                <td>1 week Trends</td>
-              </tr>
+              <% @counter_text.each do |counter| %>
+                <tr>
+                  <td data-counter-id="<%= counter[:id] %>">
+                    <%= counter[:text] %>
+                  </td>
+                </tr>
+              <% end %>
             </tbody>
           </table>
         </div>
@@ -82,10 +65,14 @@
       </div>
       
       <div class="panel-body">
-        <div class="input-prepend input-group pull-right col-sm-4">
+        <div class="input-preprend input-group pull-left col-sm-4 well well-sm">
+          <input type="text" style="width: 100%" placeholder="Find a page and view it's trend">
+        </div>
+        <div class="input-prepend input-group pull-right col-sm-4 well well-sm">
           <input type="text" style="width: 100%" name="timeslot" id="rankingDatepicker"
           class="form-control active"
           size="50"
+          placeholder="Date Range" 
           value="">
         </div>
       </div>

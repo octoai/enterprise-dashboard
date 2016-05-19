@@ -1,18 +1,18 @@
 class SegmentationController < ApplicationController
-	
+
 	get '/' do
   	erb :segmentation
 	end
 
   get '/new' do
+    @enterprise = Octo::Enterprise.first
     @operators = Octo::Segmentation::Helpers.operators_as_choice
     @dimensions = Octo::Segmentation::Helpers.dimensions_as_choice
     @logic_operators = Octo::Segmentation::Helpers.logic_operators_as_choice
 
     @events = []
-    Octo::ApiEvent.all.select do |x|
-      @events.push(x[:eventname])
-    end
+    res = Octo::ApiEvent.find_all_by_enterprise_id(@enterprise.id)
+    @events = res.collect { |x| x[:eventname] }
     erb :add_segmentation
   end
 
@@ -44,8 +44,21 @@ class SegmentationController < ApplicationController
 
   post '/create' do
     # Create a new Segmentation
-    # jsonData = params[:jsonData]
-    # puts jsonData
+    @enterprise = Octo::Enterprise.first
+    jsonData = params[:jsonData].deep_symbolize_keys!
+    puts jsonData
+    event_type = nil
+    args = {
+      enterprise_id: @enterprise.id,
+      name: jsonData[:name],
+      type: 0,
+      event_type: event_type,
+      dimensions: jsonData[:dimensions].map(&:to_i),
+      operators: jsonData[:operators].map(&:to_i),
+      dim_operators: jsonData[:logicOperators].map(&:to_i),
+      values: jsonData[:values]
+    }
+    Octo::Segment.new(args).save!
     "success"
   end
 

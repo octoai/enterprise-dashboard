@@ -54,9 +54,9 @@
     <span>
       <span><b>Event Type &nbsp;</b></span>
       <select name="event_type">
-        <option value="">Select Option &nbsp; &nbsp;</option>
+        <option value="">Select Event &nbsp; &nbsp;</option>
         <% @events.each do |x| %>
-          <option value="<%= x[:eventname] %>"><%= x[:eventname] %></option>
+          <option value="<%= x %>"><%= x %></option>
         <% end %>
       </select>
     </span>
@@ -67,17 +67,17 @@
     <span>
       <span><b>Dimension &nbsp;</b></span>
       <select name="dimension" class="dimension">
-        <option value="">Select Option &nbsp; &nbsp;</option>
+        <option value="">Select Dimension</option>
         <% @dimensions.each do |x| %>
           <option value="<%= x[:id] %>"><%= x[:text] %></option>
         <% end %>
       </select>
       <span class="values">
         <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
-        
+
         <!-- Operator Selection -->
         <select name="operators" class="operators">
-          <option value="">Select Option &nbsp; &nbsp;</option>
+          <option value="">Select Operator</option>
           <% @operators.each do |x| %>
             <option value="<%= x[:id] %>"><%= x[:text] %></option>
           <% end %>
@@ -111,7 +111,7 @@
     <center>
       <!-- Operator Selection -->
         <select name="logic_operators" class="logic_operators">
-          <option value="">Select Option &nbsp; &nbsp;</option>
+          <option value="">Select Condition</option>
           <% @logic_operators.each do |x| %>
             <option value="<%= x[:id] %>"><%= x[:text] %></option>
           <% end %>
@@ -123,17 +123,16 @@
     <span>
       <span><b>Dimension &nbsp;</b></span>
       <select name="dimension" class="dimension">
-        <option value="">Select Option &nbsp; &nbsp;</option>
+        <option value="">Select Dimension</option>
         <% @dimensions.each do |x| %>
           <option value="<%= x[:id] %>"><%= x[:text] %></option>
         <% end %>
       </select>
       <span class="values">
         <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
-        
         <!-- Operator Selection -->
         <select name="operators" class="operators">
-          <option value="">Select Option &nbsp; &nbsp;</option>
+          <option value="">Select Operator</option>
           <% @operators.each do |x| %>
             <option value="<%= x[:id] %>"><%= x[:text] %></option>
           <% end %>
@@ -269,7 +268,7 @@
       value_element.css('display','inline-block');
       value_element.html('');
       value_element.append($('<span><b>&nbsp;&nbsp; Value &nbsp;</b></span>'));
-      value_element.append($('<select name="rowValue" class="rowValue"><option value="">Select Option &nbsp; &nbsp;</option></select>'));
+      value_element.append($('<select name="rowValue" class="rowValue"><option value="">Select Value</option></select>'));
       var add_options = value_element.children('.rowValue');
       // var name = $(this).children('option[value='+$(this).val()+']').text();
       $.getJSON('/segmentation/dimensions', { dimension: $(this).val()}, function(response){
