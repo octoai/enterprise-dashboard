@@ -1,5 +1,5 @@
 <% content_for :breadcrumb do %>
-  <li><a href="/funnel">Funnel</a></li>
+  <li><a href="/segmentation">Segmentation</a></li>
   <li><a href="#" class="active">Add New</a></li>
 <% end %>
 
@@ -17,95 +17,139 @@
   </style>
   <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
 <% end %>
-
-<section>
-  <span>
-    <h4 class="pull-left">Add Segmentation</h4>
-    <section class="pull-right">
-      <button type="btn" class="btn btn-danger" onclick="createSegment()">Save</button>
-      <button type="btn" class="btn btn-success" onclick="segmentHome()">Cancel</button>
-    </section>
-  </span>
-  <br/>
-  <div class="custom-row">
-    <input placeholder="Name your Segmentation" id="segmentation_name" type="text" style="width: 100%;">
-  </div>
-  <br/>
-  <div>
-    <h4>Segmentation Inputs</h4>
-  </div>
-</section>
-
-<section id="inputValues">
-
-  <div class="custom-row">
+<div class="col-md-9 col-lg-9 col-sm-12">
+  <section>
     <span>
-      <span><b>TYPE </b></span>
-      <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <h4 class="pull-left">Add Segmentation</h4>
+      <section class="pull-right">
+        <button type="btn" class="btn btn-danger" onclick="createSegment()">Save</button>
+        <button type="btn" class="btn btn-success" onclick="segmentHome()">Cancel</button>
+      </section>
+    </span>
+    <br/>
+    <div class="custom-row">
+      <span><b>NAME </b></span>
+      <input placeholder="Name your Segmentation" id="segmentation_name" type="text" style="width: 95%;">
+    </div>
+    <br/>
+    <div>
+      <h4>Segmentation Inputs</h4>
+    </div>
+  </section>
+
+  <section id="inputValues">
+
+    <div class="custom-row">
       <span>
-        <input type="radio" name="seg_type" value="user" onclick="changeType(this.value)" style="margin-left: 10px;"> User
-        <input type="radio" name="seg_type" value="event" onclick="changeType(this.value)" style="margin-left: 10px;"> Event
+        <span><b>TYPE </b></span>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span>
+          <input type="radio" name="seg_type" value="user" onclick="changeType(this.value)" style="margin-left: 10px;"> User
+          <input type="radio" name="seg_type" value="event" onclick="changeType(this.value)" style="margin-left: 10px;"> Event
+        </span>
       </span>
-    </span>
-  </div>
+    </div>
 
-  <br/>
-  <div class="custom-row" id="event_type" style="display: none;">
-    <span>
-      <span><b>Event Type &nbsp;</b></span>
-      <select name="event_type">
-        <option value="">Select Event &nbsp; &nbsp;</option>
-        <% @events.each do |x| %>
-          <option value="<%= x %>"><%= x %></option>
-        <% end %>
-      </select>
-    </span>
-  </div>
-  <br/>
-  
-  <div class="custom-row">
-    <span>
-      <span><b>Dimension &nbsp;</b></span>
-      <select name="dimension" class="dimension">
-        <option value="">Select Dimension</option>
-        <% @dimensions.each do |x| %>
-          <option value="<%= x[:id] %>"><%= x[:text] %></option>
-        <% end %>
-      </select>
-      <span class="values">
-        <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
-
-        <!-- Operator Selection -->
-        <select name="operators" class="operators">
-          <option value="">Select Operator</option>
-          <% @operators.each do |x| %>
+    <br/>
+    <div class="custom-row" id="event_type" style="display: none;">
+      <span>
+        <span><b>Event Type &nbsp;</b></span>
+        <select name="event_type">
+          <option value="">Select Event &nbsp; &nbsp;</option>
+          <% @events.each do |x| %>
+            <option value="<%= x %>"><%= x %></option>
+          <% end %>
+        </select>
+      </span>
+    </div>
+    <br/>
+    
+    <div class="custom-row">
+      <span>
+        <span><b>Dimension &nbsp;</b></span>
+        <select name="dimension" class="dimension">
+          <option value="">Select Dimension</option>
+          <% @dimensions.each do |x| %>
             <option value="<%= x[:id] %>"><%= x[:text] %></option>
           <% end %>
         </select>
+        <span class="values">
+          <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
 
-        <!-- Accepts Value -->
-        <span class="valueElement" style="display: none;">
+          <!-- Operator Selection -->
+          <select name="operators" class="operators">
+            <option value="">Select Operator</option>
+            <% @operators.each do |x| %>
+              <option value="<%= x[:id] %>"><%= x[:text] %></option>
+            <% end %>
+          </select>
+
+          <!-- Accepts Value -->
+          <span class="valueElement" style="display: none;">
+          </span>
+
         </span>
-
       </span>
-    </span>
-  </div>
+    </div>
 
-  <span id="endpoint"></span>
-</section>
+    <div>
+      <br />
+      <div>
+        <center>
+          <!-- Operator Selection -->
+            <select name="logic_operators" class="logic_operators">
+              <option value="">Select Condition</option>
+              <% @logic_operators.each do |x| %>
+                <option value="<%= x[:id] %>"><%= x[:text] %></option>
+              <% end %>
+            </select>
+        </center>
+      </div>
+      <br />
+      <div class="custom-row">
+        <span>
+          <span><b>Dimension &nbsp;</b></span>
+          <select name="dimension" class="dimension">
+            <option value="">Select Dimension</option>
+            <% @dimensions.each do |x| %>
+              <option value="<%= x[:id] %>"><%= x[:text] %></option>
+            <% end %>
+          </select>
+          <span class="values">
+            <span><b>&nbsp;&nbsp; Operator &nbsp;</b></span>
+            <!-- Operator Selection -->
+            <select name="operators" class="operators">
+              <option value="">Select Operator</option>
+              <% @operators.each do |x| %>
+                <option value="<%= x[:id] %>"><%= x[:text] %></option>
+              <% end %>
+            </select>
 
-<div class="actionBar">
-  <button type="button" class="btn btn-primary pull-left" id="addRow">
-    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
-  </button>
-  <section class="pull-right">
-    <button type="btn" class="btn btn-danger" onclick="createSegment()">Save</button>
-      <button type="btn" class="btn btn-success" onclick="segmentHome()">Cancel</button>
+            <!-- Accepts Value -->
+            <span class="valueElement" style="display: none;">
+            </span>
+
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <span id="endpoint"></span>
   </section>
+  <br/>
+  <div class="actionBar">
+    <button type="button" class="btn btn-primary pull-left" id="addRow">
+      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
+    </button>
+    <section class="pull-right">
+      <button type="btn" class="btn btn-danger" onclick="createSegment()">Save</button>
+        <button type="btn" class="btn btn-success" onclick="segmentHome()">Cancel</button>
+    </section>
+  </div>
 </div>
 
 <!-- Dummy Element -->
-<div id="dummy_row" style="display: none;">
+<div id="dummy_row" class="rowParent" style="display: none;">
   <br />
   <div>
     <center>
@@ -140,6 +184,10 @@
 
         <!-- Accepts Value -->
         <span class="valueElement" style="display: none;">
+        </span>
+
+        <span class="deleteRow pull-right" style="margin-right: 20px; padding: 2px;">
+          <i class="glyphicon glyphicon-remove"></i>
         </span>
 
       </span>
@@ -228,7 +276,7 @@
     };
 
     $.post('/segmentation/create', { jsonData: jsonValue}, function(response){
-      // createSegment();
+      segmentHome();
     });
   }
 
@@ -239,6 +287,13 @@
                       .removeAttr('id')
                       .insertBefore(endpoint)
                       .slideDown();
+  });
+
+  $(document.body).on('click', '.deleteRow', function(){
+    $(this).parents('.rowParent').slideUp("slow", function() {
+      // Animation complete.
+      $(this).remove();
+    });
   });
 
   $(document.body).on('change', '.operators', function(){
@@ -280,10 +335,6 @@
     } else {
 
     }
-
-  });
-
-  $(function() {
 
   });
 

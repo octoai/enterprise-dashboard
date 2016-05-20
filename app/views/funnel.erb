@@ -35,34 +35,54 @@
         </div>
       </div>
       <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-hover table-condensed" id="condensedTable">
-            <thead>
-             <tr role="row">
-              <th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
-             </tr>
-            </thead>
-            <tbody id="funnels_list">
-              <!-- Place Funnel List Here -->
-            </tbody>
-          </table>
-        </div>
+        <table class="table table-hover table-condensed" id="condensedTable">
+          <thead>
+           <tr role="row">
+            <th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
+           </tr>
+          </thead>
+          <tbody id="funnels_list">
+            <!-- Place Funnel List Here -->
+          </tbody>
+        </table>
       </div>
     </div>
   <!-- End Table -->
   </div>
   <div class="col-md-9">
-    <center>
-      <div id="chart_title"></div>
-      <div id="chartdiv" style="padding-left: 100px; width: 90%; height: 500px;"></div>
-    </center>
+    <!-- Start Panel -->
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <div id="chart_title"></div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
+    <!-- End Panel -->
   </div>
 </div>
 
 <% content_for :scripts do %>
   <script type="text/javascript">
 
-   var chart;
+    var chart;
+    var table_nav = $('#condensedTable');
+    var settings_nav_table = {
+      "sDom": "<'table-responsive't><'row'<p i>>",
+        "destroy": true,
+        "autoWidth" : true,
+        "scrollCollapse": true,
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ ",
+            "sInfo": ""
+        },
+        "paging": false,
+        "scrollY": 400,
+        "scrollX": 0
+    }
 
     $('#funnels_list').on('click', 'tr.select_funnel', function() {
       get_graph_data($(this).data('slugname'), $(this).data('name'));
@@ -113,6 +133,7 @@
           html += "<tr class='select_funnel' data-name='"+response.data[x].name+"' data-slugname='"+response.data[x].name_slug+"'><td class='v-align-middle semi-bold'>"+response.data[x].name+"</td></tr>";
         }
         $("#funnels_list").html(html);
+        table_nav.dataTable(settings_nav_table);
         if(response.data[0] != null){
           get_graph_data(response.data[0].name_slug, response.data[0].name);
         } else {

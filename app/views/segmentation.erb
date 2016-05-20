@@ -35,35 +35,104 @@
         </div>
       </div>
       <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-hover table-condensed" id="condensedTable">
-            <thead>
-              <tr role="row">
-                <th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
-              </tr>
-            </thead>
-            <tbody id="segmentations_list">
-              <!-- Place Segmentation List Here -->
-            </tbody>
-          </table>
-        </div>
+        <table class="table table-hover table-condensed" id="condensedTable">
+          <thead>
+            <tr role="row">
+              <th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
+            </tr>
+          </thead>
+          <tbody id="segmentations_list">
+            <!-- Place Segmentation List Here -->
+          </tbody>
+        </table>
       </div>
     </div>
     <!-- End Table -->
   </div>
   <div class="col-md-9">
-    <center>
-      <div id="chart_title"></div>
-      <div id="chartdiv" style="width: 100%; height: 500px;"></div>
-    </center>
+    <!-- Start Panel -->
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <div id="chart_title"></div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
+    <!-- End Panel -->
   </div>
 </div>
+
+<!-- START ROW -->
+<div class="row">
+  <div class="col-md-12 m-b-10">
+    <div class="panel no-border panel-default no-margin widget-loader-circle">
+      <div class="panel-heading p-l-30 p-t-30 p-r-30">
+        <div class="pull-left">
+          <div class="panel-title">Segmentation Table
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="p-l-30 p-r-30 p-b-30">
+        <table class="table table-hover " id="rankingTable">
+          <thead>
+            <tr>
+              <th class="hint-text fs-11 col-xs-5">Date</th>
+              <th class="hint-text fs-11">Absolute Value</th>
+              <th class="hint-text fs-11">Percentage</th>
+            </tr>
+          </thead>
+          <tbody id="tableData">
+            <!-- Append Rows into it -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END ROW -->
 
 <% content_for :scripts do %>
   <script type="text/javascript">
   	// Custom JS for this page only
     var chart;
     var chartData = [];
+    var trendLine1;
+    var trendLine2;
+
+    var table = $('#rankingTable');
+    var tableData = [];
+    var settings = {
+        "sDom": "<'table-responsive't><'row'<p i>>",
+        "destroy": true,
+        "autoWidth" : false,
+        "scrollCollapse": true,
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ ",
+            "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+        },
+        "iDisplayLength": 5,
+        "data": tableData
+    };
+    table.dataTable(settings);
+
+    var table_nav = $('#condensedTable');
+    var settings_nav_table = {
+      "sDom": "<'table-responsive't><'row'<p i>>",
+        "destroy": true,
+        "autoWidth" : true,
+        "scrollCollapse": true,
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ ",
+            "sInfo": ""
+        },
+        "paging": false,
+        "scrollY": 400,
+        "scrollX": 0
+    }
 
     $('#segmentations_list').on('click', 'tr.select_segment', function() {
       generateChartData($(this).data('slugname'), $(this).data('name'));
@@ -74,30 +143,40 @@
       $(this).addClass("active");
     });
 
-    // generate some random data, quite different range
     function generateChartData(slug_name, name) {
 
       $.getJSON('/segmentation/graph_data', 
         {segmentName: slug_name}, 
         function(response){
+          $('#tableData').html("");
+          chartData = [];
+          tableData = [];
           $.each( response.reverse(), function( key, value ) {
             json = {
               date: new Date(value['ts']),
               abs: parseInt(value['abs']),
               perc: parseFloat(value['perc'].toFixed(2))
             };
+            arr = [json['date'], json['abs'], json['perc']];
+
             chartData.push(json);
+            tableData.push(arr);
           });
           
           var last_index = chartData.length - 1;
           var initElement = chartData[0];
           var lastElement = chartData[last_index];
-          add_trendline(initElement['date'], lastElement['date'], initElement['abs'], lastElement['abs'], "#FF6600");
+          add_trendline(trendLine1, initElement['date'], lastElement['date'], initElement['abs'], lastElement['abs']);
 
-          // add_trendline(initElement['date'], lastElement['date'], initElement['perc'], lastElement['perc'], "#FCD202");          
+          add_trendline(trendLine2, initElement['date'], lastElement['date'], initElement['perc'], lastElement['perc']);
 
           chart.dataProvider = chartData;
           chart.validateData();
+
+          var tabledata = table.dataTable().api();
+          tabledata.clear();
+          tabledata.rows.add(tableData);
+          tabledata.draw();
 
         }
       );
@@ -106,17 +185,15 @@
       $('#chart_title').html("<h2>"+name+"</h2>");
     }
 
-    function add_trendline(initDate, finalDate, initValue, finalValue, color="#CC0000"){
+    function add_trendline( trendLine, initDate, finalDate, initValue, finalValue){
       // TREND LINES
       // first trend line
-      var trendLine = new AmCharts.TrendLine();
+      
       // note,when creating date objects 0 month is January, as months are zero based in JavaScript.
       trendLine.initialDate = initDate; // 12 is hour - to start trend line in the middle of the day
       trendLine.finalDate = finalDate;
       trendLine.initialValue = initValue;
       trendLine.finalValue = finalValue;
-      trendLine.lineColor = color;//"#CC0000";
-      chart.addTrendLine(trendLine);
     }
 
     $(function() {
@@ -163,16 +240,15 @@
 
         // first value axis (on the left)
         var valueAxis1 = new AmCharts.ValueAxis();
-        valueAxis1.axisColor = "#FF6600";
-        valueAxis1.axisThickness = 2;
+        valueAxis1.axisColor = "#FF0000";
+        valueAxis1.axisThickness = 3;
         chart.addValueAxis(valueAxis1);
 
         // second value axis (on the right)
         var valueAxis2 = new AmCharts.ValueAxis();
         valueAxis2.position = "right"; // this line makes the axis to appear on the right
-        valueAxis2.axisColor = "#FCD202";
-        valueAxis2.gridAlpha = 0;
-        valueAxis2.axisThickness = 2;
+        valueAxis2.axisColor = "#0055FF";
+        valueAxis2.axisThickness = 3;
         chart.addValueAxis(valueAxis2);
 
         // GRAPHS
@@ -183,7 +259,8 @@
         graph1.valueField = "abs";
         graph1.bullet = "round";
         graph1.hideBulletsCount = 30;
-        graph1.bulletBorderThickness = 1;
+        graph1.bulletBorderThickness = 3;
+        graph1.lineColor = "#FF0000";
         chart.addGraph(graph1);
 
         // second graph
@@ -193,8 +270,21 @@
         graph2.valueField = "perc";
         graph2.bullet = "square";
         graph2.hideBulletsCount = 30;
-        graph2.bulletBorderThickness = 1;
+        graph2.bulletBorderThickness = 3;
+        graph2.lineColor = "#0055FF";
         chart.addGraph(graph2);
+
+        trendLine1 = new AmCharts.TrendLine();
+        trendLine1.dashLength = 8;
+        trendLine1.lineColor = "#980000";
+        trendLine1.valueAxis = valueAxis1;
+        chart.addTrendLine(trendLine1);
+
+        trendLine2 = new AmCharts.TrendLine();
+        trendLine2.dashLength = 8;
+        trendLine2.lineColor = "#0044BB";
+        trendLine2.valueAxis = valueAxis2;
+        chart.addTrendLine(trendLine2);
 
         // CURSOR
         var chartCursor = new AmCharts.ChartCursor();
@@ -225,10 +315,11 @@
           html += "<tr class='select_segment' data-name='"+response.data[x].name+"' data-slugname='"+response.data[x].name_slug+"'><td class='v-align-middle semi-bold'>"+response.data[x].name+"</td></tr>";
         }
         $("#segmentations_list").html(html);
+        table_nav.dataTable(settings_nav_table);
         if(response.data[0] != null){
-          // get_graph_data(response.data[0].name_slug, response.data[0].name);
+          generateChartData(response.data[0].name_slug, response.data[0].name);
         } else {
-          $('#chart_title').html("<h3>No Funnel Found</h3>");
+          $('#chart_title').html("<h3>No Segmentation Found</h3>");
         }
       });
       
