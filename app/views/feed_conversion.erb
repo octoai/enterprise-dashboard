@@ -1,0 +1,173 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/feed" class="">Feed</a></li>
+  <li><a href="#" class="active">Conversion</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+    /* Custom CSS for this page */
+  </style>
+<% end %>
+
+<div class="row">
+  <div class="col-lg-1 col-md-1"></div>
+  <div class="col-lg-10 col-md-10 col-sm-12">
+    <!-- Start Panel -->
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <span id="chart_title">News Feed Conversions</span>
+        </div>
+        <div class="pull-right">
+          <span><input type="text" name="daterange" id="daterange" placeholder="Select Date"></span>
+        </div>
+      </div>
+      <div class="panel-body">
+      <br/>
+        <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
+    <!-- End Panel -->
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    // Custom JS for this page only
+    var chart;
+    var graph;
+
+    var chartData = [];
+
+
+    AmCharts.ready(function () {
+      // SERIAL CHART
+      chart = new AmCharts.AmSerialChart();
+
+      chart.dataProvider = chartData;
+      chart.marginLeft = 10;
+      chart.categoryField = "date";
+
+      // AXES
+      // category
+      var categoryAxis = chart.categoryAxis;
+      categoryAxis.parseDates = true;
+      categoryAxis.minPeriod = "DD";
+      categoryAxis.dashLength = 3;
+      categoryAxis.minorGridEnabled = true;
+      categoryAxis.minorGridAlpha = 0.1;
+      categoryAxis.dateFormats = [{
+            period: 'fff',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'ss',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'mm',
+            format: 'JJ:NN'
+        }, {
+            period: 'hh',
+            format: 'JJ:NN'
+        }, {
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }];
+
+      // value
+      var valueAxis = new AmCharts.ValueAxis();
+      valueAxis.axisAlpha = 0;
+      valueAxis.inside = true;
+      valueAxis.dashLength = 3;
+      chart.addValueAxis(valueAxis);
+
+      // GRAPH
+      graph = new AmCharts.AmGraph();
+      graph.type = "smoothedLine"; // this line makes the graph smoothed line.
+      graph.lineColor = "#d1655d";
+      graph.negativeLineColor = "#637bb6"; // this line makes the graph to change color when it drops below 0
+      graph.bullet = "round";
+      graph.bulletSize = 8;
+      graph.bulletBorderColor = "#FFFFFF";
+      graph.bulletBorderAlpha = 1;
+      graph.bulletBorderThickness = 2;
+      graph.lineThickness = 2;
+      graph.valueField = "value";
+      graph.balloonText = "<b><span style='font-size:14px;'>[[value]]</span></b>";
+      chart.addGraph(graph);
+
+      // CURSOR
+      var chartCursor = new AmCharts.ChartCursor();
+      chartCursor.cursorAlpha = 0;
+      chartCursor.cursorPosition = "mouse";
+      chart.addChartCursor(chartCursor);
+
+      // SCROLLBAR
+      var chartScrollbar = new AmCharts.ChartScrollbar();
+      chart.addChartScrollbar(chartScrollbar);
+
+      chart.creditsPosition = "bottom-right";
+
+      // WRITE
+      chart.write("chartdiv");
+    });
+
+    // Callback when date changes
+    $('#daterange').on('apply.daterangepicker', function(ev, picker){
+
+      let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+      let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+      
+      $(this).val(start_time + ' - ' + end_time);
+      
+      $.getJSON('/feed/conversion/data', 
+      {
+        startTime: start_time,
+        endTime: end_time
+      }, 
+      function(response){
+        chartData = [];
+        $.each( response.data, function( index, value ) {
+          let json_data = {
+            date: new Date(value['ts']),
+            value: value['value'].toFixed(2)
+          };
+          chartData.push(json_data);
+        });
+        chart.dataProvider = chartData;
+        chart.validateData();
+      });
+
+    });
+
+    $('#daterange').on('change', function() {
+      $.getJSON('/feed/conversion/data', { daterange: $(this).val()}, function(response){
+        dataArray = response.data;
+        console.log(dataArray);
+        $.each( dataArray, function( index, value ) {
+          console.log(value);
+        });
+      });
+    });
+
+    $(function() {
+      $('#daterange').daterangepicker({
+        "timePicker": true,
+        "opens": "left",
+        "maxDate":new Date()
+      }, 
+      function(start, end, label) {
+        
+      });
+    });
+
+  </script>
+<% end %>

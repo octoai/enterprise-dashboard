@@ -15,7 +15,7 @@ class NotificationController < ApplicationController
   	erb :notification_template
 	end
 
-  post '/template/template/update' do
+  post '/template/update' do
     category = params['templateCategory']
     text = params['templateText']
     state = params['templateState']

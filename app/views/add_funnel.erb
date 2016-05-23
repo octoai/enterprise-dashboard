@@ -50,44 +50,45 @@
   </style>
   <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
 <% end %>
+<div class="col-md-1 col-lg-1"></div>
+<div class="col-md-10 col-lg-10 col-sm-12">
+  <section>
+    <span>
+      <h4 class="pull-left">Add Funnel</h4>
+      <section class="pull-right">
+        <button type="btn" class="btn btn-danger" onclick="createFunnel()">Save</button>
+        <button type="btn" class="btn btn-success" onclick="funnel_home()">Cancel</button>
+      </section>
+    </span>
+    <br/>
+    <div class="field_wrapper">
+      <input placeholder="Name your funnel" id="funnel_name" type="text">
+    </div>
+    <div>
+      <h4>Add Pages</h4>
+    </div>
+  </section>
 
-<section>
-  <span>
-    <h4 class="pull-left">Add Funnel</h4>
+  <section id="sortable">
+    <div id="initRow" class="inputValues ui-state-default">
+      <span class="pg-menu_justify"></span>
+      <span class="SNo">Step 1 </span>
+      <input id="auto1" name="pageName" type="text" placeholder="Pick your page" class="pageName">
+    </div>
+
+    <span id="endpoint"></span>
+  </section>
+
+  <div class="actionBar">
+    <button type="button" class="btn btn-primary pull-left" id="addRow">
+      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
+    </button>
     <section class="pull-right">
       <button type="btn" class="btn btn-danger" onclick="createFunnel()">Save</button>
-      <button type="btn" class="btn btn-success" onclick="funnel_home()">Cancel</button>
+        <button type="btn" class="btn btn-success" onclick="funnel_home()">Cancel</button>
     </section>
-  </span>
-  <br/>
-  <div class="field_wrapper">
-    <input placeholder="Name your funnel" id="funnel_name" type="text">
   </div>
-  <div>
-    <h4>Add Pages</h4>
-  </div>
-</section>
-
-<section id="sortable">
-  <div id="initRow" class="inputValues ui-state-default">
-    <span class="pg-menu_justify"></span>
-    <span class="SNo">Step 1 </span>
-    <input id="auto1" name="pageName" type="text" placeholder="Pick your page" class="pageName">
-  </div>
-
-  <span id="endpoint"></span>
-</section>
-
-<div class="actionBar">
-  <button type="button" class="btn btn-primary pull-left" id="addRow">
-    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Row
-  </button>
-  <section class="pull-right">
-    <button type="btn" class="btn btn-danger" onclick="createFunnel()">Save</button>
-      <button type="btn" class="btn btn-success" onclick="funnel_home()">Cancel</button>
-  </section>
 </div>
-
 <!-- Dummy Element -->
 <div style="display:none;">
   <div id="additional">

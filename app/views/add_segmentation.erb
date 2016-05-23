@@ -17,7 +17,8 @@
   </style>
   <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
 <% end %>
-<div class="col-md-9 col-lg-9 col-sm-12">
+<div class="col-md-1 col-lg-1"></div>
+<div class="col-md-10 col-lg-10 col-sm-12">
   <section>
     <span>
       <h4 class="pull-left">Add Segmentation</h4>
@@ -316,8 +317,7 @@
       value_element.children('input[name="datePicker"]').daterangepicker({
             "timePicker": true,
             "opens": "left",
-            "startDate": "05/11/2016",
-            "endDate": "05/17/2016"
+            "maxDate":new Date()
           });
     } else if ($(this).val() < 8){ // For Text Type Input
       value_element.css('display','inline-block');
