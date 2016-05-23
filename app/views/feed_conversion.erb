@@ -1,5 +1,5 @@
 <% content_for :breadcrumb do %>
-  <li><a href="/feed" class="">Feed</a></li>
+  <li><a href="/<%= @breadcrumb %>" class=""><%= @breadcrumb %></a></li>
   <li><a href="#" class="active">Conversion</a></li>
 <% end %>
 
@@ -16,7 +16,7 @@
     <div class="panel panel-transparent">
       <div class="panel-heading">
         <div class="panel-title">
-          <span id="chart_title">News Feed Conversions</span>
+          <span id="chart_title"><%= @title %></span>
         </div>
         <div class="pull-right">
           <span><input type="text" name="daterange" id="daterange" placeholder="Select Date"></span>
@@ -34,6 +34,9 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
     // Custom JS for this page only
+
+    var type = <%= @type %>;
+
     var chart;
     var graph;
 
@@ -128,8 +131,9 @@
       
       $(this).val(start_time + ' - ' + end_time);
       
-      $.getJSON('/feed/conversion/data', 
+      $.getJSON('/conversion/graphdata', 
       {
+        graph_type: type,
         startTime: start_time,
         endTime: end_time
       }, 
@@ -146,16 +150,6 @@
         chart.validateData();
       });
 
-    });
-
-    $('#daterange').on('change', function() {
-      $.getJSON('/feed/conversion/data', { daterange: $(this).val()}, function(response){
-        dataArray = response.data;
-        console.log(dataArray);
-        $.each( dataArray, function( index, value ) {
-          console.log(value);
-        });
-      });
     });
 
     $(function() {

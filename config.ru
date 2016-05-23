@@ -16,3 +16,4 @@ map('/segmentation') {run SegmentationController}
 map('/user') {run UserController}
 map('/trends') { run TrendsController }
 map('/event') { run EventController }
+map('/conversion') {run ConversionController}
