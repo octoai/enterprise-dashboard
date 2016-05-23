@@ -1,7 +1,7 @@
 class FeedController < ApplicationController
 
 	get '/' do
-  		erb :feed
+  	erb :feed
 	end
 	
 end

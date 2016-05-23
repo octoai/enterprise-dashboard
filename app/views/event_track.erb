@@ -1,0 +1,65 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/funnel">Funnel</a></li>
+  <li><a href="#" class="active">Add New</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+    /* Custom CSS for this page */
+
+  </style>
+<% end %>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">Event Tracking</div>
+      </div>
+
+      <div class="panel-body">
+        <center>
+          <div>
+            <h4> Search for uuid </h4>
+          </div>
+          <div>
+            <input id="uuid_value" type="text" placeholder="Enter UUID" class="form-control" aria-label="..." style="width: 60% !important;">
+          </div>
+          <br/>
+          <div>
+            <button type="button" class="btn btn-primary" id="search"><i class="glyphicon glyphicon-search"></i> Search</button>
+          </div>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div id="search_result">
+      
+    </div>
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    // Custom JS for this page only
+
+    // UUID Search for tracking
+    // Required uuid value
+    $('#search').on('click', function(event) {
+      $.get(
+        "/event/uuid_data",
+        { 
+          uuid_value : $('#uuid_value').val()
+        },
+        function(data) {
+          var code = JSON.stringify(JSON.parse(data), null, '\t');
+          $('#search_result').html('<code>' + code + '</code>');
+        }
+      );
+    });
+
+  </script>
+<% end %>

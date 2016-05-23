@@ -1,0 +1,90 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/notification">Notification</a></li>
+  <li><a href="#" class="active">Template</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+  	/* Custom CSS for this page */
+  </style>
+<% end %>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">Notification Template</div>
+      </div>
+
+      <div class="panel-body">
+        <br/>
+        <div id="formInfo">
+          <span class="label label-info">Add or Modify Template Text</span>
+        </div>
+        <br />
+        <select class="form-control" id="notif_cat">
+          <option value="null"> Select Category </option>
+          <% @categories.each do |cat| %>
+            <option value="<%= cat[:category_type] %>"><%= cat[:category_type] %></option>
+          <% end %>
+        </select>
+        <br />
+        <textarea rows="3" id="templateText" type="text" class="form-control" placeholder="Template Text"></textarea>
+        <br />
+        <input id="templateState" type="checkbox"> Template State
+        <br /><br />
+        <button id="updateButton" type="button" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+
+    $('#updateButton').click(function(){
+      templateCategory = $('#notif_cat').val();
+      templateText = $('#templateText').val();
+      templateState = $('#templateState').is(':checked'); 
+      defaultValue = "null";
+      if (templateText != "" && templateCategory != defaultValue){
+        $.post("/notification/template/update",
+        {
+          templateCategory: templateCategory,
+          templateText: templateText,
+          templateState: templateState,
+          templateType: 'notification'
+        },
+        function(data,status){
+          if (data == "success"){
+            $('#formInfo').html('<span class="label label-success">Updated Successfull</span>');
+          } else {
+            $('#formInfo').html('<span class="label label-danger">Error</span>');
+          }
+        });
+      } else {
+        $('#formInfo').html('<span class="label label-danger">Input values missing</span>');
+      }
+    });
+
+    $('#notif_cat').change(function() {
+      defaultValue = "null";
+      if ($(this).val() != defaultValue){
+        $.get("/notification/template/data",
+          {
+            templateCategory : $(this).val()
+          },
+          function(data) {
+            var obj = jQuery.parseJSON(data);
+            $('#templateText').val(obj['text']);
+            $('#templateState').prop('checked', obj['state']);
+          }
+        );
+      } else {
+        $('#templateText').val("");
+        $('#templateState').prop('checked', false);
+      }
+      $('#formInfo').html('<span class="label label-info">Add or Modify Template Text</span>');
+    });
+  </script>
+<% end %>

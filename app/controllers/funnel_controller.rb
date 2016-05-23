@@ -46,4 +46,5 @@ class FunnelController < ApplicationController
     end
     json_array.to_json
   end
+  
 end

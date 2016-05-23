@@ -9,6 +9,6 @@ class ApplicationController < Sinatra::Base
 
   # set folder for templates to ../views, but make the path absolute
   set :views, File.expand_path('../../views', __FILE__)
-  set :public, File.expand_path('../../public', __FILE__)
+  set :public_folder, File.expand_path('../../public', __FILE__)
 
 end
