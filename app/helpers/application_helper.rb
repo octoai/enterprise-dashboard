@@ -22,5 +22,10 @@ module ApplicationHelper
     Octo::Enterprise.first
   end
 
+  def mktime_from_urlparam(str)
+    return nil if str.nil?
+    Time.parse(str, 'YYYYMMDDhhmmss')
+  end
+
 end
 

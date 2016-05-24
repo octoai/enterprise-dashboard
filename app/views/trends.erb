@@ -1,15 +1,21 @@
 <% content_for :breadcrumb do %>
-  <li><a href="#" class="active">Trends</a></li>
+  <li><a href="#" class="">Trends</a></li>
+  <li><a href="#" class="active"><%= @params[:trend_for].capitalize %></a></li>
 <% end %>
 
 
 <% content_for :styles do %>
+  <style type='text/css'>
+  select {
+    height: 40px !important;
+  }
+  </style>
 <% end %>
 
 
 <div class="secondary-navbar">
 
-    <h4>Product Trends</h4>
+  <h4><%= @params[:trend_for].capitalize %> Trends</h4>
 
 </div>
 <div class="row">
@@ -27,7 +33,6 @@
       </div>
 
       <div class="panel-body">
-
         <div class="table-responsive">
           <table class="table table-hover table-condensed" id="condensedTable">
             <thead>
@@ -42,12 +47,10 @@
                    style="width:100%">Trends type</th>
              </tr>
             </thead>
-            <tbody id="funnels_list">
+            <tbody id="<%= @params[:trend_for] %>_list">
               <% @counter_text.each do |counter| %>
-                <tr>
-                  <td data-counter-id="<%= counter[:id] %>">
-                    <%= counter[:text] %>
-                  </td>
+                <tr data-counter-id="<%= counter[:id] %>">
+                  <td><%= counter[:text] %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -59,137 +62,89 @@
   </div>
 
   <div class="col-md-9">
+    <div id="alertbox" style="position:absolute" role="alert"></div>
     <div class="panel panel-transparent">
       <div class="panel-heading bg-primary-darker">
-        <h2>Overall Trends for Pages</h2>
+        <h2>Overall Trends for <%= @params[:trend_for].capitalize %></h2>
       </div>
-      
       <div class="panel-body">
-        <div class="input-preprend input-group pull-left col-sm-4 well well-sm">
-          <input type="text" style="width: 100%" placeholder="Find a page and view it's trend">
+        <div class="input-preprend input-group pull-left col-sm-4">
+          <input type="text" style="width: 100%" placeholder="Find a <%= @params[:trend_for] %> and view it's trend">
         </div>
-        <div class="input-prepend input-group pull-right col-sm-4 well well-sm">
+        <div class="input-prepend input-group pull-right col-sm-4">
           <input type="text" style="width: 100%" name="timeslot" id="rankingDatepicker"
           class="form-control active"
           size="50"
-          placeholder="Date Range" 
+          placeholder="Date Range"
           value="">
         </div>
+        <div class="export-options-container pull-right"></div>
+        <div class="clearfix"></div>
       </div>
-                <table class="table table-striped" id="tableWithExportOptions">
-                  <thead>
-                    <tr>
-                      <th>Page</th>
-                      <th>Rank</th>
-                      <th>% w.o.w change</th>
-                      <th>Total Hits</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="odd gradeX">
-                      <td><a href="#">Page 1</a></td>
-                      <td>1</td>
-                      <td>+300% <i class="pg-arrow_up text-success"></i></td>
-                      <td>324,098</td>
-                    </tr>
-
-                   <tr class="gradeA">
-                     <td><a href="#">Page 2</a></td>
-                     <td>2</td>
-                      <td>-20% <i class="pg-arrow_down text-danger"></i></p></td>
-                      <td>23,987</td>
-                    </tr>
-                    <tr class="gradeA">
-                      <td><a href="#">Page 3</a></td>
-                      <td>3</td>
-                      <td>+40% <i class="pg-arrow_up text-success"></i></td>
-                      <td>34,982</td>
-                    </tr>
-                    <tr class="gradeX">
-                      <td><a href="#">Page 4</a></td>
-                      <td>4</td>
-                      <td>0%</td>
-                      <td>21,098</td>
-                    </tr>
-                  </tbody>
-                </table>
+      <table class="table table-striped" id="tableWithExportOptions">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Rank</th>
+            <th>Page</th>
+            <th>Total Hits</th>
+            <th>Total Hits w.o.w</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 
 <% content_for :scripts do %>
 
-  <script type="text/javascript">
+<script type="text/javascript" src="assets/js/trend.js"></script>
+
+<script type="text/javascript">
 
 (function($) {
+  'use strict';
 
-    'use strict';
+  var selector = 'input[name="timeslot"]';
 
-    var responsiveHelper = undefined;
-    var breakpointDefinition = {
-        tablet: 1024,
-        phone: 480
-    };
+  /* set date range picker */
+  $(selector).daterangepicker({
+    "timePicker": true,
+    "opens": "left",
+    "startDate": new Date(),
+    "endDate": new Date(),
+    "maxDate":new Date(),
+  });
 
-    var table = $('#tableWithExportOptions');
+  $(selector).on('apply.daterangepicker', function(ev, picker){
+    var start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+    var end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+    $(this).val(start_time + ' - ' + end_time);
 
-     var settings = {
-            "sDom": "<'exportOptions'T><'table-responsive't><'row'<p i>>",
-            "destroy": true,
-            "scrollCollapse": true,
-            "oLanguage": {
-                "sLengthMenu": "_MENU_ ",
-                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
-            },
-            "iDisplayLength": 20,
-            "oTableTools": {
-                "sSwfPath": "assets/plugins/jquery-datatable/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
-                "aButtons": [{
-                    "sExtends": "csv",
-                    "sButtonText": "<i class='pg-grid'></i>",
-                }, {
-                    "sExtends": "xls",
-                    "sButtonText": "<i class='fa fa-file-excel-o'></i>",
-                }, {
-                    "sExtends": "pdf",
-                    "sButtonText": "<i class='fa fa-file-pdf-o'></i>",
-                }, {
-                    "sExtends": "copy",
-                    "sButtonText": "<i class='fa fa-copy'></i>",
-                }]
-            },
-            fnDrawCallback: function(oSettings) {
-                $('.export-options-container').append($('.exportOptions'));
+    start_time = picker.startDate.format('YYYYMMDDhhmmss');
+    end_time = picker.endDate.format('YYYYMMDDhhmmss');
+    onDateChange(start_time, end_time);
+  });
 
-                $('#ToolTables_tableWithExportOptions_0').tooltip({
-                    title: 'Export as CSV',
-                    container: 'body'
-                });
+  function onDateChange(start_time, end_time) {
+    $.fn.showTrend.updateForTime( start_time, end_time);
+  };
 
-                $('#ToolTables_tableWithExportOptions_1').tooltip({
-                    title: 'Export as Excel',
-                    container: 'body'
-                });
 
-                $('#ToolTables_tableWithExportOptions_2').tooltip({
-                    title: 'Export as PDF',
-                    container: 'body'
-                });
 
-                $('#ToolTables_tableWithExportOptions_3').tooltip({
-                    title: 'Copy data',
-                    container: 'body'
-                });
-            }
-        };
-       table.dataTable(settings);
+  $.fn.showTrend({
+    trendfor: '<%= @params[:trend_for] %>',
+    trendtext: '<%= @params[:trend_for].capitalize %>',
+    counter: 0,
+    counter_text: <%= @counter_text.to_json %>,
+    datatable: 'tableWithExportOptions'
+  });
 
-       $('input[name="timeslot"]').daterangepicker({
-            "timePicker": true,
-            "opens": "left",
-            "startDate": "05/11/2016",
-            "endDate": "05/17/2016"
-       });
+
+
 })(window.jQuery);
 
   </script>

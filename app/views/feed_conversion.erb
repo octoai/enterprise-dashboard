@@ -128,9 +128,9 @@
 
       let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
       let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
-      
+
       $(this).val(start_time + ' - ' + end_time);
-      
+
       $.getJSON('/conversion/graphdata', 
       {
         graph_type: type,
@@ -157,9 +157,9 @@
         "timePicker": true,
         "opens": "left",
         "maxDate":new Date()
-      }, 
+      },
       function(start, end, label) {
-        
+
       });
     });
 
