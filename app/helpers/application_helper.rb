@@ -26,9 +26,25 @@ module ApplicationHelper
     Octo::Enterprise.first
   end
 
+
   def get_enterprise_id
     enterprise = Octo::Enterprise.first
     enterprise[:id].to_s
+  end
+
+  def args_with_time(args)
+    ts_start = mktime_from_urlparam(@params[:start_time])
+    ts_end = mktime_from_urlparam(@params[:end_time])
+
+    if ts_end.nil?
+      if ts_start.nil?
+        return args.merge({ts: 30.minutes.ago - Time.now.floor})
+      else
+        return args.merge({ts: ts_start})
+      end
+    else
+      return args.merge({ts: ts_start..ts_end})
+    end
   end
 
   def mktime_from_urlparam(str)

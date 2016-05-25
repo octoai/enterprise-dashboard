@@ -28,21 +28,12 @@ class TrendsController < ApplicationController
 
     trend_clazz = trend_class_map[@params[:trend_for]]
     counter_clazz = counter_map[@params[:trend_for]]
-    ts_start = mktime_from_urlparam(@params[:start_time])
-    ts_end = mktime_from_urlparam(@params[:end_time])
 
     args = {
       enterprise_id: @enterprise.id,
       type: @params[:counter].to_i
     }
-
-    if ts_end.nil?
-      unless ts_start.nil?
-        args.merge!({ts: ts_start})
-      end
-    else
-      args.merge!({ts: ts_start..ts_end})
-    end
+    args = args_with_time(args)
 
     trends = trend_clazz.send(:where, args)
     counters = counter_clazz.send(:where, args)

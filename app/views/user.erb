@@ -4,161 +4,83 @@
 
 <% content_for :styles do %>
   <style type="text/css">
+.timeline::before  {
+  background: '#DAD1D1 !important',
+}
   	/* Custom CSS for this page */
   </style>
 <% end %>
 
 <div class="timeline-container top-circle">
+  <div class="panel panel-transparent">
+
+      <div class="panel-heading bg-primary-darker">
+        <h2>User Timeline <% if @user %>for UserID: <%= @user.id %> <% end %></h2>
+      </div>
+    <div class="panel-body">
+      <div class="input-prepend input-group pull-left col-sm-4">
+        <input type="text" style="width: 100%" class="form-control" placeholder="Search user by their ID" value="<%= @user.nil? ? '' : @user.id %>" />
+      </div>
+      <div class="input-prepend input-group pull-right col-sm-6">
+        <input type="text" style="width: 100%" name="timeslot" id="rankingDatepicker"
+        class="form-control active"
+        size="50"
+        placeholder="Date Range"
+        value="">
+      </div>
+    </div>
+  </div>
   <section class="timeline">
-    <div class="timeline-block">
-      <div class="timeline-point success">
-        <i class="pg-map"></i>
-      </div>
-      <div class="timeline-content">
-        <div class="card share full-width">
-          <div data-original-title="Label" class="circle" data-toggle="tooltip" title="" data-container="body"></div>
-          <div class="card-header clearfix">
-            <div class="user-pic">
-              <img alt="Profile Image" data-src-retina="images/user_icon.png" data-src="images/user_icon.png" src="images/user_icon.png" height="33" width="33">
+
+    <% @res.each do |r| %>
+      <div class="timeline-block">
+        <div class="timeline-point warning">
+          <% case r.type_raw
+          when Octo::UserTimeline::CHECKOUT %>
+            <i class="pg-credit_card"></i>
+          <% when Octo::UserTimeline::ADD_TO_CART %>
+            <i class="pg-shopping_cart"></i>
+          <% when Octo::UserTimeline::APP_OPEN %>
+            <i class="pg-power"></i>
+          <% when Octo::UserTimeline::APP_CLOSE %>
+            <i class="pg-close_line"></i>
+          <% when Octo::UserTimeline::PAGE_RELOAD %>
+            <i class="pg-refresh_new"></i>
+          <% when Octo::UserTimeline::BROWSE_PAGE %>
+            <i class="pg-plus_circle"></i>
+          <% when Octo::UserTimeline::SHARE %>
+            <i class="pg-social"></i>
+          <% when Octo::UserTimeline::SEARCH %>
+            <i class="pg-search"></i>
+          <% when Octo::UserTimeline::BROWSE_PRODUCT %>
+            <i class="pg-plus_circle"></i>
+          <% end %>
+        </div>
+        <div class="timeline-content">
+          <div class="card share full-width">
+            <div data-original-title="Label" class="circle" data-toggle="tooltip" title="" data-container="body"></div>
+            <div class="card-header clearfix">
+              <div class="user-pic">
+                <img alt="Profile Image" data-src-retina="images/user_icon.png" data-src="images/user_icon.png" src="images/user_icon.png" height="33" width="33">
+              </div>
+              <h5><%= r.type %></h5>
+              <h6><%= r.title %>
+                <span class="location semi-bold"><i class="fa fa-map-marker"></i> <%= r.location %></span>
+              </h6>
             </div>
-            <h5>Jeff Curtis</h5>
-            <h6>Shared a Tweet
-              <span class="location semi-bold"><i class="fa fa-map-marker"></i> SF, California</span>
-            </h6>
-          </div>
-          <div class="card-description">
-            <p>What you think, you become. What you feel, you attract. What you imagine, you create - Buddha. <a href="#">#quote</a> </p>
-            <div class="via">via Twitter</div>
-          </div>
-        </div>
-        <div class="event-date">
-          <h6 class="font-montserrat all-caps hint-text m-t-0">Apple Inc</h6>
-          <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
-        </div>
-      </div>
-    </div>
-    <div class="timeline-block">
-      <div class="timeline-point small"></div>
-      <div class="timeline-content">
-        <div class="card share full-width">
-          <div data-original-title="Label" class="circle" data-toggle="tooltip" title="" data-container="body"></div>
-          <div class="card-header clearfix">
-            <div class="user-pic">
-              <img alt="Profile Image" data-src-retina="images/user_icon.png" data-src="images/user_icon.png" src="images/user_icon.png" height="33" width="33">
+            <div class="card-description">
+              <p><%= r.details %> </p>
+              <p><%= r.insight %> </p>
+              <div class="via">via Twitter</div>
             </div>
-            <h5>Shannon Williams</h5>
-            <h6>Shared a photo
-              <span class="location semi-bold"><i class="fa fa-map-marker"></i> NYC, New York</span>
-            </h6>
           </div>
-          <div class="card-description">
-            <p>Inspired by : good design is obvious, great design is transparent</p>
-            <div class="via">via themeforest</div>
+          <div class="event-date">
+            <small class="fs-12 hint-text"><%= r.ts %></small>
           </div>
-          <div class="card-content">
-            <ul class="buttons ">
-              <li>
-                <a href="#"><i class="fa fa-expand"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#"><i class="fa fa-heart-o"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer clearfix">
-            <div class="time">few seconds ago</div>
-            <ul class="reactions">
-              <li><a href="#">5,345 <i class="fa fa-comment-o"></i></a></li>
-              <li><a href="#">23K <i class="fa fa-heart-o"></i></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="event-date">
-          <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
         </div>
       </div>
-    </div>
-    <div class="timeline-block">
-      <div class="timeline-point warning bounce-in">
-        <i class="pg-social"></i>
-      </div>
-      <div class="timeline-content bounce-in">
-        <div class="card share full-width ">
-          <div class="card-header clearfix">
-            <h5 class="text-warning-dark pull-left fs-12">Stock Market <i class="fa fa-circle text-warning-dark fs-11"></i></h5>
-            <div class="pull-right small hint-text">
-              5,345 <i class="fa fa-comment-o"></i>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-          <div class="card-description">
-            <h5 class="hint-text no-margin">Apple Inc.</h5>
-            <h5 class="small hint-text no-margin">NASDAQ: AAPL - Nov 13 8:37 AM ET</h5>
-            <h3>111.25 <span class="text-warning-dark"><i class="fa fa-sort-up small text-warning-dark"></i> 0.15 (0.13%)</span></h3>
-          </div>
-          <div class="card-footer clearfix">
-            <div class="pull-left">by <span class="text-warning-dark">John Smith</span></div>
-            <div class="pull-right hint-text">
-              Apr 23
-            </div>
-            <div class="clearfix"></div>
-          </div>
-        </div>
-        <div class="event-date">
-          <h6 class="font-montserrat all-caps hint-text m-t-0">Shared</h6>
-          <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
-        </div>
-      </div>
-    </div>
-    <div class="timeline-block">
-      <div class="timeline-point small bounce-in"></div>
-      <div class="timeline-content bounce-in">
-        <div class="card share full-width ">
-          <div data-original-title="Label" class="circle" data-toggle="tooltip" title="" data-container="body"></div>
-          <div class="card-header clearfix">
-            <div class="user-pic">
-              <img alt="Profile Image" data-src-retina="images/user_icon.png" data-src="images/user_icon.png" src="images/user_icon.png" height="33" width="33">
-            </div>
-            <h5>Nathaniel Hamilton</h5>
-            <h6>Shared a Tweet
-              <span class="location semi-bold"><i class="icon-map"></i> NYC, New York</span>
-            </h6>
-          </div>
-          <div class="card-description">
-            <p>Testing can show the presense of bugs, but not their absence.</p>
-            <div class="via">via Twitter</div>
-          </div>
-        </div>
-        <div class="event-date">
-          <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
-        </div>
-      </div>
-    </div>
-    <div class="timeline-block">
-      <div class="timeline-point small bounce-in"></div>
-      <div class="timeline-content bounce-in">
-        <div class="card share full-width">
-          <div data-original-title="Label" class="circle" data-toggle="tooltip" title="" data-container="body"></div>
-          <div class="card-header clearfix">
-            <div class="user-pic">
-              <img alt="Profile Image" data-src-retina="images/user_icon.png" data-src="images/user_icon.png" src="images/user_icon.png" height="33" width="33">
-            </div>
-            <h5>Andy Young</h5>
-            <h6>Updated his status
-              <span class="location semi-bold"><i class="icon-map"></i> NYC, New York</span>
-            </h6>
-          </div>
-          <div class="card-description">
-            <p>What a lovely day! I think I should go and play outside.</p>
-          </div>
-        </div>
-        <div class="event-date">
-          <small class="fs-12 hint-text">15 January 2015, 06:50 PM</small>
-        </div>
-      </div>
-    </div>
+    <% end %>
+
   </section>
 </div>
 
