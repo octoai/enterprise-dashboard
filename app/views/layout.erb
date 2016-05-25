@@ -40,7 +40,7 @@
       if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
         document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="pages/css/windows.chrome.fix.css" />'
 
-      $.getJSON('/notifications', function(response){
+      $.getJSON('/messages', function(response){
         $('#all_notifications').html('');
         response.forEach(function(element, index, array){
           console.log(element);

@@ -212,6 +212,7 @@
         categoryAxis.minorGridEnabled = true;
         categoryAxis.axisColor = "#DADADA";
         categoryAxis.twoLineMode = true;
+        categoryAxis.title = "DATE TIME";
         categoryAxis.dateFormats = [{
               period: 'fff',
               format: 'JJ:NN:SS'
@@ -242,6 +243,7 @@
         var valueAxis1 = new AmCharts.ValueAxis();
         valueAxis1.axisColor = "#FF0000";
         valueAxis1.axisThickness = 3;
+        valueAxis1.title = "ABSOLUTE VALUE";
         chart.addValueAxis(valueAxis1);
 
         // second value axis (on the right)
@@ -249,6 +251,7 @@
         valueAxis2.position = "right"; // this line makes the axis to appear on the right
         valueAxis2.axisColor = "#0055FF";
         valueAxis2.axisThickness = 3;
+        valueAxis2.title = "PERCENTAGE";
         chart.addValueAxis(valueAxis2);
 
         // GRAPHS

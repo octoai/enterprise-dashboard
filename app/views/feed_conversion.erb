@@ -59,6 +59,7 @@
       categoryAxis.dashLength = 3;
       categoryAxis.minorGridEnabled = true;
       categoryAxis.minorGridAlpha = 0.1;
+      categoryAxis.title = "DATE TIME"
       categoryAxis.dateFormats = [{
             period: 'fff',
             format: 'JJ:NN:SS'
@@ -90,6 +91,7 @@
       valueAxis.axisAlpha = 0;
       valueAxis.inside = true;
       valueAxis.dashLength = 3;
+      valueAxis.title = "PERCENTAGE";
       chart.addValueAxis(valueAxis);
 
       // GRAPH
@@ -163,7 +165,7 @@
       $('#daterange').daterangepicker({
         "ranges": {
           "Today": [ today, today],
-          "Yesterday": [ yesterday, yesterday],
+          "Last 1 Day": [ yesterday, today],
           "Last 7 Days": [ last7day, today]
         },
         "timePicker": true,
@@ -172,7 +174,7 @@
         "endDate": yesterday,
         "maxDate":new Date()
       });
-      loadData( yesterday, today);
+      loadData( last7day, today);
     });
 
   </script>

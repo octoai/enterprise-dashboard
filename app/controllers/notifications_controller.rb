@@ -1,7 +1,7 @@
-class NotificationsController < ApplicationController
+class MessagesController < ApplicationController
 
   get '/' do
-    hashmap = [
+    messages = [
       {
         title: 'Dummy1',
         keyword: 'keyword',
@@ -15,7 +15,7 @@ class NotificationsController < ApplicationController
         link: '#'
       }
     ]
-    hashmap.to_json
+    messages.to_json
   end
 
 end
