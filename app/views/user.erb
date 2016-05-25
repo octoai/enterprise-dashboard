@@ -19,14 +19,25 @@
       </div>
     <div class="panel-body">
       <div class="input-prepend input-group pull-left col-sm-4">
-        <input type="text" style="width: 100%" class="form-control" placeholder="Search user by their ID" value="<%= @user.nil? ? '' : @user.id %>" />
+        <form class="navbar-form" role="search">
+          <div class="input-group required">
+            <input type="text" class="form-control" placeholder="Search for a user by ID" name="userid" id="userid">
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit">
+                <i class="glyphicon glyphicon-search"></i>
+              </button>
+            </div>
+        </div>
+        </form>
       </div>
       <div class="input-prepend input-group pull-right col-sm-6">
-        <input type="text" style="width: 100%" name="timeslot" id="rankingDatepicker"
-        class="form-control active"
-        size="50"
-        placeholder="Date Range"
-        value="">
+        <form class="form-group form-group-default">
+          <input type="text" style="width: 100%" name="timeslot" id="rankingDatepicker"
+          class="form-control active"
+          size="30"
+          placeholder="Date Range"
+          value="">
+        </form>
       </div>
     </div>
   </div>
