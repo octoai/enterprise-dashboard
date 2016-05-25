@@ -3,6 +3,7 @@ require 'octocore'
 
 # application_controller.rb
 class ApplicationController < Sinatra::Base
+
   helpers ApplicationHelper, Sinatra::ContentFor
 
   Octo.connect_with_config_file(File.join(Dir.pwd, 'config', 'config.yml'))

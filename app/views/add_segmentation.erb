@@ -314,11 +314,23 @@
       value_element.html('');
       value_element.append($('<span><b>&nbsp;&nbsp; Value &nbsp;</b></span>'));
       value_element.append($('<input type="text" name="datePicker" class="rowValue" data-type="datetime">'));
+      let today = new Date();
+      let yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      let last7day = new Date();
+      last7day.setDate(today.getDate() - 7);
       value_element.children('input[name="datePicker"]').daterangepicker({
-            "timePicker": true,
-            "opens": "left",
-            "maxDate":new Date()
-          });
+        "ranges": {
+          "Today": [ today, today],
+          "Yesterday": [ yesterday, yesterday],
+          "Last 7 Days": [ last7day, today]
+        },
+        "timePicker": true,
+        "opens": "left",
+        "startDate": today,
+        "endDate": yesterday,
+        "maxDate":today
+      });
     } else if ($(this).val() < 8){ // For Text Type Input
       value_element.css('display','inline-block');
       value_element.html('');

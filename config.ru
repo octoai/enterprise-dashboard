@@ -17,3 +17,5 @@ map('/user') {run UserController}
 map('/trends') { run TrendsController }
 map('/event') { run EventController }
 map('/conversion') {run ConversionController}
+map('/settings') {run SettingsController}
+map('/notifications') {run NotificationsController}

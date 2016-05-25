@@ -28,3 +28,8 @@ kong:
     year: 1000000000
 dashboard:
   title: 'Octo Dashboard'
+aws:
+  region: 'ap-southeast-1'
+  secret_key: 'S6wzZDwQDoWAF7U+mbuFHR5uUhzp8ybxiJJjB8Yg'
+  access_key: 'AKIAJSPC6N3YAZRKVJTA'
+  bucket_name: 'octo-enterprise'

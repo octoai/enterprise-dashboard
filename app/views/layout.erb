@@ -39,6 +39,15 @@
       // fix for windows 8
       if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
         document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="pages/css/windows.chrome.fix.css" />'
+
+      $.getJSON('/notifications', function(response){
+        $('#all_notifications').html('');
+        response.forEach(function(element, index, array){
+          console.log(element);
+          console.log(element.title);
+          $('#all_notifications').append('<div class="notification-item  clearfix"><div class="heading"><a href="'+ element.link +'" class="text-complete pull-left"><i class="glyphicon glyphicon-comment"> </i> <span class="bold"> '+ element.title +' </span><span class="fs-12 m-l-10">'+ element.keyword +'</span></a><span class="pull-right time">'+ element.time +'</span></div></div>');
+        });
+      });
     }
     </script>
   </head>
@@ -124,11 +133,11 @@
               <span class="title">User Timeline</span>
               <span class="arrow"></span>
             </a>
-            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <span class="icon-thumbnail">U</span>
             <ul class="sub-menu">
               <li class="">
                 <a href="/user">Timeline</a>
-                <span class="icon-thumbnail">U</span>
+                <span class="icon-thumbnail">U-T</span>
               </li>
             </ul>
           </li>
@@ -152,7 +161,7 @@
                 <span class="icon-thumbnail">N-C</span>
               </li>
               <li class="">
-                <a href="/notification">Settings</a>
+                <a href="/notification/settings">Settings</a>
                 <span class="icon-thumbnail">N-S</span>
               </li>
             </ul>
@@ -162,15 +171,15 @@
               <span class="title">Newsfeed</span>
               <span class=" arrow"></span>
             </a>
-            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <span class="icon-thumbnail">NF</span>
             <ul class="sub-menu">
               <li class="">
                 <a href="/feed">Overview</a>
-                <span class="icon-thumbnail">F</span>
+                <span class="icon-thumbnail">F-O</span>
               </li>
               <li class="">
                 <a href="/conversion/newsfeed">Conversions</a>
-                <span class="icon-thumbnail">F</span>
+                <span class="icon-thumbnail">F-C</span>
               </li>
             </ul>
           </li>
@@ -180,19 +189,19 @@
               <span class="title">Trends</span>
               <span class=" arrow"></span>
             </a>
-            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <span class="icon-thumbnail">T</span>
             <ul class="sub-menu">
               <li class="">
                 <a href="/trends/products">Products</a>
-                <span class="icon-thumbnail">F</span>
+                <span class="icon-thumbnail">T-P</span>
               </li>
               <li class="">
                 <a href="/trends/categories">Categories</a>
-                <span class="icon-thumbnail">F</span>
+                <span class="icon-thumbnail">T-C</span>
               </li>
               <li class="">
                 <a href="/trends/tags">Tags</a>
-                <span class="icon-thumbnail">F</span>
+                <span class="icon-thumbnail">T-T</span>
               </li>
             </ul>
           </li>
@@ -217,7 +226,7 @@
           </li>
 
          <li class="">
-            <a href="#" class="detailed">
+            <a href="/settings" class="detailed">
               <span class="title">API Settings</span>
             </a>
          </li>
@@ -286,7 +295,14 @@
                   <!-- START Notification Dropdown -->
                   <div class="dropdown-menu notification-toggle" role="menu" aria-labelledby="notification-center">
                     <!-- START Notification -->
-                    
+                    <div class="notification-panel">
+                      <!-- START Notification Body-->
+                      <div class="notification-body scrollable" id="all_notifications">
+                        
+                        
+
+                      </div>
+                    </div>
                     <!-- END Notification -->
                   </div>
                   <!-- END Notification Dropdown -->
@@ -309,7 +325,7 @@
                 </span>
               </button>
               <ul class="dropdown-menu profile-dropdown" role="menu">
-                <li><a href="#"><i class="pg-settings_small"></i> Settings</a>
+                <li><a href="/settings"><i class="pg-settings_small"></i> Settings</a>
                 </li>
                 <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
                 </li>

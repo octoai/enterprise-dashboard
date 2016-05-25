@@ -1,3 +1,5 @@
+include Octo::Stats
+
 class NotificationController < ApplicationController
 
   get '/' do
@@ -44,6 +46,19 @@ class NotificationController < ApplicationController
     text = result[:template_text]
     state = result[:active]
     {:text => text, :state => state}.to_json
+  end
+
+  get '/settings' do
+    erb :notification_settings
+  end
+
+  post '/settings' do
+    instrument(:upload_certificate) do
+      upload_certificate(params['certificate'][:tempfile].read)
+    end
+
+    @response_string = 'Uploaded Successful'
+    erb :notification_settings
   end
 
 end

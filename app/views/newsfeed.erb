@@ -1,0 +1,273 @@
+<% content_for :breadcrumb do %>
+  <li><a href="#" class="active">Feed</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+  	/* Custom CSS for this page */
+  </style>
+<% end %>
+
+<div class="row">
+  <div class="col-lg-3 col-md-3">
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">Select</div>
+      </div>
+      <div class="panel-body">
+        <table class="table table-hover table-condensed" id="condensedTable">
+          <thead>
+           <tr role="row">
+            <th aria-sort="ascending" aria-label="Title: activate to sort column descending" colspan="1" rowspan="1" aria-controls="condensedTable" tabindex="0" class="sorting_asc" style="width:100%">Title</th>
+           </tr>
+          </thead>
+          <tbody>
+            <tr class="select_option" id="ctr_graph" data-name="ctr">
+              <td class='v-align-middle semi-bold'>CTR</td>
+            </tr>
+            <tr class="select_option" id="abs_graph" data-name="absolute">
+              <td class='v-align-middle semi-bold'>Newsfeed Absolute Count</td>
+            </tr>
+            <tr class="select_option" id="pageload_graph" data-name="pageload">
+              <td class='v-align-middle semi-bold'>Pageload Time</td>
+            </tr>
+            <tr class="select_option" id="engagement_graph" data-name="engagement">
+              <td class='v-align-middle semi-bold'>User Engagement Time</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9 col-md-9">
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <span class="panel-title" id="graph-title">GRAPH TITLE</span>
+      </div>
+      <div class="pull-right">
+        <span>
+          <input type="text" name="daterange" id="daterange" placeholder="Select Date">
+        </span>
+      </div>
+      <div class="panel-body">
+        <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    // Custom JS for this page only
+    var chart;
+    var chartData = [];
+    var selected_graph_type = null;
+
+    var balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]]</b></span>";
+
+    $('#ctr_graph').click(function(){
+      // Code here
+      selected_graph_type = 'ctr';
+      remove_activeclass();
+      $(this).addClass("active");
+      balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]]</b></span>";
+      $('#graph-title').html('CTR - Click Through Rate');
+      load_data(new Date(), new Date(), true, "column");
+    });
+
+    $('#abs_graph').click(function(){
+      // Code here
+      selected_graph_type = 'absolute';
+      remove_activeclass();
+      $(this).addClass("active");
+      balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]]</b></span>";
+      $('#graph-title').html('Absolute Count');
+      load_data(new Date(), new Date(), true, "smoothedLine");
+    });
+
+    $('#pageload_graph').click(function(){
+      // Code here
+      selected_graph_type = 'pageload';
+      remove_activeclass();
+      $(this).addClass("active");
+      balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]] ms </b></span>";
+      $('#graph-title').html('Page Load Time');
+      load_data(new Date(), new Date(), true, "smoothedLine");
+    });
+
+    $('#engagement_graph').click(function(){
+      // Code here
+      selected_graph_type = 'engagement';
+      remove_activeclass();
+      $(this).addClass("active");
+      balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]] sec/user </b></span>";
+      $('#graph-title').html('User Engagement Time');
+      load_data(new Date(), new Date(), true, "smoothedLine");
+    });
+
+    function remove_activeclass(){
+      $(".select_option").each(function(){
+        $(this).removeClass("active");
+      });
+    }
+
+    // Callback when date changes
+    $('#daterange').on('apply.daterangepicker', function(ev, picker){
+
+      let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+      let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+
+      $(this).val(start_time + ' - ' + end_time);
+
+      load_data( start_time, end_time);
+    });
+
+    $(function() {
+      let today = new Date();
+      let yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      let last7day = new Date();
+      last7day.setDate(today.getDate() - 7);
+      $('#daterange').daterangepicker({
+        "ranges": {
+          "Today": [ today, today],
+          "Yesterday": [ yesterday, yesterday],
+          "Last 7 Days": [ last7day, today]
+        },
+        "timePicker": true,
+        "opens": "left",
+        "startDate": today,
+        "endDate": yesterday,
+        "maxDate":new Date()
+      });
+    });
+
+    function load_data(start_time, end_time, new_graph=false, graphType="smoothedLine"){
+      $.getJSON('/feed/graphdata', 
+      {
+        graph_type: selected_graph_type,
+        startTime: start_time,
+        endTime: end_time
+      }, 
+      function(response){
+        chartData = [];
+        $.each( response.data, function( index, value ) {
+          console.log(value);
+          json_data = {
+            date: value['ts']
+          };
+          let values = value['value'];
+          if (typeof values === 'object'){
+            for(var x=0; x<values.length; x++) json_data["CTR"+(x+1)] = values[x].toFixed(2);
+          } else {
+            json_data["value"] = values.toFixed(2);
+          }
+          chartData.push(json_data);
+        });
+        if (new_graph){
+          $('#daterange').val('');
+          create_graph( chartData, "chartdiv", graphType);
+        } else {
+          chart.dataProvider = chartData;
+          chart.validateData();
+        }
+      });
+    }
+
+    function create_graph( chartData, element_id="chartdiv", chartType="column", category="date"){
+
+      $('#'+element_id).html('');
+
+      chart = new AmCharts.AmSerialChart();
+      chart.dataProvider = chartData;
+      chart.categoryField = category; // By default category = date
+      chart.plotAreaBorderAlpha = 0.2;
+      chart.depth3D = 25; // 3D angle
+      chart.angle = 30; // 3D depth
+
+      var categoryAxis = chart.categoryAxis;
+      categoryAxis.gridAlpha = 0.1;
+      categoryAxis.axisAlpha = 0;
+      categoryAxis.gridPosition = "start";
+      categoryAxis.parseDates = true;
+      categoryAxis.minPeriod = "DD";
+      categoryAxis.dateFormats = [{
+            period: 'fff',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'ss',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'mm',
+            format: 'JJ:NN'
+        }, {
+            period: 'hh',
+            format: 'JJ:NN'
+        }, {
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }];
+
+      // value
+      var valueAxis = new AmCharts.ValueAxis();
+      valueAxis.stackType = "regular";
+      valueAxis.gridAlpha = 0.1;
+      valueAxis.axisAlpha = 0;
+      chart.addValueAxis(valueAxis);
+
+      $.each(chartData[0], function( key, value) {
+        if (key == category){
+          // Continue leaving category axis 
+        } else {
+          let graph = new AmCharts.AmGraph();
+          graph.title = key;
+          graph.valueField = key;
+          graph.type = chartType; // chartType should be like "column" or ""
+          graph.balloonText = balloonText;
+
+          if(chartType == "smoothedLine" || chartType == "line"){
+            graph.bullet = "round";
+            graph.lineThickness = 2;
+            graph.bulletSize = 8;
+            graph.bulletBorderAlpha = 1;
+            graph.bulletBorderThickness = 2;
+          } else if(chartType == "column"){
+            graph.lineAlpha = 0;
+            graph.fillAlphas = 0.5;
+          } else {
+
+          }
+          chart.addGraph(graph);
+        }
+      });
+
+      if(chartType == "smoothedLine" || chartType == "line"){
+        var chartCursor = new AmCharts.ChartCursor();
+        chartCursor.cursorAlpha = 0;
+        chartCursor.cursorPosition = "mouse";
+        chart.addChartCursor(chartCursor);
+
+        var chartScrollbar = new AmCharts.ChartScrollbar();
+        chart.addChartScrollbar(chartScrollbar);
+
+        chart.creditsPosition = "bottom-right";
+      } else if(chartType == "column"){
+        var legend = new AmCharts.AmLegend();
+        legend.borderAlpha = 0.2;
+        legend.horizontalGap = 10;
+        chart.addLegend(legend);
+      }
+      chart.write(element_id);
+    }
+
+  </script>
+<% end %>

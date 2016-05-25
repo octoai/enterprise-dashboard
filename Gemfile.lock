@@ -10,19 +10,27 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    aws-sdk (2.2.37)
+      aws-sdk-resources (= 2.2.37)
+    aws-sdk-core (2.2.37)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.2.37)
+      aws-sdk-core (= 2.2.37)
     builder (3.2.2)
     cassandra-driver (2.1.6)
       ione (~> 1.2)
     cequel (1.9.0)
       activemodel (~> 4.0)
       cassandra-driver (~> 2.0)
-    contest (0.1.3)
     descriptive_statistics (2.5.1)
+    escape (0.0.4)
     hiredis (0.6.1)
     hooks (0.4.1)
       uber (~> 0.0.14)
     i18n (0.7.0)
     ione (1.2.3)
+    jmespath (1.2.4)
+      json_pure (>= 1.8.1)
     json (1.8.3)
     json_pure (1.8.3)
     minitest (5.8.4)
@@ -43,7 +51,6 @@ GEM
     rack-protection (1.5.3)
       rack
     rake (11.1.2)
-    redgreen (1.2.2)
     redis (3.2.2)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -58,21 +65,13 @@ GEM
       redis (~> 3.0)
       resque (~> 1.25)
       rufus-scheduler (~> 3.0)
-    rubyforge (2.0.4)
-      json_pure (>= 1.1.7)
     rufus-scheduler (3.2.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
     sinatra-content-for (0.1)
-      contest
-      redgreen
       sinatra
-      sr-mg
-    sr-mg (0.0.5)
-      rake
-      rubyforge
     statsd-ruby (1.3.0)
     thread_safe (0.3.5)
     tilt (2.0.2)
@@ -86,6 +85,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
+  escape
   octocore
   sinatra
   sinatra-content-for

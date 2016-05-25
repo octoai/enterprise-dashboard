@@ -1,12 +1,26 @@
 <% content_for :breadcrumb do %>
-  <li><a href="/funnel">Funnel</a></li>
-  <li><a href="#" class="active">Add New</a></li>
+<li><a href="#">Event</a></li>
+  <li><a href="#" class="active">Track</a></li>
 <% end %>
 
 <% content_for :styles do %>
   <style type="text/css">
     /* Custom CSS for this page */
-
+    pre {
+       background-color: ghostwhite;
+       border: 1px solid silver;
+       padding: 10px 20px;
+       margin: 20px; 
+    }
+    .json-key {
+       color: brown;
+    }
+    .json-value {
+       color: navy;
+    }
+    .json-string {
+       color: olive;
+    }
   </style>
 <% end %>
 
@@ -20,7 +34,7 @@
       <div class="panel-body">
         <center>
           <div>
-            <h4> Search for uuid </h4>
+            <h4> Search for UUID </h4>
           </div>
           <div>
             <input id="uuid_value" type="text" placeholder="Enter UUID" class="form-control" aria-label="..." style="width: 60% !important;">
@@ -47,16 +61,14 @@
     // Custom JS for this page only
 
     // UUID Search for tracking
-    // Required uuid value
     $('#search').on('click', function(event) {
       $.get(
         "/event/uuid_data",
         { 
           uuid_value : $('#uuid_value').val()
         },
-        function(data) {
-          var code = JSON.stringify(JSON.parse(data), null, '\t');
-          $('#search_result').html('<code>' + code + '</code>');
+        function(response) {
+          $('#search_result').html('<pre><code>'+response+'</code></pre>');
         }
       );
     });

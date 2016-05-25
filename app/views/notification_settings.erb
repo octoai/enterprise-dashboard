@@ -1,0 +1,47 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/notification">Notification</a></li>
+  <li><a href="#" class="active">Settings</a></li>
+<% end %>
+
+<% content_for :styles do %>
+  <style type="text/css">
+   /* Custom CSS for this page */
+  </style>
+<% end %>
+
+<div class="row">
+  <div class="col-lg-2 col-md-2"></div>
+  <div class="col-lg-8 col-md-8">
+    <!-- Start Panel -->
+    <div class="panel panel-transparent">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <div id="chart_title">Upload APNS Certificate</div>
+          <br/>
+          <div id="forminfo">
+            <% if @response_string then %>
+              <span class="label label-success"><%= @response_string %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form action="/notification/settings" method="POST" enctype='multipart/form-data'>
+          <br>
+          <input id="certificate" name="certificate" type="file" class="btn" style="width: 100%;" required/>
+          <br />
+          <center>
+            <button id="updateCertificate" type="submit" value="upload" class="btn btn-primary">Update</button>
+          </center>
+        </form>
+      </div>
+    </div>
+    <!-- End Panel -->
+  </div>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+
+  </script>
+<% end %>

@@ -27,4 +27,4 @@
             $(this).data('timer', wait);
         }
     });
-})
+});

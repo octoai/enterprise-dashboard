@@ -130,7 +130,10 @@
       let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
 
       $(this).val(start_time + ' - ' + end_time);
+      loadData( start_time, end_time);
+    });
 
+    function loadData( start_time, end_time){
       $.getJSON('/conversion/graphdata', 
       {
         graph_type: type,
@@ -149,18 +152,27 @@
         chart.dataProvider = chartData;
         chart.validateData();
       });
-
-    });
+    }
 
     $(function() {
+      let today = new Date();
+      let yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      let last7day = new Date();
+      last7day.setDate(today.getDate() - 7);
       $('#daterange').daterangepicker({
+        "ranges": {
+          "Today": [ today, today],
+          "Yesterday": [ yesterday, yesterday],
+          "Last 7 Days": [ last7day, today]
+        },
         "timePicker": true,
         "opens": "left",
+        "startDate": today,
+        "endDate": yesterday,
         "maxDate":new Date()
-      },
-      function(start, end, label) {
-
       });
+      loadData( yesterday, today);
     });
 
   </script>
