@@ -7,11 +7,6 @@
 .timeline::before  {
   background: '#DAD1D1 !important',
 };
-#chartdiv {
-	width		: 100%;
-	height		: 500px;
-	font-size	: 11px;
-};
   	/* Custom CSS for this page */
   </style>
 <% end %>
@@ -24,7 +19,9 @@
       </div>
     <div class="panel-body">
       <div class="input-prepend input-group pull-left col-sm-4">
-        <form class="navbar-form" role="search" action="/user/" method="get">
+        <form class="navbar-form" role="search" action="/user/" method="get" id="userform">
+          <input type="hidden" name="start_time" value="" />
+          <input type="hidden" name="end_time" value="" />
           <div class="input-group required">
             <input type="text" class="form-control" placeholder="Search for a user by ID" name="userid" id="userid" value="<%= @params.fetch('userid', nil) %>">
             <div class="input-group-btn">
@@ -41,7 +38,7 @@
           class="form-control active"
           size="30"
           placeholder="Date Range"
-          value="">
+          value='<%= (@success ? "#{ @start_ts.strftime('%Y/%m/%d %I:%M:%S %P')} - #{@end_ts.strftime('%Y/%m/%d %I:%M:%S %P')}" : '') %>'>
         </form>
       </div>
     </div>
@@ -61,9 +58,9 @@
               <li><b>Last Active On</b>: <%= rand(0..10).days.ago.strftime('%-d %b %y') %></li>
             </ul>
 
-            <div id="chartdiv" class="col-md-4" style="height:260px;font-size:11px;"></div>
-            <div id="chartdiv2" class="col-md-4" style="height:260px;font-size:11px;"></div>
-            <div id="chartdiv3" class="col-md-4" style="height:260px;font-size:11px;"></div>
+            <% [:categories, :tags, :trending].each do |ptype| %>
+              <div id="<%= ptype %>_chart" class="col-md-4" style="height:260px;font-size:11px;"></div>
+            <% end %>
           </div>
         </div>
       </div>
@@ -125,87 +122,69 @@
     <% end %>
 
   </section>
+<% else %>
+  <h3>I can't find any user by that ID :-(</h3>
 <% end %>
 </div>
 
 <% content_for :scripts do %>
   <script type="text/javascript">
-    // Custom JS for this page only
     $(function() {
-      var categories_persona = <%= @persona[:categories].collect { |k,v| {title: k, value: v } }.to_json %>;
-      var tags_persona = <%= @persona[:tags].collect { |k,v| {title: k, value: v } }.to_json %>;
-      var trending_persona = <%= @persona[:trending].collect { |k,v| {title: k, value: v } }.to_json %>;
 
+        var selector = 'input[name="timeslot"]';
+        /* set date range picker */
+        $(selector).daterangepicker({
+          "timePicker": true,
+          "opens": "left",
+          "startDate": new Date(),
+          "endDate": new Date(),
+          "maxDate":new Date(),
+        });
 
+        $(selector).on('apply.daterangepicker', function(ev, picker){
+          var start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+          var end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+          $(this).val(start_time + ' - ' + end_time);
 
-      var chart = AmCharts.makeChart( "chartdiv", {
-        "type": "pie",
-        "dataProvider": categories_persona,
-        "titleField": "title",
-        "valueField": "value",
-        "labelRadius": 5,
+          start_time = picker.startDate.format('YYYYMMDDhhmmss');
+          end_time = picker.endDate.format('YYYYMMDDhhmmss');
+          onDateChange(start_time, end_time);
+        });
 
-          "startEffect": "easeOutSine",
-        "radius": "30%",
-        "innerRadius": "60%",
-        "labelText": "[[title]]",
-                    "titles":  [
-                      {
-                        "text": "Categories Persona",
-                        "size": 10
-                      }],
-        "export": {
-          "enabled": true
-        }
-      });
+        function onDateChange(start_time, end_time) {
+          $('#userform').find('input[name="start_time"]').val(start_time);
+          $('#userform').find('input[name="end_time"]').val(end_time);
+          $('#userform').submit();
+        };
 
-            var chart2 = AmCharts.makeChart( "chartdiv2", {
-        "type": "pie",
-        "dataProvider": tags_persona,
-        "titleField": "title",
-        "valueField": "value",
-        "labelRadius": 5,
-          "startEffect": "easeOutSine",
+      <% if @success %>
 
-        "radius": "30%",
-        "innerRadius": "60%",
-        "labelText": "[[title]]",
-          "titles":  [
-                      {
-                        "text": "Tags Persona",
-                        "size": 10
-                      }],
-        "export": {
-          "enabled": true
-        }
+          <% [:categories, :tags, :trending].each do |ptype| %>
+
+            var <%= ptype %>_persona = <%= @persona[ptype].collect { |k,v| {title: k, value: v } }.to_json %>;
+            var <%= ptype %>_chart = AmCharts.makeChart('<%= ptype %>_chart', {
+              "type": "pie",
+              "dataProvider": <%= ptype %>_persona,
+              "titleField": "title",
+              "valueField": "value",
+              "labelRadius": 5,
+              "startEffect": "easeOutSine",
+              "radius": "30%",
+              "innerRadius": "60%",
+              "labelText": "[[title]]",
+              "titles":  [{
+                  "text": "<%= ptype.capitalize %> Persona",
+                  "size": 10
+                }],
+              "export": {
+                "enabled": true
+              }
             });
 
-
-            var chart3 = AmCharts.makeChart( "chartdiv3", {
-        "type": "pie",
-        "dataProvider": trending_persona,
-        "titleField": "title",
-        "valueField": "value",
-        "labelRadius": 5,
-                    "titles":  [
-                      {
-                        "text": "Time Persona",
-                        "size": 10
-                      }],
-
-        "radius": "30%",
-
-          "startEffect": "easeOutSine",
-        "innerRadius": "60%",
-        "labelText": "[[title]]",
-        "export": {
-          "enabled": true
-        }
-      });
-
+        <% end %>
     });
 
-
-
+    <% end %>
   </script>
+
 <% end %>

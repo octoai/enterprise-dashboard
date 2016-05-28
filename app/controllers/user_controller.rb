@@ -18,9 +18,15 @@ class UserController < ApplicationController
         @res = Octo::UserTimeline.fakedata(@user).collect do |x|
           x.human_readable
         end
-        start_ts = @params.fetch('start_time', 7.days.ago)
-        end_ts = @params.fetch('end_time', Time.now)
-        @persona = Octo::UserPersona.fakedata(@user, start_ts..end_ts)
+        @start_ts = 7.days.ago
+        if @params.has_key?('start_time') and @params['start_time'] != ''
+          @start_ts = mktime_from_urlparam(@params['start_time'])
+        end
+        @end_ts = Time.now
+        if @params.has_key?('end_time') and @params['end_time'] != ''
+          @end_ts = mktime_from_urlparam(@params['end_time'])
+        end
+        @persona = Octo::UserPersona.fakedata(@user, @start_ts..@end_ts)
       else
         @success = false
       end
