@@ -1,5 +1,7 @@
+require 'octocore'
+
 class FunnelController < ApplicationController
-	
+
 	get '/' do
 		erb :funnel
 	end
@@ -21,9 +23,11 @@ class FunnelController < ApplicationController
 
   get '/pageNames' do
     dataArray = ["All Products", "All Pages"]
-    Octo::Page.all.select do |x|
-      dataArray.push(x[:routeurl])
-    end
+    @enterprise = Octo::Enterprise.first
+    res = Octo::Product.where(enterprise_id: @enterprise.id)
+    res.each { |x| dataArray << x[:routeurl] }
+    res = Octo::Page.where(enterprise_id: @enterprise.id)
+    res.each { |x| x[:routeurl] }
     {data: dataArray}.to_json
   end
 
@@ -46,5 +50,6 @@ class FunnelController < ApplicationController
     end
     json_array.to_json
   end
-  
+
 end
+
