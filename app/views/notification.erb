@@ -9,22 +9,103 @@
 <% end %>
 
 <div class="row">
-  <div class="col-lg-12 col-md-12 col-sm-12">
+  <div class="col-md-3 b-r b-grey sm-b-b">
     <div class="panel panel-transparent">
       <div class="panel-heading">
-        <div class="panel-title">Notification</div>
+         <div class="tools">
+          <a class="collapse" href="javascript:;"></a>
+          <a class="config" data-toggle="modal" href="#grid-config"></a>
+          <a class="reload" href="javascript:;"></a>
+          <a class="remove" href="javascript:;"></a>
+        </div>
       </div>
 
       <div class="panel-body">
-        <p>This is a dummy page for notifications</p>
+        <div class="table-responsive">
+          <table class="table table-hover table-condensed" id="condensedTable">
+            <thead>
+             <tr role="row">
+               <th aria-sort="ascending"
+                   aria-label="Title: activate to sort column descending"
+                   colspan="1"
+                   rowspan="1"
+                   aria-controls="condensedTable"
+                   tabindex="0"
+                   class="sorting_asc"
+                   style="width:100%">Overview</th>
+             </tr>
+            </thead>
+            <tbody id="notifications_list">
+              <tr data-notifications-type="platform">
+                <td>Platforms</td>
+              </tr>
+              <tr data-notifications-type="time">
+                <td>Timings</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
     </div>
   </div>
+   <div class="col-md-9">
+    <div id="alertbox" style="position:absolute" role="alert"></div>
+     <div class="panel panel-transparent">
+      <div class="panel-heading bg-primary-darker">
+        <h2>Notifications</h2>
+      </div>
+      <div class="panel-body">
+        <div class="input-prepend input-group pull-right col-sm-4">
+          <input type="text" style="width: 100%" name="timeslot" id="rankingDatepicker"
+          class="form-control active"
+          size="50"
+          placeholder="Date Range"
+          value="">
+        </div>
+        <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
+   </div>
 </div>
 
 <% content_for :scripts do %>
+  <script type="text/javascript" src="assets/js/notifications.js"></script>
+
   <script type="text/javascript">
     // Custom JS for this page only
 
+(function($) {
+var selector = 'input[name="timeslot"]';
+
+  /* set date range picker */
+  $(selector).daterangepicker({
+    "timePicker": true,
+    "opens": "left",
+    "startDate": new Date(),
+    "endDate": new Date(),
+    "maxDate":new Date(),
+  });
+
+  $(selector).on('apply.daterangepicker', function(ev, picker){
+    var start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+    var end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+    $(this).val(start_time + ' - ' + end_time);
+
+    start_time = picker.startDate.format('YYYYMMDDhhmmss');
+    end_time = picker.endDate.format('YYYYMMDDhhmmss');
+    onDateChange(start_time, end_time);
+  });
+
+  function onDateChange(start_time, end_time) {
+    $.fn.notifications.updateForTime( start_time, end_time);
+  };
+
+  $.fn.notifications({
+    actOn : 'notifications',
+    dataAttr: 'notifications-type'
+  });
+
+})(window.jQuery);
   </script>
 <% end %>

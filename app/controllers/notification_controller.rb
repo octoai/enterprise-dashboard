@@ -2,10 +2,57 @@ include Octo::Stats
 
 class NotificationController < ApplicationController
 
-  get '/' do
-    erb :notification
+  get '/:overview_type/' do
+    puts @params
+    enterprise = Octo::Enterprise.first
+    ts_begin = @params.has_key?('start_time') ? mktime_from_urlparam(@params['start_time']) : 7.days.ago
+    ts_end = @params.has_key?('end_time') ? mktime_from_urlparam(@params['end_time']) : Time.now
+    ts = ts_begin..ts_end
+    args = {
+     enterprise_id: enterprise.id,
+     type: Octo::Counter::TYPE_DAY,
+     ts: ts
+    }
+    res = Octo::NotificationHit.fakedata(args)
+
+    # group the push notifications count on platforms first
+    push_notifications = res.select do |x|
+      Set.new([:android, :ios]).include?(x.uid.to_sym)
+    end.group_by do |x|
+      x.ts
+    end.inject([]) do |r,e|
+      key = e[0]
+      values = e[1]
+      r << values.inject({}) do |rs, el|
+        rs[el.uid] = el.count
+        rs
+      end.merge( ts: key )
+      r
+    end
+
+    # group the time groupings then
+    time_groups = res.select do |x|
+      Set.new(Octo::NotificationHit.time_slots).include?(x.uid)
+    end.group_by do |x|
+      x.ts
+    end.inject([]) do |r,e|
+      key = e[0]
+      values = e[1]
+      r << values.inject({}) do |rs, el|
+        rs[el.uid] = el.count
+        rs
+      end.merge( ts: key )
+      r
+    end
+
+    case @params[:overview_type]
+    when 'platform'
+      push_notifications.to_json
+    when 'time'
+      time_groups.to_json
+    end
   end
-	
+
 	get '/template' do
     enterprise = get_enterprise
     @categories = []
@@ -61,4 +108,10 @@ class NotificationController < ApplicationController
     erb :notification_settings
   end
 
+
+  get '/' do
+    erb :notification
+  end
+
 end
+
