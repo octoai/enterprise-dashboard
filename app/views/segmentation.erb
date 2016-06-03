@@ -56,6 +56,9 @@
         <div class="panel-title">
           <div id="chart_title"></div>
         </div>
+        <div class="pull-right">
+          <span><input type="text" name="daterange" id="daterange" placeholder="Select Date"></span>
+        </div>
       </div>
       <div class="panel-body">
         <div id="chartdiv" style="width: 100%; height: 500px;"></div>
@@ -135,23 +138,43 @@
     }
 
     $('#segmentations_list').on('click', 'tr.select_segment', function() {
-      generateChartData($(this).data('slugname'), $(this).data('name'));
-
+      let slugName = $(this).data('slugname');
+      let chartName = $(this).data('name');
+      generateChartData(slugName, chartName, null, null);
       $(".select_segment").each(function(){
         $(this).removeClass("active");
       });
       $(this).addClass("active");
     });
 
-    function generateChartData(slug_name, name) {
+    // Callback when date changes
+    $('#daterange').on('apply.daterangepicker', function(ev, picker){
+
+      let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+      let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+
+      $(this).val(start_time + ' - ' + end_time);
+
+      let slugName = $(".select_segment.active").data('slugname');
+      let chartName = $(".select_segment.active").data('name');
+      generateChartData(slugName, chartName, start_time, end_time);
+    });
+
+    function generateChartData(slug_name, name, start_time, end_time) {
+
+      args = {
+        segmentName: slug_name,
+        startTime: start_time,
+        endTime: end_time
+      }
 
       $.getJSON('/segmentation/graph_data', 
-        {segmentName: slug_name}, 
+      args, 
         function(response){
           $('#tableData').html("");
           chartData = [];
           tableData = [];
-          $.each( response.reverse(), function( key, value ) {
+          $.each( response, function( key, value ) {
             json = {
               date: new Date(value['ts']),
               abs: parseInt(value['abs']),
@@ -181,7 +204,6 @@
         }
       );
 
-      
       $('#chart_title').html("<h2>"+name+"</h2>");
     }
 
@@ -308,8 +330,8 @@
 
         // WRITE
         chart.write("chartdiv");
-      });
 
+      });
 
       var html = "";
 
@@ -320,19 +342,31 @@
         $("#segmentations_list").html(html);
         table_nav.dataTable(settings_nav_table);
         if(response.data[0] != null){
-          generateChartData(response.data[0].name_slug, response.data[0].name);
+          $('.select_segment').first().click();
         } else {
           $('#chart_title').html("<h3>No Segmentation Found</h3>");
         }
       });
+
+      let today = new Date();
+      let yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      let last7day = new Date();
+      last7day.setDate(today.getDate() - 7);
+      $('#daterange').daterangepicker({
+        "ranges": {
+          "Today": [ today, today],
+          "Last 1 Day": [ yesterday, today],
+          "Last 7 Days": [ last7day, today]
+        },
+        "timePicker": true,
+        "opens": "left",
+        "startDate": today,
+        "endDate": yesterday,
+        "maxDate":new Date()
+      });
       
     });
-
-    // this method is called when chart is first inited as we listen for "dataUpdated" event
-    function zoomChart() {
-      // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-      chart.zoomToDates(new Date(1972, 0), new Date(1984, 0));
-    }
 
   </script>
 <% end %>

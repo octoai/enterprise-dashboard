@@ -65,19 +65,22 @@ class SegmentationController < ApplicationController
   end
 
   get '/graph_data' do
+    day_value = 1*24*60*60
     segmentName = params[:segmentName]
+    start_time = params[:startTime] == '' ? (Time.now - (10*day_value)) : (Time.parse(params[:startTime]))
+    end_time = params[:endTime] == '' ? (Time.now) : (Time.parse(params[:endTime]))
+
     enterprise = get_enterprise
     json_array = []
-    day_value = 1*24*60*60
     
-    Segment = Octo::Segment.where(enterprise_id: enterprise[:id], name_slug: segmentName).first
+    segment = Octo::Segment.where(enterprise_id: enterprise[:id], name_slug: segmentName).first
 
-    10.times do |n|
-      SegmentData = Segment.data(Time.now - n*day_value)
+    (start_time.to_i..end_time.to_i).step(1.day) do |x|
+      segmentData = segment.data(x)
       jsonData = { 
-        ts: SegmentData.ts,
-        abs: SegmentData.value[0],
-        perc: SegmentData.value[1]
+        ts: segmentData.ts,
+        abs: segmentData.value[0],
+        perc: segmentData.value[1]
       }
       json_array.push(jsonData)
     end

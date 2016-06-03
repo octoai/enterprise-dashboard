@@ -7,8 +7,6 @@ class FeedController < ApplicationController
   get '/graphdata' do
     start_time = Time.parse(params[:startTime])
     end_time = Time.parse(params[:endTime])
-    puts start_time
-    puts end_time
     graph_type = params[:graph_type]
 
     enterprise = get_enterprise
@@ -45,7 +43,6 @@ class FeedController < ApplicationController
       _args = args.merge({
         type: Octo::Counter::TYPE_DAY
       })
-      puts _args
       res = Octo::NewsfeedHit.fakedata(_args)
       data = res.collect { |x| { ts: x.ts, value: x.count }}
     end

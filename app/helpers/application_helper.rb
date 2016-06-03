@@ -5,6 +5,7 @@ require 'escape'
 require 'octocore'
 
 module ApplicationHelper
+  include Octo::Helpers::ClientHelper
 
   def counters_text
     mapping_as_choice Octo::Counter::Helper.counter_text

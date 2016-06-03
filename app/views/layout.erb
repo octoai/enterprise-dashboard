@@ -43,8 +43,6 @@
       $.getJSON('/messages', function(response){
         $('#all_notifications').html('');
         response.forEach(function(element, index, array){
-          console.log(element);
-          console.log(element.title);
           $('#all_notifications').append('<div class="notification-item  clearfix"><div class="heading"><a href="'+ element.link +'" class="text-complete pull-left"><i class="glyphicon glyphicon-comment"> </i> <span class="bold"> '+ element.title +' </span><span class="fs-12 m-l-10">'+ element.keyword +'</span></a><span class="pull-right time">'+ element.time +'</span></div></div>');
         });
       });
@@ -281,8 +279,6 @@
                       <!-- START Notification Body-->
                       <div class="notification-body scrollable" id="all_notifications">
                         
-                        
-
                       </div>
                     </div>
                     <!-- END Notification -->
@@ -314,7 +310,7 @@
                 <li><a href="#"><i class="pg-signals"></i> Help</a>
                 </li>
                 <li class="bg-master-lighter">
-                  <a href="#" class="clearfix">
+                  <a href="/access/logout" class="clearfix">
                     <span class="pull-left">Logout</span>
                     <span class="pull-right"><i class="pg-power"></i></span>
                   </a>

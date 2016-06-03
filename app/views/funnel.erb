@@ -135,7 +135,7 @@
         $("#funnels_list").html(html);
         table_nav.dataTable(settings_nav_table);
         if(response.data[0] != null){
-          get_graph_data(response.data[0].name_slug, response.data[0].name);
+          $('.select_funnel').first().click();
         } else {
           $('#chart_title').html("<h3>No Funnel Found</h3>");
         }
