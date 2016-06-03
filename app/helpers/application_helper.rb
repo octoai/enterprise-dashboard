@@ -24,13 +24,17 @@ module ApplicationHelper
 
   # Get the first enterprise object for debugging
   def get_enterprise
-    Octo::Enterprise.first
+    Octo::Enterprise.where(id: session[:consumer_id]).first
   end
 
 
   def get_enterprise_id
-    enterprise = Octo::Enterprise.first
-    enterprise[:id].to_s
+    session[:consumer_id]
+  end
+
+  def get_api_key
+    enterprise = get_enterprise
+    Octo::Authorization.find_by_username(enterprise.name).apikey
   end
 
   def args_with_time(args)

@@ -5,6 +5,9 @@
 <% content_for :styles do %>
   <style type="text/css">
     /* Custom CSS for this page */
+    .panel-body {
+      font-size: 1.5em;
+    }
   </style>
 <% end %>
 
@@ -16,7 +19,20 @@
       </div>
 
       <div class="panel-body">
-        <p>This is a dummy page for api settings</p>
+        <div>
+          <div class="col-lg-3 col-md-3 col-sm-3 text-right"> Consumer ID </div>
+          <div class="col-lg-1 col-md-1 col-sm-1 text-center"> | </div>
+          <div class="col-lg-8 col-md-8 col-sm-8 text-left">
+            <code><%= session[:consumer_id] %></code>
+          </div>
+        </div><br/><br/>
+        <div>
+          <div class="col-lg-3 col-md-3 col-sm-3 text-right"> Api Key </div>
+          <div class="col-lg-1 col-md-1 col-sm-1 text-center"> | </div>
+          <div class="col-lg-8 col-md-8 col-sm-8 text-left">
+            <code><%= @apikey %></code>
+          </div>
+        </div>
       </div>
     </div>
   </div>
