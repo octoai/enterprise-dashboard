@@ -26,7 +26,7 @@
     method: 'GET'
   };
 
-  $.octo.createGraph = function( chartData, element_id="chartdiv", chartType="column", axisTitle, category="date"){
+  $.octo.createGraph = function(chartData, element_id="chartdiv", chartType="column", axisTitle="Count", category="date"){
     var balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]]</b></span>";
     $('#'+element_id).html('');
 
