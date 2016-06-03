@@ -33,7 +33,7 @@
   };
 
   function showChart(data) {
-  $.octo.createGraph(data, 'chartdiv', 'smoothedLine', 'TITLE HERE', 'ts');
+    $.octo.createGraph(data, 'chartdiv', 'smoothedLine', 'User Count', 'ts');
     console.log(data);
   };
 
