@@ -20,13 +20,6 @@
 
       <div class="panel-body">
         <div>
-          <div class="col-lg-3 col-md-3 col-sm-3 text-right"> Consumer ID </div>
-          <div class="col-lg-1 col-md-1 col-sm-1 text-center"> | </div>
-          <div class="col-lg-8 col-md-8 col-sm-8 text-left">
-            <code><%= session[:consumer_id] %></code>
-          </div>
-        </div><br/><br/>
-        <div>
           <div class="col-lg-3 col-md-3 col-sm-3 text-right"> Api Key </div>
           <div class="col-lg-1 col-md-1 col-sm-1 text-center"> | </div>
           <div class="col-lg-8 col-md-8 col-sm-8 text-left">
@@ -34,6 +27,105 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+<div class="container-md-height m-b-20">
+  <div class="row row-md-height">
+    <div class="col-lg-7 col-md-6 col-md-height col-middle bg-white">
+      <!-- START PANEL -->
+      <div class="full-height">
+
+        <div class="panel-body">
+          <h3>Try it out!</h3>
+<pre>
+<code class="bash hljs">curl -X POST 
+ --header <span class="hljs-string">'Content-Type: application/json'</span>
+ --header <span class="hljs-string">'Accept: text/html'</span>
+ --header <span class="hljs-string">'apikey: <%= @apikey %>'</span>
+  <span class="hljs-operator">-d</span> <span class="hljs-string">'{
+  "userId": 2736482,
+  "phoneDetails": {
+    "deviceId": "FCDBD8EF-62FC-4ECB-B2F5-92C9E79AC7F9",
+    "manufacturer": "Apple",
+    "model": "iPhone 6",
+    "latitude": 28.6139,
+    "longitude": 77.209
+  }
+}'</span> <span class="hljs-string">'http://api.octomatic.in/events/app.init/'</span>
+</code>
+</pre>
+        </div>
+      </div>
+      <!-- END PANEL -->
+    </div>
+  </div>
+
+
+
+<div class="container m-b-20">
+  <div class="row">
+    <div class="col-lg-5 col-md-height col-md-6 col-top">
+      <!-- START PANEL -->
+      <div class="panel panel-transparent">
+        <div class="panel-body">
+          <h3>Octomatic Developers</h3>
+          <p>Welcome to the Octomatic Developers section. You'll find comprehensive details about the fundamental architecture, API Documentation, Starter Kit and FAQs. It'll help you start working with Octomatic Enterprise in a snap.</p>
+          <p>This Developers section is divided into following segments:</p>
+          <ul>
+						<li><a href="//developers.octo.ai/Arconcepts/index.html" target="_blank">Architecture and Concepts</a></li>
+						<li><a href="//developers.octo.ai/ApiDoc/index.html" target="_blank">API Documentation</a></li>
+						<li><a href="http://sandbox-api.octo.ai/" target="_blank">API Swagger</a></li>
+						<li><a href="//developers.octo.ai/StarterKit/index.html" target="_blank">Starter Kit</a></li>
+					</ul>
+          <p>
+          	Github: <a href="//github.com/octoai" target="_blank">github.com/octoai</a>
+          </p>
+          <p>
+          	Developers Website: <a href="//developers.octo.ai/" target="_blank">developers.octo.ai</a>
+          </p>
+        </div>
+      </div>
+      <!-- END PANEL -->
+    </div>
+  </div>
+
+  <div class="row row-md-height">
+    <div class="col-lg-12 col-md-height col-md-12 col-top">
+      <!-- START PANEL -->
+      <div class="panel panel-transparent">
+        <div class="panel-body">
+          <h3>Starter Kit</h3>
+          <p>Octomatic Enterprise onboarding includes a starter kit for following platforms:</p>
+					<ul>
+						<li>iOS</li>
+						<li>Objective C</li>
+						<li>Swift</li>
+					</ul>
+					<ul>
+						<li>Android</li>
+						<li>Native</li>
+						<li>Cordova</li>
+					</ul>
+					<p>We support two major push notification services</p>
+					<ul>
+						<li>Apple Push Notification Service (APNS)</li>
+						<li>Google Cloud Messaging (GCM)</li>
+					</ul>
+					<p>The starter kit contains code for all the valid permutations of above.</p>
+					<p>Depending on the platform you have for your app and for the push notifications click on one of the following:</p>
+					<ul>
+						<li><a href="//developers.octo.ai/iOSAPNSStarterKit/index.html" target="_blank">iOS, APNS (Objective C/ Swift)</a></li>
+						<li><a href="//developers.octo.ai/iOSGCMStarterKit/index.html" target="_blank">iOS, GCM (Objective C / Swift)</a></li>
+						<li><a href="//developers.octo.ai/androidGCMStarterKit/index.html" target="_blank">Android, GCM, Native</a></li>
+						<li><a href="//developers.octo.ai/cordovaOctoStarterKit/index.html" target="_blank">Android, GCM, Cordova</a></li>
+					</ul>
+					<p>This part of the Knowledge Base will detail into the starter kit. It will cover how to set up data stream on iOS and android and explain about the coding guidelines.</p>
+        </div>
+      </div>
+      <!-- END PANEL -->
     </div>
   </div>
 </div>
