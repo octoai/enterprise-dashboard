@@ -15,8 +15,221 @@
 <% end %>
 
 
+<div class="row">
+              <div class="col-md-6 col-xlg-5">
+                <div class="row">
+                  <div class="col-md-12 m-b-10">
+                    <div class="ar-3-2 widget-1-wrapper">
+                      <!-- START WIDGET widget_imageWidget-->
+                      <div class="widget-1 panel no-border bg-complete no-margin widget-loader-circle-lg">
+                        <div class="panel-heading top-right ">
+                          <div class="panel-controls">
+                            <ul>
+                              <li><a data-toggle="refresh" class="portlet-refresh text-black" href="#"><i class="portlet-icon portlet-icon-refresh-lg-master"></i><i class="portlet-icon-refresh-lg-white-animated" style="position: absolute; top: 17px; left: 23px;"></i></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <div class="pull-bottom bottom-left bottom-right ">
+                            <span class="label font-montserrat fs-11">TODAY</span>
+                            <br>
+                            <% @today.each do |title, opts| %>
+                              <div class="row">
+                                <h2 class="text-white"><%= "#{ title } #{ opts[:title] }" %></h2>
+                                <% [:wow, :oye].each do |prop| %>
+                                  <% if opts.has_key?(prop) %>
+                                    <div class="company col-xs-4">
+                                      <%= fa_caret opts[prop], text: '% ' + prop.to_s %>
+                                    </div>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 m-b-10">
+                    <div class="ar-2-1">
+                      <!-- START WIDGET widget_graphTile-->
+                      <div class="widget-4 panel no-border  no-margin widget-loader-bar">
+                        <div class="container-sm-height full-height">
+                          <div class="row-sm-height">
+                            <div class="col-sm-height col-top">
+                              <div class="panel-heading ">
+                                <div class="panel-title text-black hint-text">
+                                  <span class="font-montserrat fs-11 all-caps">
+	                                  Octo Uptime <i class="fa fa-chevron-right"></i>
+                                  </span>
+                                </div>
+                                <div class="panel-controls">
+                                  <ul>
+                                    <li><a href="#" class="portlet-refresh text-black" data-toggle="refresh"><i class="portlet-icon portlet-icon-refresh"></i></a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row-sm-height">
+                            <div class="col-sm-height col-top">
+                              <div class="p-l-20 p-r-20">
+                                <h5 class="no-margin p-b-5 pull-left hint-text">Status</h5>
+                                <p class="pull-right no-margin bold hint-text">Normal</p>
+                                <div class="clearfix"></div>
+                              </div>
+                              <div class="p-l-20 p-r-20">
+                                <h5 class="no-margin p-b-5 pull-left hint-text">Latency</h5>
+                                <p class="pull-right no-margin bold hint-text">12 ms</p>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                  <div class="col-sm-6 m-b-10">
+                    <div class="ar-2-1">
+                      <!-- START WIDGET widget_barTile-->
+                      <div class="widget-5 panel no-border  widget-loader-bar">
+                        <div class="panel-heading pull-top top-right">
+                          <div class="panel-controls">
+                            <ul>
+                              <li><a data-toggle="refresh" class="portlet-refresh text-black" href="#"><i class="portlet-icon portlet-icon-refresh"></i></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="container-xs-height full-height">
+                          <div class="row row-xs-height">
+                            <div class="col-xs-5 col-xs-height col-middle relative">
+                              <div class="padding-15 top-left bottom-left">
+                                <h5 class="hint-text no-margin p-l-10">API Quota</h5>
+                                <p class=" bold font-montserrat p-l-10">2,345,789
+                                  <br>calls</p>
+                                <p class=" hint-text visible-xlg p-l-10">API Quota</p>
+                              </div>
+                            </div>
+                            <div class="col-xs-7 col-xs-height col-bottom relative widget-5-chart-container">
+                              <div class="widget-5-chart rickshaw_graph"><svg width="124" height="76"><rect x="0" y="0.7524752475247567" width="7" height="75.24752475247524" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="17.71428571428571" y="15.801980198019798" width="7" height="60.1980198019802" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="35.42857142857142" y="38.37623762376238" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="53.14285714285714" y="8.277227722772281" width="7" height="67.72277227722772" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="70.85714285714285" y="38.37623762376238" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="88.57142857142856" y="15.801980198019798" width="7" height="60.1980198019802" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="106.28571428571428" y="0.7524752475247567" width="7" height="75.24752475247524" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="0" y="0.7524752475247567" width="7" height="0" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="17.71428571428571" y="0.7524752475247567" width="7" height="15.04950495049505" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="35.42857142857142" y="0.7524752475247567" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="53.14285714285714" y="0.7524752475247567" width="7" height="7.524752475247525" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="70.85714285714285" y="0.7524752475247567" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="88.57142857142856" y="0.7524752475247567" width="7" height="15.04950495049505" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="106.28571428571428" y="0.7524752475247567" width="7" height="0" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect></svg></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xlg-4">
+                <div class="row">
+                  <div class="col-sm-6 m-b-10">
+                    <div class="ar-1-1">
+                      <!-- START WIDGET widget_imageWidgetBasic-->
+                      <div class="widget-2 panel no-border bg-primary widget widget-loader-circle-lg no-margin">
+                        <div class="panel-heading">
+                          <div class="panel-controls">
+                            <ul>
+                              <li><a href="#" class="portlet-refresh" data-toggle="refresh"><i class="portlet-icon portlet-icon-refresh-lg-white"></i></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <div class="pull-bottom bottom-left bottom-right padding-25">
+                            <h1 class="text-white semi-bold">Userbase</h1>
+
+                             <span class="label font-montserrat fs-11">Engagement</span>
+
+
+                            <div id="user_segment_chart" style="height:160px;font-size:11px;"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                  <div class="col-sm-6 m-b-10">
+                    <div class="ar-1-1">
+                      <!-- START WIDGET widget_plainLiveWidget-->
+                      <div class="widget-3 panel no-border bg-complete no-margin widget-loader-bar">
+                        <div class="panel-body no-padding">
+                           <div class="pull-bottom bottom-left bottom-right padding-25">
+                            <h1 class="text-white semi-bold">Conversions</h1>
+                            <br>
+                            <p class="text-white hint-text hidden-md">Newsfeed and notifications conversions here.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 m-b-10">
+                    <div class="ar-1-1">
+                      <!-- START WIDGET widget_plainWidget-->
+                      <div class="panel no-border bg-master widget widget-6 widget-loader-circle-lg no-margin">
+                        <div class="panel-heading">
+                          <div class="panel-controls">
+                            <ul>
+                              <li><a data-toggle="refresh" class="portlet-refresh" href="#"><i class="portlet-icon portlet-icon-refresh-lg-white"></i></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <div class="pull-bottom bottom-left bottom-right padding-25">
+                            <h1 class="text-white semi-bold">Trending</h1>
+                            <p class="text-white hint-text m-t-30">Top 3 trending products, tags and categories</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                  <div class="col-sm-6 m-b-10">
+                    <div class="ar-1-1">
+                      <!-- START WIDGET D3 widget_graphLiveWidget-->
+                      <div class="widget-7 panel no-border bg-success no-margin">
+                        <div class="panel-body no-padding">
+                          <div class="pull-bottom bottom-left bottom-right padding-25">
+                            <h1 class="text-white semi-bold">Top Funnels</h1>
+                            <p class="text-white hint-text m-t-30">Top 3 funnels</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END WIDGET -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
 <% content_for :scripts do %>
   <script type="text/javascript">
-  	// Custom JS for this page only
+$(function() {
+  var user_segment = <%= @seg_data.to_json %>;
+  var user_segment_chart = AmCharts.makeChart('user_segment_chart', {
+    type: 'pie',
+    dataProvider: user_segment,
+    titleField: 'title',
+    valueField: 'value',
+    labelRadius: 5,
+    radius: '30%',
+    innerRadius: '60%',
+    labelText: '[[title]]',
+  });
+});
   </script>
 <% end %>

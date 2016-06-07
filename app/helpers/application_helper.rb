@@ -106,7 +106,7 @@ module ApplicationHelper
     p12_file = Tempfile.new 'p12_file'
     p12_file.write p12
     p12_file.close
-    
+
     pem_file = Tempfile.new 'pem_file'
     pem_file.write p12_to_pem_text(p12)
     pem_file.close
@@ -123,6 +123,23 @@ module ApplicationHelper
 
     p12_file.unlink
     pem_file.unlink
+  end
+
+  def fa_caret(val, opts={})
+    val = val.to_f.round(2)
+    rows = []
+    if val > 0
+      rows << '<p class="font-montserrat text-success no-margin fs-16">'
+      rows << "<i class='fa fa-caret-up'></i> +#{ val } <span class='font-arial text-white fs-12 hint-text m-l-5'>#{ opts.fetch(:text, '') }</span>"
+    elsif val < 0
+      rows << '<p class="font-montserrat text-danger no-margin fs-16">'
+      rows << "<i class='fa fa-caret-down'></i> #{ val } <span class='font-arial text-white fs-12 hint-text m-l-5'>#{ opts.fetch(:text, '') }</span>"
+    else
+      rows << '<p class="font-montserrat text-danger no-margin fs-16">'
+      rows << "<i class='fa fa-caret-down'></i> #{ val } <span class='font-arial text-white fs-12 hint-text m-l-5'>#{ opts.fetch(:text, '') }</span>"
+    end
+    rows << '</p>'
+    rows.join
   end
 
 end
