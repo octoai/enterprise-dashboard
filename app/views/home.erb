@@ -11,6 +11,7 @@
   	.hljs-string {
   		color: #d14;
   	}
+
   </style>
 <% end %>
 
@@ -135,21 +136,27 @@
                       <!-- START WIDGET widget_imageWidgetBasic-->
                       <div class="widget-2 panel no-border bg-primary widget widget-loader-circle-lg no-margin">
                         <div class="panel-heading">
+                          <%#
+                              Because we don't have specific calls for each of these portlets,
+                              the refresh UX is disabled by comments.
+                              We should pick it up soon and enable these UX controls.
                           <div class="panel-controls">
                             <ul>
                               <li><a href="#" class="portlet-refresh" data-toggle="refresh"><i class="portlet-icon portlet-icon-refresh-lg-white"></i></a>
                               </li>
                             </ul>
                           </div>
+                           %>
                         </div>
                         <div class="panel-body">
                           <div class="pull-bottom bottom-left bottom-right padding-25">
                             <h1 class="text-white semi-bold">Userbase</h1>
-
                              <span class="label font-montserrat fs-11">Engagement</span>
-
-
-                            <div id="user_segment_chart" style="height:160px;font-size:11px;"></div>
+                             <% if @seg_data.count > 0 %>
+                              <div id="user_segment_chart" style="height:180px;font-size:11px;margin:0px 0px -25px -25px;"></div>
+                            <% else %>
+                              <p class="text-white hint-text m-t-30">Unable to load data. <a href="#">Find Out Why?</a></p>
+                            <% end %>
                           </div>
                         </div>
                       </div>
@@ -164,7 +171,12 @@
                            <div class="pull-bottom bottom-left bottom-right padding-25">
                             <h1 class="text-white semi-bold">Conversions</h1>
                             <br>
-                            <p class="text-white hint-text hidden-md">Newsfeed and notifications conversions here.</p>
+                            <% if @conv_data.count > 0 %>
+                              <div id="conversions_chart" style="height:190px;font-size:11px;margin:0px 0px -25px -25px;"></div>
+                            <% else %>
+                              <span class="label font-montserrat fs-11">Newsfeed and Notifications</span>
+                              <p class="text-white hint-text hidden-md">Unable to load data. <a href="#">Find out Why?</a></p>
+                            <% end %>
                           </div>
                         </div>
                       </div>
@@ -219,17 +231,29 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
 $(function() {
-  var user_segment = <%= @seg_data.to_json %>;
-  var user_segment_chart = AmCharts.makeChart('user_segment_chart', {
-    type: 'pie',
-    dataProvider: user_segment,
-    titleField: 'title',
-    valueField: 'value',
-    labelRadius: 5,
-    radius: '30%',
-    innerRadius: '60%',
-    labelText: '[[title]]',
-  });
+
+  <% if @conv_data.count > 0 %>
+      var conv_data = <%= @conv_data.to_json %>;
+      var conv_opts = {
+        depth3D: 0,
+        angle: 10
+      };
+      $.octo.createGraph(conv_data, 'conversions_chart', 'smoothedLine', 'Conversion %', 'ts', conv_opts);
+  <% end %>
+
+  <% if @seg_data.count > 0 %>
+    var user_segment = <%= @seg_data.to_json %>;
+    var user_segment_chart = AmCharts.makeChart('user_segment_chart', {
+      type: 'pie',
+      dataProvider: user_segment,
+      titleField: 'title',
+      valueField: 'value',
+      labelRadius: 5,
+      radius: '30%',
+      innerRadius: '60%',
+      labelText: '[[title]]',
+    });
+  <% end %>
 });
   </script>
 <% end %>

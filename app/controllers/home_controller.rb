@@ -2,11 +2,30 @@
 class HomeController < ApplicationController
 
 	get '/' do
-    smart_segments = get_enterprise.segments.select { |x| x.intelligence }
+    enterprise = get_enterprise
+
+    smart_segments = enterprise.segments.select { |x| x.intelligence }
     @seg_data = []
     smart_segments.each do |x|
       i = x.data(Time.now)
-      @seg_data << { title: x.name.split(' ')[0], value: i.value[1] }
+      if i
+        @seg_data << { title: x.name.split(' ')[0], value: i.value[1].round(2) }
+      end
+    end
+
+    @conv_data = Octo::Conversions.types.values.collect do |type_val|
+      Octo::Conversions.data(enterprise.id, type_val, 3.days.ago..Time.now)
+    end.flatten.group_by do |x|
+      x.ts
+    end.inject([]) do |r,e|
+      key = e[0]
+      values = e[1]
+      r << values.inject({}) do |rs, el|
+        val = (el.type == 1) ? 'Notification' : 'Newsfeed'
+        rs[val] = el.value.round(2)
+        rs
+      end.merge( ts: key )
+      r
     end
 
     @today = {

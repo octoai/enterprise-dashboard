@@ -10,7 +10,7 @@ class ConversionController < ApplicationController
 
     (start_time.to_i..end_time.to_i).step(86400) do |x|
       ConversionData = Octo::Conversions.data( enterprise[:id], graph_type, x)
-      jsonData = { 
+      jsonData = {
         ts: ConversionData[:ts],
         value: ConversionData[:value]
       }

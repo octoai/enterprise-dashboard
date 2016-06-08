@@ -26,16 +26,36 @@
     method: 'GET'
   };
 
-  $.octo.createGraph = function(chartData, element_id="chartdiv", chartType="column", axisTitle="Count", category="date"){
+  $.octo.graph = {
+    default_settings: {
+      depth3D: 0,
+      angle: 0,
+      plotAreaBorderAlpha: 0.2,
+      lineThickness: 0.5,
+      bulletSize: 4,
+      bulletBorderAlpha: 0.1,
+      bulletBorderThickness: 1,
+      bulletBorderColor: '#eee',
+      maxZoomFactor: 0,
+      chartScrollbar: {
+        enabled: false
+      },
+    },
+  };
+
+  $.octo.createGraph = function(chartData, element_id="chartdiv", chartType="column", axisTitle="Count", category="date", opts={}){
+    var settings = $.extend( {}, $.octo.graph.default_settings, opts);
     var balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]]</b></span>";
     $('#'+element_id).html('');
 
     chart = new AmCharts.AmSerialChart();
     chart.dataProvider = chartData;
     chart.categoryField = category; // By default category = date
-    chart.plotAreaBorderAlpha = 0.2;
-    chart.depth3D = 25; // 3D angle
-    chart.angle = 30; // 3D depth
+    chart.plotAreaBorderAlpha = settings.plotAreaBorderAlpha;
+    chart.depth3D = settings.depth3D; // 3D angle
+    chart.angle = settings.angle; // 3D depth
+    chart.maxZoomFactor = settings.maxZoomFactor;
+    chart.chartScrollbar = settings.chartScrollbar;
 
     var categoryAxis = chart.categoryAxis;
     categoryAxis.gridAlpha = 0.1;
@@ -90,11 +110,11 @@
 
         if(chartType == "smoothedLine" || chartType == "line"){
           graph.bullet = "round";
-          graph.lineThickness = 2;
-          graph.bulletSize = 8;
-          graph.bulletBorderAlpha = 1;
-          graph.bulletBorderThickness = 2;
-        } else if(chartType == "column"){
+          graph.lineThickness = settings.lineThickness;
+          graph.bulletSize = settings.bulletSize;
+          graph.bulletBorderAlpha = settings.bulletBorderAlpha;
+          graph.bulletBorderThickness = settings.bulletBorderThickness;
+        } else if(chartType == "column") {
           graph.lineAlpha = 0;
           graph.fillAlphas = 0.5;
         } else {
@@ -110,8 +130,21 @@
       chartCursor.cursorPosition = "mouse";
       chart.addChartCursor(chartCursor);
 
-      var chartScrollbar = new AmCharts.ChartScrollbar();
-      chart.addChartScrollbar(chartScrollbar);
+      if ( settings.chartScrollbar.enabled) {
+        var chartScrollbar = new AmCharts.ChartScrollbar();
+        chart.addChartScrollbar(chartScrollbar);
+      }
+
+      var legend = new AmCharts.AmLegend();
+      legend.borderAlpha = 0.2;
+      legend.position = 'absolute';
+      legend.left = 70;
+      legend.top = -20;
+      legend.markerType = 'line';
+      legend.borderAlpha = 0;
+      legend.horizontalGap = 10;
+      chart.addLegend(legend);
+
 
       chart.creditsPosition = "bottom-right";
     } else if(chartType == "column"){
