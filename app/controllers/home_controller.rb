@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 	get '/' do
     enterprise = get_enterprise
 
+    # Get segments data
     smart_segments = enterprise.segments.select { |x| x.intelligence }
     @seg_data = []
     smart_segments.each do |x|
@@ -13,6 +14,7 @@ class HomeController < ApplicationController
       end
     end
 
+    # Get the conversions data
     @conv_data = Octo::Conversions.types.values.collect do |type_val|
       Octo::Conversions.data(enterprise.id, type_val, 3.days.ago..Time.now)
     end.flatten.group_by do |x|
@@ -26,6 +28,26 @@ class HomeController < ApplicationController
         rs
       end.merge( ts: key )
       r
+    end
+
+    # Get the trending data
+    @trend_data = [Octo::ProductTrend, Octo::CategoryTrend, Octo::TagTrend].inject({}) do |trend_data, trend_class|
+      trend_data[trend_text_for(trend_class)] = trend_class.send(:get_trending, enterprise.id, Octo::Counter::TYPE_MINUTE, limit: 3)
+      trend_data
+    end
+
+    # Get the funnels data
+    @funnel_data = enterprise.funnels.first(3)
+
+    # Get the Api Calls happened in last few minutes
+    @api_data = []
+    apihits = Octo::ApiHit.where(
+      enterprise_id: enterprise.id,
+      type: Octo::Counter::TYPE_MINUTE,
+      ts: 5.minutes.ago.utc..Time.now.floor.utc
+    ).group_by { |x| x.ts }
+    apihits.values.each_with_index do |counters, index|
+      @api_data << { x: index, y: counters.inject(0) { |sum, counter| sum += counter.count } }
     end
 
     @today = {

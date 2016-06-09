@@ -142,4 +142,15 @@ module ApplicationHelper
     rows.join
   end
 
+  def trend_text_for(trend)
+    case trend.to_s
+    when 'Octo::ProductTrend'
+      'product'
+    when 'Octo::CategoryTrend'
+      'category'
+    when 'Octo::TagTrend'
+      'tag'
+    end
+  end
+
 end

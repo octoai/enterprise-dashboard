@@ -68,12 +68,14 @@
 	                                  Octo Uptime <i class="fa fa-chevron-right"></i>
                                   </span>
                                 </div>
+                                <%#
                                 <div class="panel-controls">
                                   <ul>
                                     <li><a href="#" class="portlet-refresh text-black" data-toggle="refresh"><i class="portlet-icon portlet-icon-refresh"></i></a>
                                     </li>
                                   </ul>
                                 </div>
+                              %>
                               </div>
                             </div>
                           </div>
@@ -100,6 +102,7 @@
                     <div class="ar-2-1">
                       <!-- START WIDGET widget_barTile-->
                       <div class="widget-5 panel no-border  widget-loader-bar">
+                   <%#
                         <div class="panel-heading pull-top top-right">
                           <div class="panel-controls">
                             <ul>
@@ -108,18 +111,19 @@
                             </ul>
                           </div>
                         </div>
+                     %>
                         <div class="container-xs-height full-height">
                           <div class="row row-xs-height">
                             <div class="col-xs-5 col-xs-height col-middle relative">
                               <div class="padding-15 top-left bottom-left">
-                                <h5 class="hint-text no-margin p-l-10">API Quota</h5>
-                                <p class=" bold font-montserrat p-l-10">2,345,789
+                                <h5 class="hint-text no-margin p-l-10">API Hits</h5>
+                                <p class=" bold font-montserrat p-l-10"><%= @api_data[0][:y] %>
                                   <br>calls</p>
                                 <p class=" hint-text visible-xlg p-l-10">API Quota</p>
                               </div>
                             </div>
                             <div class="col-xs-7 col-xs-height col-bottom relative widget-5-chart-container">
-                              <div class="widget-5-chart rickshaw_graph"><svg width="124" height="76"><rect x="0" y="0.7524752475247567" width="7" height="75.24752475247524" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="17.71428571428571" y="15.801980198019798" width="7" height="60.1980198019802" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="35.42857142857142" y="38.37623762376238" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="53.14285714285714" y="8.277227722772281" width="7" height="67.72277227722772" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="70.85714285714285" y="38.37623762376238" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="88.57142857142856" y="15.801980198019798" width="7" height="60.1980198019802" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="106.28571428571428" y="0.7524752475247567" width="7" height="75.24752475247524" transform="matrix(1,0,0,1,0,0)" fill="rgba(245, 87, 83, 1)"></rect><rect x="0" y="0.7524752475247567" width="7" height="0" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="17.71428571428571" y="0.7524752475247567" width="7" height="15.04950495049505" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="35.42857142857142" y="0.7524752475247567" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="53.14285714285714" y="0.7524752475247567" width="7" height="7.524752475247525" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="70.85714285714285" y="0.7524752475247567" width="7" height="37.62376237623762" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="88.57142857142856" y="0.7524752475247567" width="7" height="15.04950495049505" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect><rect x="106.28571428571428" y="0.7524752475247567" width="7" height="0" transform="matrix(1,0,0,1,0,0)" fill="rgba(230, 230, 230, 1)"></rect></svg></div>
+                              <div class="apicalls-chart rickshaw_graph"></div>
                             </div>
                           </div>
                         </div>
@@ -189,6 +193,7 @@
                     <div class="ar-1-1">
                       <!-- START WIDGET widget_plainWidget-->
                       <div class="panel no-border bg-master widget widget-6 widget-loader-circle-lg no-margin">
+                        <%#
                         <div class="panel-heading">
                           <div class="panel-controls">
                             <ul>
@@ -197,10 +202,39 @@
                             </ul>
                           </div>
                         </div>
+                        %>
                         <div class="panel-body">
                           <div class="pull-bottom bottom-left bottom-right padding-25">
                             <h1 class="text-white semi-bold">Trending</h1>
-                            <p class="text-white hint-text m-t-30">Top 3 trending products, tags and categories</p>
+                            <span class="label font-montserrat fs-11">Right Now</span><p/>
+                            <% if @trend_data.keys.count > 0 %>
+                              <div class="panel" style="margin: 0px 0px -20px -20px;">
+                                <ul class="nav nav-tabs nav-tabs-simple">
+                                  <% @trend_data.keys.each_with_index do |key, index| %>
+                                    <li  <% if index == 0 %> class="active" <% end %> >
+                                      <a data-toggle="tab" style="padding: 2px 6px;" href="#trending<%= key %>"><%= key %></a>
+                                    </li>
+                                  <% end %>
+                                </ul>
+                                <div class="tab-content bg-white">
+                                  <% @trend_data.each do |text, trending| %>
+                                    <div class="tab-pane slide-left  <% if text == 'product' %> active <% end %>" id="trending<%= text %>">
+                                     <% if trending.count > 0 %>
+                                      <% trending.each do |trend| %>
+                                        <div class="row">
+                                          <h6><%= trend.nil? ? 'Not Available <a href="#">Know Why?</a>' : trend.unique_id %></h6>
+                                        </div>
+                                      <% end %>
+                                    <% else %>
+                                      <p>Unable to load data</p>
+                                    <% end %>
+                                    </div>
+                                  <% end %>
+                                </div>
+                              </div>
+                            <% else %>
+                              <p class="text-white hint-text m-t-30">Top 3 trending products, tags and categories</p>
+                            <% end %>
                           </div>
                         </div>
                       </div>
@@ -214,7 +248,17 @@
                         <div class="panel-body no-padding">
                           <div class="pull-bottom bottom-left bottom-right padding-25">
                             <h1 class="text-white semi-bold">Top Funnels</h1>
-                            <p class="text-white hint-text m-t-30">Top 3 funnels</p>
+                            <% if @funnel_data %>
+                              <table>
+                                <% @funnel_data.each do |funnel| %>
+                                  <tr>
+                                    <td><h5><%= funnel.name %></h5></td>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% else %>
+                              <p class="text-white hint-text hidden-md">Unable to load data. <a href="#">Find out Why?</a></p>
+                            <% end %>
                           </div>
                         </div>
                       </div>
@@ -231,6 +275,28 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
 $(function() {
+
+
+  var api_data = <%= @api_data.to_json %>;
+  var container = '.apicalls-chart';
+  var graph = new Rickshaw.Graph({
+    element: document.querySelector(container),
+    renderer: 'bar',
+    series: [{ data: api_data,
+      color: $.Pages.getColor('danger')}]
+  });
+  graph.render();
+  $(window).resize(function() {
+      graph.configure({
+          width: $(container).width(),
+          height: $(container).height()
+      });
+
+      graph.render()
+  });
+
+  $(container).data('chart', graph);
+
 
   <% if @conv_data.count > 0 %>
       var conv_data = <%= @conv_data.to_json %>;
