@@ -49,24 +49,31 @@ class HomeController < ApplicationController
     apihits.values.each_with_index do |counters, index|
       @api_data << { x: index, y: counters.inject(0) { |sum, counter| sum += counter.count } }
     end
+    if @api_data.count > 0
+      @api_count = @api_data[@api_data.length-1][:y]
+    else
+      @api_count = 0
+    end
 
-    @today = {
-      'Most Engaged Users' => {
-        :title => 'Down by 0.1%',
-        :wow => 0.6,
-        :oye => -0.1
-      },
-      'Notifications Sent' => {
-        :title => 'Unchanged',
-        :wow => 0.5,
-        :oye => 0.0
-      },
-      'Feed Engagement' => {
-        :title => 'Up by 8%',
-        :wow => 4.5,
-        :oye => 8
+    if enterprise.fakedata?
+      @today = {
+        'Most Engaged Users' => {
+          :title => 'Down by 0.1%',
+          :wow => 0.6,
+          :oye => -0.1
+        },
+        'Notifications Sent' => {
+          :title => 'Unchanged',
+          :wow => 0.5,
+          :oye => 0.0
+        },
+        'Feed Engagement' => {
+          :title => 'Up by 8%',
+          :wow => 4.5,
+          :oye => 8
+        }
       }
-    }
+    end
   	erb :home
 	end
 

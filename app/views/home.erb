@@ -35,17 +35,36 @@
                           <div class="pull-bottom bottom-left bottom-right ">
                             <span class="label font-montserrat fs-11">TODAY</span>
                             <br>
-                            <% @today.each do |title, opts| %>
-                              <div class="row">
-                                <h2 class="text-white"><%= "#{ title } #{ opts[:title] }" %></h2>
-                                <% [:wow, :oye].each do |prop| %>
-                                  <% if opts.has_key?(prop) %>
-                                    <div class="company col-xs-4">
-                                      <%= fa_caret opts[prop], text: '% ' + prop.to_s %>
-                                    </div>
+                            <% if @today %>
+                              <% @today.each do |title, opts| %>
+                                <div class="row">
+                                  <h2 class="text-white"><%= "#{ title } #{ opts[:title] }" %></h2>
+                                  <% [:wow, :oye].each do |prop| %>
+                                    <% if opts.has_key?(prop) %>
+                                      <div class="company col-xs-4">
+                                        <%= fa_caret opts[prop], text: '% ' + prop.to_s %>
+                                      </div>
+                                    <% end %>
                                   <% end %>
-                                <% end %>
+                                </div>
+                              <% end %>
+                            <% else %>
+                              <div class="row">
+                                <h2 class="text-white">Welcome. Today's a great day.</h2>
                               </div>
+                              <div class="row">
+                                <h2 class="text-white">You'll see news here when it's ready.</h2>
+                                <h5 class="text-info">Like below</h5>
+                              </div>
+                              <div class="row">
+                                  <h2 class="text-white">Feed Engagement Up by 8%</h2>
+                                      <div class="company col-xs-4">
+                                        <p class="font-montserrat text-success no-margin fs-16"><i class="fa fa-caret-up"></i> +4.5 <span class="font-arial text-white fs-12 hint-text m-l-5">% wow</span></p>
+                                      </div>
+                                      <div class="company col-xs-4">
+                                        <p class="font-montserrat text-success no-margin fs-16"><i class="fa fa-caret-up"></i> +8.0 <span class="font-arial text-white fs-12 hint-text m-l-5">% oye</span></p>
+                                      </div>
+                                </div>
                             <% end %>
                           </div>
                         </div>
@@ -117,7 +136,7 @@
                             <div class="col-xs-5 col-xs-height col-middle relative">
                               <div class="padding-15 top-left bottom-left">
                                 <h5 class="hint-text no-margin p-l-10">API Hits</h5>
-                                <p class=" bold font-montserrat p-l-10"><%= @api_data[0][:y] %>
+                                <p class=" bold font-montserrat p-l-10"><%= @api_count %>
                                   <br>calls</p>
                                 <p class=" hint-text visible-xlg p-l-10">API Quota</p>
                               </div>
