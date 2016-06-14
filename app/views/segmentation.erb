@@ -164,8 +164,8 @@
 
       args = {
         segmentName: slug_name,
-        startTime: start_time,
-        endTime: end_time
+        startTime: start_time == null ? '' : start_time,
+        endTime: end_time == null ? '' : end_time
       }
 
       $.getJSON('/segmentation/graph_data', 

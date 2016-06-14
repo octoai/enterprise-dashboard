@@ -1,5 +1,3 @@
-require 'octocore'
-
 class FunnelController < ApplicationController
 
 	get '/' do
@@ -38,10 +36,16 @@ class FunnelController < ApplicationController
   end
 
   get '/graph_data' do
+    day_value = 1*24*60*60
+
     funnelName = params[:funnelName]
+    start_time = params[:startTime] == '' ? (Time.now - (10*day_value)) : (Time.parse(params[:startTime]))
+    end_time = params[:endTime] == '' ? (Time.now) : (Time.parse(params[:endTime]))
+
     enterprise = get_enterprise
+
     funnel = Octo::Funnel.where(enterprise_id: enterprise[:id], name_slug: funnelName).first
-    data = Octo::FunnelData.where(enterprise_id: enterprise[:id], funnel_slug: funnelName).first
+    data = funnel.data(start_time)
     counter = 0
     json_array = []
     funnel[:funnel].each do |x, index|
