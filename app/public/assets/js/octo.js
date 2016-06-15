@@ -43,7 +43,18 @@
     },
   };
 
-  $.octo.createGraph = function(chartData, element_id="chartdiv", chartType="column", axisTitle="Count", category="date", opts={}){
+  $.octo.createGraph = function(opts){
+    var chartData = opts['chartData'];
+    if (chartData == undefined) {
+      debug('Empty ChartData');
+      return 0;
+    }
+
+    var element_id = opts['element_id'] || 'chartdiv';
+    var chartType = opts['chartType'] || 'column';
+    var axisTitle = opts['axisTitle'] || 'Count';
+    var category = opts['category'] || 'date';
+
     var settings = $.extend( {}, $.octo.graph.default_settings, opts);
     var balloonText = "<span>[[category]]</span><br><span style='font-size:14px'>[[title]]:<b>[[value]]</b></span>";
     $('#'+element_id).html('');
@@ -102,7 +113,7 @@
       if (key == category){
         // Continue leaving category axis 
       } else {
-        let graph = new AmCharts.AmGraph();
+        var graph = new AmCharts.AmGraph();
         graph.title = key;
         graph.valueField = key;
         graph.type = chartType; // chartType should be like "column" or ""

@@ -33,7 +33,13 @@
   };
 
   function showChart(data) {
-    $.octo.createGraph(data, 'chartdiv', 'smoothedLine', 'User Count', 'ts');
+    var _opts = {
+      chartData: data,
+      chartType: 'smoothedLine',
+      axisTitle: 'User Count',
+      category: 'ts'
+    }
+    $.octo.createGraph(_opts);
     console.log(data);
   };
 
