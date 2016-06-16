@@ -2,6 +2,7 @@ require 'octocore'
 
 class UserController < ApplicationController
 
+
   # specific to user
   get '/' do
     @enterprise = Octo::Enterprise.first
@@ -35,5 +36,19 @@ class UserController < ApplicationController
   end
 
 
+  get '/:userid?' do
+    @enterprise = Octo::Enterprise.first
+    user = Octo::User.find_by_enterprise_id_and_id(
+      @enterprise.id,
+      @params[:userid].to_i
+    )
+    if user
+      @success = true
+      @user = user
+      @res = Octo::UserTimeline.fakedata(@user)
+    else
+      @success = false
+    end
+    erb :user
+  end
 end
-

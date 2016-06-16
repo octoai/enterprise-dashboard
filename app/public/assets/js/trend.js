@@ -37,7 +37,7 @@
   };
 
   // activate a counter
-  function setActiveCounter(data = {}) {
+  function setActiveCounter(data) {
 
     // send a backend call to fetch the data
     var url = '/trends/' + $.fn.showTrend.settings.trendfor + '/' + $.fn.showTrend.activeCounter + '/';

@@ -99,13 +99,13 @@
     // Callback when date changes
     $('#daterange').on('apply.daterangepicker', function(ev, picker){
 
-      let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
-      let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+      var start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+      var end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
 
       $(this).val(start_time + ' - ' + end_time);
 
-      let slugName = $(".select_funnel.active").data('slugname');
-      let chartName = $(".select_funnel.active").data('name');
+      var slugName = $(".select_funnel.active").data('slugname');
+      var chartName = $(".select_funnel.active").data('name');
       get_graph_data(slugName, chartName, start_time, end_time);
     });
 
@@ -162,10 +162,10 @@
         }
       });
 
-      let today = new Date();
-      let yesterday = new Date();
+      var today = new Date();
+      var yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);
-      let last7day = new Date();
+      var last7day = new Date();
       last7day.setDate(today.getDate() - 7);
       $('#daterange').daterangepicker({
         "ranges": {

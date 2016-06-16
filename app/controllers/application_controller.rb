@@ -7,7 +7,10 @@ class ApplicationController < Sinatra::Base
   helpers ApplicationHelper, Sinatra::ContentFor
 
   configure do
-    enable :sessions
+    use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :expire_after => 2592000,
+                           :secret => 'ashdgjsf982u3e2jbd'
   end
 
   before do

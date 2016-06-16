@@ -138,8 +138,8 @@
     }
 
     $('#segmentations_list').on('click', 'tr.select_segment', function() {
-      let slugName = $(this).data('slugname');
-      let chartName = $(this).data('name');
+      var slugName = $(this).data('slugname');
+      var chartName = $(this).data('name');
       generateChartData(slugName, chartName, null, null);
       $(".select_segment").each(function(){
         $(this).removeClass("active");
@@ -150,13 +150,13 @@
     // Callback when date changes
     $('#daterange').on('apply.daterangepicker', function(ev, picker){
 
-      let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
-      let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+      var start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+      var end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
 
       $(this).val(start_time + ' - ' + end_time);
 
-      let slugName = $(".select_segment.active").data('slugname');
-      let chartName = $(".select_segment.active").data('name');
+      var slugName = $(".select_segment.active").data('slugname');
+      var chartName = $(".select_segment.active").data('name');
       generateChartData(slugName, chartName, start_time, end_time);
     });
 
@@ -185,7 +185,6 @@
             chartData.push(json);
             tableData.push(arr);
           });
-          
           var last_index = chartData.length - 1;
           var initElement = chartData[0];
           var lastElement = chartData[last_index];
@@ -348,10 +347,10 @@
         }
       });
 
-      let today = new Date();
-      let yesterday = new Date();
+      var today = new Date();
+      var yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);
-      let last7day = new Date();
+      var last7day = new Date();
       last7day.setDate(today.getDate() - 7);
       $('#daterange').daterangepicker({
         "ranges": {

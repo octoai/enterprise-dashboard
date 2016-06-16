@@ -320,10 +320,15 @@ $(function() {
   <% if @conv_data.count > 0 %>
       var conv_data = <%= @conv_data.to_json %>;
       var conv_opts = {
+        chartData: conv_data,
+        element_id: 'conversions_chart',
+        chartType: 'smoothedLine',
+        axisTitle: 'Conversion %',
+        category: 'ts',
         depth3D: 0,
         angle: 10
       };
-      $.octo.createGraph(conv_data, 'conversions_chart', 'smoothedLine', 'Conversion %', 'ts', conv_opts);
+      $.octo.createGraph(conv_opts);
   <% end %>
 
   <% if @seg_data.count > 0 %>

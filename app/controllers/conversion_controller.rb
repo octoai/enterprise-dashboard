@@ -6,15 +6,11 @@ class ConversionController < ApplicationController
     graph_type = params[:graph_type].to_i
 
     enterprise = get_enterprise
-    json_arr = []
 
-    (start_time.to_i..end_time.to_i).step(86400) do |x|
-      ConversionData = Octo::Conversions.data( enterprise[:id], graph_type, x)
-      jsonData = {
-        ts: ConversionData[:ts],
-        value: ConversionData[:value]
-      }
-      json_arr.push(jsonData)
+    conversionData = Octo::Conversions.data( enterprise.id, graph_type, start_time..end_time)
+    json_arr = conversionData.inject([]) do |arr, conv|
+      arr << { ts: conv.ts, value: conv.value }
+      arr
     end
     {data: json_arr}.to_json
   end

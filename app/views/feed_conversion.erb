@@ -128,24 +128,24 @@
     // Callback when date changes
     $('#daterange').on('apply.daterangepicker', function(ev, picker){
 
-      let start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
-      let end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
+      var start_time = picker.startDate.format('YYYY/MM/DD h:mm:ss a');
+      var end_time = picker.endDate.format('YYYY/MM/DD h:mm:ss a');
 
       $(this).val(start_time + ' - ' + end_time);
       loadData( start_time, end_time);
     });
 
     function loadData( start_time, end_time){
-      $.getJSON('/conversion/graphdata', 
+      $.getJSON('/conversion/graphdata',
       {
         graph_type: type,
         startTime: start_time,
         endTime: end_time
-      }, 
+      },
       function(response){
         chartData = [];
         $.each( response.data, function( index, value ) {
-          let json_data = {
+          var json_data = {
             date: new Date(value['ts']),
             value: value['value'].toFixed(2)
           };
@@ -157,10 +157,10 @@
     }
 
     $(function() {
-      let today = new Date();
-      let yesterday = new Date();
+      var today = new Date();
+      var yesterday = new Date();
       yesterday.setDate(today.getDate() - 1);
-      let last7day = new Date();
+      var last7day = new Date();
       last7day.setDate(today.getDate() - 7);
       $('#daterange').daterangepicker({
         "ranges": {

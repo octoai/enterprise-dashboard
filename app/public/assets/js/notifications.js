@@ -13,7 +13,7 @@
 
   };
 
-  $.fn.activate = function(data = {}) {
+  $.fn.activate = function(data) {
     var url = '/notification/' + $.fn.notifications.activeFor + '/';
     var opts = {
        ajaxSuccess: showChart
