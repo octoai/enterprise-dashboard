@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  Octo.connect_with_config_file(File.join(Dir.pwd, 'config', 'config.yml'))
+  Octo.connect_with(File.join(Dir.pwd, 'config'))
 
   # set folder for templates to ../views, but make the path absolute
   set :views, File.expand_path('../../views', __FILE__)
