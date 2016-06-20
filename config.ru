@@ -10,6 +10,7 @@ Dir.glob('./app/{helpers,controllers}/*.rb').each { |file| require file }
 
 # map the controllers to routes
 map('/access') {run AccessController}
+
 map('/') {run HomeController}
 map('/home') {run HomeController}
 map('/feed') {run FeedController}

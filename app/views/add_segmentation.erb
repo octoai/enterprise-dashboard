@@ -278,6 +278,8 @@
 
     $.post('/segmentation/create', { jsonData: jsonValue}, function(response){
       segmentHome();
+    }).fail(function(error) {
+      console.log(error);
     });
   }
 
