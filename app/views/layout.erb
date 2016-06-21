@@ -40,13 +40,14 @@
       // fix for windows 8
       if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
         document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="pages/css/windows.chrome.fix.css" />'
-
+      if (0) {
       $.getJSON('/messages', function(response){
         $('#all_notifications').html('');
         response.forEach(function(element, index, array){
           $('#all_notifications').append('<div class="notification-item  clearfix"><div class="heading"><a href="'+ element.link +'" class="text-complete pull-left"><i class="glyphicon glyphicon-comment"> </i> <span class="bold"> '+ element.title +' </span><span class="fs-12 m-l-10">'+ element.keyword +'</span></a><span class="pull-right time">'+ element.time +'</span></div></div>');
         });
       });
+      }
     }
     </script>
   </head>
@@ -266,6 +267,7 @@
               <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
             </div>
             <!-- START NOTIFICATION LIST -->
+            <%#
             <ul class="notification-list no-margin hidden-sm hidden-xs b-grey b-l b-r no-style p-l-30 p-r-20">
               <li class="p-r-15 inline">
                 <div class="dropdown">
@@ -286,6 +288,7 @@
                 </div>
               </li>
             </ul>
+          %>
             <!-- END NOTIFICATIONS LIST -->
           </div>
         </div>

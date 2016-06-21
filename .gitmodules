@@ -1,4 +1,0 @@
-[submodule "config/core"]
-	path = config/core
-	url = http://phab.octo.ai/diffusion/CONFIG/config.git
-	branch = local
