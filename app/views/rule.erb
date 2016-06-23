@@ -7,8 +7,17 @@
   	/* Custom CSS for this page */
   </style>
 <% end %>
-
-<p>This is rules page</p>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+  <h2>Rules List </h2>
+  <ul class="list-group">
+    <% @rules_list.each do |rule| %>
+      <li class="list-group-item"> <%= rule[:name] %> </li>
+    <% end %>
+  </ul>
+    
+  </div>
+</div>
 
 <% content_for :scripts do %>
   <script type="text/javascript">

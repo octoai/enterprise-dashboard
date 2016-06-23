@@ -30,6 +30,12 @@
     <link href="pages/css/pages-icons.css" rel="stylesheet" type="text/css">
     <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
 
+    <style type="text/css">
+      /*.brand {
+        margin-left: 10px;
+      }*/
+    </style>
+
     <% yield_content :styles %>
     <!--[if lte IE 9]>
         <link href="pages/css/ie9.css" rel="stylesheet" type="text/css" />
@@ -40,14 +46,16 @@
       // fix for windows 8
       if (navigator.appVersion.indexOf("Windows NT 6.2") != -1)
         document.head.innerHTML += '<link rel="stylesheet" type="text/css" href="pages/css/windows.chrome.fix.css" />'
-      if (0) {
       $.getJSON('/messages', function(response){
         $('#all_notifications').html('');
-        response.forEach(function(element, index, array){
-          $('#all_notifications').append('<div class="notification-item  clearfix"><div class="heading"><a href="'+ element.link +'" class="text-complete pull-left"><i class="glyphicon glyphicon-comment"> </i> <span class="bold"> '+ element.title +' </span><span class="fs-12 m-l-10">'+ element.keyword +'</span></a><span class="pull-right time">'+ element.time +'</span></div></div>');
-        });
-      });
-      }
+        if(response.length == 0){
+          $('#all_notifications').html('<div align="center">No New Notification</div>');
+        } else {  
+          response.forEach(function(element, index, array){
+            $('#all_notifications').append('<div class="notification-item  clearfix"><div class="heading"><a href="'+ element.link +'" class="text-complete pull-left"><i class="glyphicon glyphicon-comment"> </i> <span class="bold"> '+ element.title +' </span><span class="fs-12 m-l-10">'+ element.keyword +'</span></a><span class="pull-right time">'+ element.time +'</span></div></div>');
+          });
+        }
+      })
     }
     </script>
   </head>
@@ -55,10 +63,11 @@
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar" data-pages="sidebar">
       <div id="appMenu" class="sidebar-overlay-slide from-top">
+
       </div>
       <!-- BEGIN SIDEBAR HEADER -->
       <div class="sidebar-header">
-        <img src="assets/img/logo_white.png" alt="logo" class="brand" data-src="assets/img/logo_white.png" data-src-retina="assets/img/logo_white_2x.png" width="78" height="22">
+        <span class="brand" style="color: white;" width="78" height="22">OCTO-MATIC</span>
         <div class="sidebar-header-controls">
           <button data-pages-toggle="#appMenu" class="btn btn-xs sidebar-slide-toggle btn-link m-l-20" type="button"><i class="fa fa-angle-down fs-16"></i>
           </button>
@@ -112,22 +121,24 @@
             </ul>
           </li>
 
-          <% if false %>
-            <%# Dont need Rules now %>
           <li class="">
             <a href="javascript:;">
               <span class="title">Rules</span>
               <span class="arrow"></span>
             </a>
-            <span class="icon-thumbnail"><i class="pg-grid"></i></span>
+            <span class="icon-thumbnail">R</span>
             <ul class="sub-menu">
               <li class="">
                 <a href="/rule">Overview</a>
-                <span class="icon-thumbnail">R</span>
+                <span class="icon-thumbnail">R-O</span>
+              </li>
+              <li class="">
+                <a href="/rule/new">Add Rule</a>
+                <span class="icon-thumbnail">R-A</span>
               </li>
             </ul>
           </li>
-        <% end %>
+
           <li class="">
             <a href="javascript:;">
               <span class="title">User Timeline</span>
@@ -245,7 +256,7 @@
           <div class="pull-center hidden-md hidden-lg">
             <div class="header-inner">
               <div class="brand inline">
-                <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+                <h5 class="brand">OCTO-MATIC</h5>
               </div>
             </div>
           </div>
@@ -264,10 +275,9 @@
         <div class=" pull-left sm-table hidden-xs hidden-sm">
           <div class="header-inner">
             <div class="brand inline">
-              <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+              <h5 class="brand">OCTO-MATIC</h5>
             </div>
             <!-- START NOTIFICATION LIST -->
-            <%#
             <ul class="notification-list no-margin hidden-sm hidden-xs b-grey b-l b-r no-style p-l-30 p-r-20">
               <li class="p-r-15 inline">
                 <div class="dropdown">
@@ -288,7 +298,6 @@
                 </div>
               </li>
             </ul>
-          %>
             <!-- END NOTIFICATIONS LIST -->
           </div>
         </div>
