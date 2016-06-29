@@ -9,6 +9,18 @@
     .form-label{
       font-weight: bold;
     }
+
+    table {
+      width:100%;
+    }
+
+    table td{
+      padding-bottom: 1em;
+    }
+
+    table select {
+      width: auto !important;
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="assets/css/auto-complete.css">
 <% end %>
@@ -21,67 +33,81 @@
       </div>
       <div class="panel-body">
         <form method="POST" action="#">
-          <div>
-            <span class="form-label">
-            Rule Name: 
-            </span>
-            <span>
-            <input id="rule_name" name="name" type="text" style="width:100%;">
-          </span>
-          </div>
-          <br/>
-          <div>
-            <span class="form-label">
-            Select Segment: 
-            </span>
-            <span>
-            <select class="form-control" id="notif_cat" name="segment">
-              <% @segments.each do |segment| %>
-                <option value="<%= segment[:slugname] %>"><%= segment[:name] %></option>
-              <% end %>
-            </select>
-            </span>
-          </div>
-          <br/>
-          <div>
-            <span class="form-label">
-            Select Template Category: 
-            </span>
-            <span>
-            <select class="form-control" id="temp_cat" name="temp_cat">
-              <% @categories.each do |cat| %>
-                <option value="<%= cat[:category_type] %>"><%= cat[:category_type] %></option>
-              <% end %>
-            </select>
-          </span>
-          </div>
-          <br />
-          <div>
-            <span class="form-label">
-            Duration Type: 
-            </span>
-            <span>
-            <select class="form-control" id="duration" name="duration">
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="weekends">Weekends</option>
-              <option value="alternate">Alternate Days</option>
-            </select>
-          </span>
-          </div>
-          <br />
-          <div>
-            <span class="form-label">
-              Custom Date Range: 
-            </span>
-            <span>
-              <input type="text" name="daterange" id="daterange" placeholder="Select Date" style="width: 100%;">
-            </span>
-          </div>
-          <br/>
-          <div>
-            <input id="state" type="checkbox" name="state"> State ( ON or OFF )
-          </div>
+        <table>
+          <tr>
+            <td>
+              <span class="form-label">
+                Rule Name: 
+              </span>
+            </td>
+            <td>
+              <input id="rule_name" name="name" type="text" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="form-label">
+                Select Segment: 
+              </span>
+            </td>
+            <td>
+              <select class="form-control" id="notif_cat" name="segment" required>
+                <% @segments.each do |segment| %>
+                  <option value="<%= segment[:slugname] %>"><%= segment[:name] %></option>
+                <% end %>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="form-label">
+                Select Template Category: 
+              </span>
+            </td>
+            <td>
+              <select class="form-control" id="temp_cat" name="temp_cat" required>
+                <% @categories.each do |cat| %>
+                  <option value="<%= cat[:category_type] %>"><%= cat[:category_type] %></option>
+                <% end %>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="form-label">
+                Duration Type: 
+              </span>
+            </td>
+            <td>
+              <select class="form-control" id="duration" name="duration" required>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="weekends">Weekends</option>
+                <option value="alternate">Alternate Days</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="form-label">
+                Custom Date Range: 
+              </span>
+            </td>
+            <td>
+              <input type="text" name="daterange" id="daterange" placeholder="Select Date" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="form-label">
+                State ( ON or OFF ): 
+              </span>
+            </td>
+            <td>
+              <input id="state" type="checkbox" name="state">
+            </td>
+          </tr>
+        </table>
           <br/>
           <span>
             <button id="submit" type="submit" class="btn btn-primary">Create</button>
