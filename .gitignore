@@ -1,4 +1,4 @@
 .DS_Store
 *.log
 .idea/
-*.rdb
+*.rdbconfig/config
