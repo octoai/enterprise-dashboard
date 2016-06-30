@@ -1,0 +1,6 @@
+# Blacklist everything
+*
+# Whitelist the file you're interested in.
+!.gitignore
+!*.yml
+!*.yaml
