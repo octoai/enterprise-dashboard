@@ -11,6 +11,15 @@ module ApplicationHelper
     mapping_as_choice Octo::Counter::Helper.counter_text
   end
 
+  # Create a new Client
+  # @param [String] username The name of the client
+  # @param [String] email The email of the client
+  # @param [String] password The password of the client
+  # @return [String] The status of request
+  def create_client(username, email, password)
+    add_consumer(username, email, password)
+  end
+
   # Converts a hash mapping into choices ready for UX
   # @return [Array<Hash{Symbol => String }>] The hash containing key :text
   #   as the text to display, and another key :id as the id to be used
@@ -27,11 +36,12 @@ module ApplicationHelper
     Octo::Enterprise.where(id: session[:consumer_id]).first
   end
 
-
+  # Get Enterprise Id of logged in user
   def get_enterprise_id
     session[:consumer_id]
   end
 
+  # Get Octo api key for logged user
   def get_api_key
     enterprise = get_enterprise
     Octo::Authorization.find_by_username(enterprise.name).apikey

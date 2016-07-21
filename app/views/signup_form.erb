@@ -1,0 +1,64 @@
+<p class="p-t-35">Create your OCTO account</p>
+
+<!-- START SignUp Form -->
+<form id="form-signup" class="p-t-15" role="form" action="/access/signup" method="POST">
+  <!-- START Form Control-->
+  <div class="form-group form-group-default">
+    <label>Username</label>
+    <div class="controls">
+      <input type="text" name="username" placeholder="User Name" class="form-control" required>
+    </div>
+  </div>
+  <!-- END Form Control-->
+
+  <!-- START Form Control-->
+  <div class="form-group form-group-default">
+    <label>Email</label>
+    <div class="controls">
+      <input type="text" name="email" placeholder="User Name" class="form-control" required>
+    </div>
+  </div>
+  <!-- END Form Control-->
+
+  <!-- START Form Control-->
+  <div class="form-group form-group-default">
+    <label>Password</label>
+    <div class="controls">
+      <input type="password" class="form-control" name="password" id="password" placeholder="Credentials" required>
+    </div>
+  </div>
+
+  <!-- START Form Control-->
+  <div class="form-group form-group-default">
+    <label>Confirm Password</label>
+    <div class="controls">
+      <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Credentials" required>
+    </div>
+  </div>
+
+  <!-- END Form Control-->
+  <button class="btn btn-primary btn-cons m-t-10" type="submit">Sign Up</button>
+</form>
+
+
+<script>
+  var password = document.getElementById("password");
+  var confirm_password = document.getElementById("confirm_password");
+
+  // Check Password and Confirm Password field both having same values
+  function validatePassword(){
+    if(password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+      confirm_password.setCustomValidity('');
+    }
+  }
+
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
+
+  $(function()
+  {
+    $('#form-signup').validate();
+  });
+</script>
