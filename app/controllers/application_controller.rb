@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
   end
 
   before do
-    pass if %w[access login].include? request.path_info.split('/')[1]
+    pass if %w[access login signup].include? request.path_info.split('/')[1]
     unless session[:identity] && validate_token(session[:identity], session[:token])
       session.delete(:identity)
       session.delete(:token)
