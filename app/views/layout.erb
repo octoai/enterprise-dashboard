@@ -281,7 +281,7 @@
                 </li>
                 <li><a href="#"><i class="pg-outdent"></i> Feedback</a>
                 </li>
-                <li><a href="javascript:void(0);" id="help"><i class="pg-signals"></i> Help</a>
+                <li><a href="/home?intro=true"><i class="pg-signals"></i> Help</a>
                 </li>
                 <li class="bg-master-lighter">
                   <a href="/access/logout" class="clearfix">
@@ -417,10 +417,6 @@
             });
           }, 1000);
         }
-
-        $('#help').click(function(){
-          startIntro();
-        });
 
         <% if @intro %>
           startIntro();

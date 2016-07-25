@@ -2,11 +2,7 @@
 class HomeController < ApplicationController
 
 	get '/' do
-    if params['intro'] == 'true'
-      @intro = true
-    else
-      @intro = false
-    end
+    @intro = params['intro'] == 'true'
   	erb :home
 	end
 
