@@ -44,7 +44,7 @@ class AccessController < ApplicationController
       session[:identity] = username
       session[:consumer_id] = res.enterprise_id
       session[:token] = save_session(username)
-      redirect '/home'
+      redirect '/home?intro=true'
     else
       redirect '/access/signup'
     end
