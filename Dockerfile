@@ -21,5 +21,5 @@ COPY  . $INSTALL_PATH
 
 #Entry Point
 WORKDIR $INSTALL_PATH
-CMD ["bash", "-c", "unicorn -o 0.0.0.0 -p 9002 --daemonize"]
+CMD bundle exec unicorn -o 0.0.0.0 -p 9002
 EXPOSE 9002
