@@ -7,3 +7,7 @@ gem 'escape'
 gem 'aws-sdk'
 
 gem 'octocore'
+
+group :test do
+  gem 'rspec'
+end
