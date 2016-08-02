@@ -1,0 +1,15 @@
+sudo: required
+
+language: ruby
+rvm:
+ - '2.1.5'
+
+services:
+ - docker
+
+before_install:
+ - docker build -t tushardwivedi/dashboard .
+ - docker run tushardwivedi/dashboard /bin/bash -c "bundle exec rspec"
+
+script:
+ - bundle exec rspec
