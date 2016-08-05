@@ -99,18 +99,28 @@
             </a>
             <span class="icon-thumbnail">E</span>
             <ul class="sub-menu">
+
+              <% if Octo.is_not_flagged?(Octo::Segmentation) %>
               <li class="">
                 <a href="/segmentation">Segmentation</a>
                 <span class="icon-thumbnail">S</span>
               </li>
+              <% end %>
+
+              <% if Octo.is_not_flagged?(Octo::Funnel) %>
               <li class="">
                 <a href="/funnel">Funnel</a>
                 <span class="icon-thumbnail">F</span>
               </li>
+              <% end %>
+
+              <% if Octo.is_not_flagged?(Octo::Segmentation) %>
               <li class="">
                 <a href="/rule">Rules</a>
                 <span class="icon-thumbnail">R</span>
               </li>
+              <% end %>
+
               <li class="">
                 <a href="/notification">Notifications</a>
                 <span class="icon-thumbnail">N</span>
@@ -153,18 +163,27 @@
             </a>
             <span class="icon-thumbnail">A</span>
             <ul class="sub-menu">
+
+              <% if Octo.is_not_flagged?(Octo::Segmentation) %>
               <li class="">
                 <a href="/segmentation/new">Add Segmentation</a>
                 <span class="icon-thumbnail">S-A</span>
               </li>
+              <% end %>
+
+              <% if Octo.is_not_flagged?(Octo::Funnel) %>
               <li class="">
                 <a href="/funnel/new">Add Funnel</a>
                 <span class="icon-thumbnail">F-A</span>
               </li>
+              <% end %>
+
+              <% if Octo.is_not_flagged?(Octo::Segmentation) %>
               <li class="">
                 <a href="/rule/new">Add Rule</a>
                 <span class="icon-thumbnail">R-A</span>
               </li>
+              <% end %>
               <li class="">
                 <a href="/notification/template">Notification Templates</a>
                 <span class="icon-thumbnail">N-T</span>
