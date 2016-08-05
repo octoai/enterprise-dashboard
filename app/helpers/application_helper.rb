@@ -106,8 +106,8 @@ module ApplicationHelper
   def upload_certificate(p12)
     config = Octo.get_config(:aws, nil)
 
-    _access_key = config[:access_key] || ENV['AWS_ACCESS_KEY']
-    _secret_key = config[:secret_key] || ENV['AWS_SECRET_KEY']
+    _access_key = ENV['AWS_ACCESS_KEY'] || config[:access_key]
+    _secret_key = ENV['AWS_SECRET_KEY'] || config[:secret_key]
 
     Aws.config.update({
       region: config[:region],
