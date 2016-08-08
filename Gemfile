@@ -7,7 +7,7 @@ gem 'escape'
 gem 'unicorn', '~> 5.1.0', '>= 5.1.0'
 gem 'aws-sdk'
 
-gem 'octocore', '~> 0.0.2', '>= 0.0.2'
+gem 'octocore', '~> 0.0.4', '>= 0.0.4'
 
 group :test do
   gem 'rspec'
