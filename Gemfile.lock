@@ -10,14 +10,14 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    aws-sdk (2.5.5)
-      aws-sdk-resources (= 2.5.5)
-    aws-sdk-core (2.5.5)
+    aws-sdk (2.5.11)
+      aws-sdk-resources (= 2.5.11)
+    aws-sdk-core (2.5.11)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.5.5)
-      aws-sdk-core (= 2.5.5)
+    aws-sdk-resources (2.5.11)
+      aws-sdk-core (= 2.5.11)
     builder (3.2.2)
-    cassandra-driver (2.1.6)
+    cassandra-driver (2.1.7)
       ione (~> 1.2)
     cequel (1.10.0)
       activemodel (~> 4.0)
@@ -33,7 +33,7 @@ GEM
       faraday
       multi_json
     escape (0.0.4)
-    excon (0.51.0)
+    excon (0.52.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     hiredis (0.6.1)
@@ -51,7 +51,7 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    octocore (0.0.6)
+    octocore-cassandra (0.0.6)
       cequel (~> 1.9, >= 1.9.0)
       descriptive_statistics (~> 2.5.1, >= 2.5.0)
       elasticsearch (~> 1.0.17, >= 1.0.17)
@@ -62,6 +62,7 @@ GEM
       mandrill-api (~> 1.0, >= 1.0.53)
       rake (~> 11.1.0, >= 11.1.0)
       redis (~> 3.2.2, >= 3.2.0)
+      redis-queue (~> 0.0.4, >= 0.0.4)
       resque (~> 1.26.0, >= 1.26.0)
       resque-scheduler (~> 4.1.0, >= 4.1.0)
       ruby-kafka (~> 0.3.2, >= 0.3.2)
@@ -73,6 +74,9 @@ GEM
     rake (11.1.2)
     redis (3.2.2)
     redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
+    redis-queue (0.0.4)
+      hiredis (~> 0.5, >= 0.5.2)
       redis (~> 3.0, >= 3.0.4)
     resque (1.26.0)
       mono_logger (~> 1.0)
@@ -89,7 +93,7 @@ GEM
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
       rspec-mocks (~> 3.5.0)
-    rspec-core (3.5.2)
+    rspec-core (3.5.3)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -124,7 +128,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   escape
-  octocore (~> 0.0.6, >= 0.0.6)
+  octocore-cassandra (~> 0.0.6, >= 0.0.6)
   rspec
   sinatra
   sinatra-content-for
